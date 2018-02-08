@@ -8,13 +8,13 @@ import (
 // Metadata describes the environment variables.
 // envvars.toml follows this structure.
 type Metadata struct {
-	Envvars []Envvar
+	Envvars []*Envvar
 }
 
 // Envvar contains the information of a single environment variable
 type Envvar struct {
-	Name        string
-	Description string
+	Name string
+	Desc string
 }
 
 // NewMetadata reads a file and creates the environment variables Metadata out of it.
