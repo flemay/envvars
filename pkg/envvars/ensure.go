@@ -5,10 +5,10 @@ import (
 	"os"
 )
 
-// Ensure verifies that the environment variables are comform to the Metadata.
-func Ensure(metadata *Metadata) error {
+// Ensure verifies that the environment variables comply to their Definition.
+func Ensure(definition *Definition) error {
 	errorAppender := errorappender.NewErrorAppender("\n")
-	for _, ev := range metadata.Envvars {
+	for _, ev := range definition.Envvars {
 		errorAppender.AppendError(ensureEnvvar(ev))
 	}
 	return errorAppender.Error()
