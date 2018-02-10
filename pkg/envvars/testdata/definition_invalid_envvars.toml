@@ -1,22 +1,9 @@
 # valid
 [[envvars]]
-  name = "NAME_1"
-  desc = "Desc of NAME_1"
+  name = "ENVVAR_1"
+  desc = "Desc of ENVVAR_1"
 
 # invalid because required fields are empty
 [[envvars]]
   name = ""
   desc = ""
-
-# invalid because required fields are not defined
-[[envvars]]
-
-# invalid NAME_2 is not unique
-[[envvars]]
-  name = "NAME_2"
-  desc = "Desc of NAME_2"
-
-# invalid NAME_2 is not unique
-[[envvars]]
-  name = "NAME_2"
-  desc = "Desc of NAME_3"
