@@ -1,2 +1,2 @@
-environment variable NAME_1 must be set
-environment variable NAME_2 must be set
+environment variable ENVVAR_1 must be set
+environment variable ENVVAR_2 must be set
