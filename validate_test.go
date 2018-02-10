@@ -22,6 +22,6 @@ func TestValidate_toReturnErrorIfInvalidMetadata(t *testing.T) {
 	// when
 	err := envvars.Validate(metadata)
 	// then
-	expectedErrorMsg, _ := ioutil.ReadFile("testdata/invalid_envvars_error_message.golden")
+	expectedErrorMsg, _ := ioutil.ReadFile("testdata/validate_error_message.golden")
 	assert.EqualError(t, err, string(expectedErrorMsg))
 }
