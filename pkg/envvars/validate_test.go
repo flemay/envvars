@@ -8,7 +8,7 @@ import (
 
 func TestValidate_toReturnNoErrorIfValidDefinition(t *testing.T) {
 	// given
-	definition, _ := envvars.NewDefinition("testdata/envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/validate_envvars.toml")
 	// when
 	err := envvars.Validate(definition)
 	// then
@@ -17,7 +17,7 @@ func TestValidate_toReturnNoErrorIfValidDefinition(t *testing.T) {
 
 func TestValidate_toReturnErrorIfInvalidDefinition(t *testing.T) {
 	// given
-	definition, _ := envvars.NewDefinition("testdata/invalid_envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/validate_invalid_envvars.toml")
 	// when
 	err := envvars.Validate(definition)
 	// then
