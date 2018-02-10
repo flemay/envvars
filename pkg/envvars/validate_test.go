@@ -15,6 +15,15 @@ func TestValidate_toReturnNoErrorIfValidDefinition(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestValidate_toReturnNoErrorIfValidDefinitionWithTags(t *testing.T) {
+	// given
+	definition, _ := envvars.NewDefinition("testdata/validate_envvars_with_tags.toml")
+	// when
+	err := envvars.Validate(definition)
+	// then
+	assert.NoError(t, err)
+}
+
 func TestValidate_toReturnErrorIfInvalidDefinition(t *testing.T) {
 	// given
 	definition, _ := envvars.NewDefinition("testdata/validate_invalid_envvars.toml")

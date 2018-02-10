@@ -1,7 +1,35 @@
 # valid
+[[tags]]
+  name = "TAG_1"
+  desc = "Desc of TAG_1"
+
+# invalid because required fields are empty
+[[tags]]
+  name = ""
+  desc = ""
+
+# invalid because required fields are not defined
+[[tags]]
+
+# invalid TAG_NAME_NOT_UNIQUE is not unique
+[[tags]]
+  name = "TAG_NAME_NOT_UNIQUE"
+  desc = "Desc of TAG_NAME_NOT_UNIQUE"
+
+# invalid TAG_NAME_NOT_UNIQUE is not unique
+[[tags]]
+  name = "TAG_NAME_NOT_UNIQUE"
+  desc = "Desc of TAG_NAME_NOT_UNIQUE"
+
+# invalid TAG_NOT_USED is not used
+[[tags]]
+  name = "TAG_NOT_USED"
+  desc = "Desc of TAG_NOT_USED"
+
+# valid
 [[envvars]]
-  name = "NAME_1"
-  desc = "Desc of NAME_1"
+  name = "ENVVAR_1"
+  desc = "Desc of ENVVAR_1"
 
 # invalid because required fields are empty
 [[envvars]]
@@ -11,12 +39,30 @@
 # invalid because required fields are not defined
 [[envvars]]
 
-# invalid NAME_2 is not unique
+# invalid ENVVAR_NAME_NOT_UNIQUE is not unique
 [[envvars]]
-  name = "NAME_2"
-  desc = "Desc of NAME_2"
+  name = "ENVVAR_NAME_NOT_UNIQUE"
+  desc = "Desc of ENVVAR_NAME_NOT_UNIQUE"
 
-# invalid NAME_2 is not unique
+# invalid ENVVAR_NAME_NOT_UNIQUE is not unique
 [[envvars]]
-  name = "NAME_2"
+  name = "ENVVAR_NAME_NOT_UNIQUE"
   desc = "Desc of NAME_3"
+
+# valid
+[[envvars]]
+  name = "ENVVAR_3"
+  desc = "Desc of ENVVAR_3"
+  tags = ["TAG_1"]
+
+# invalid because tags are not defined
+[[envvars]]
+  name = "ENVVAR_4"
+  desc = "Desc of ENVVAR_4"
+  tags = ["","TAG_NOT_DEFINED", "TAG_NAME_NOT_UNIQUE"]
+
+# invalid because tag TAG_NOT_DEFINED is not defined
+[[envvars]]
+  name = "ENVVAR_5"
+  desc = "Desc of ENVVAR_5"
+  tags = ["TAG_1","TAG_NOT_DEFINED"]
