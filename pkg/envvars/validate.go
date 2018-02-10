@@ -6,14 +6,14 @@ import (
 	"github.com/flemay/envvars/pkg/errorappender"
 )
 
-// Validate ensures the metadata is without any error.
-// Consumer should always validate before doing any action with the Metadata
-func Validate(metadata *Metadata) error {
+// Validate ensures the Definition is without any error.
+// Consumer should always validate before doing any action with the Definition
+func Validate(definition *Definition) error {
 	errorAppender := errorappender.NewErrorAppender("\n")
-	for i, ev := range metadata.Envvars {
+	for i, ev := range definition.Envvars {
 		evErrorAppender := errorappender.NewErrorAppender("; ")
 		evErrorAppender.AppendError(validateEnvvar(ev))
-		evErrorAppender.AppendError(validateNameUniqueness(ev.Name, metadata.Envvars))
+		evErrorAppender.AppendError(validateNameUniqueness(ev.Name, definition.Envvars))
 		errorAppender.AppendError(evErrorAppender.Wrap(fmt.Sprintf("Envvar #%d: ", i+1)))
 	}
 

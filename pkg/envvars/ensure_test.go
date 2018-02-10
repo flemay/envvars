@@ -8,14 +8,14 @@ import (
 	"testing"
 )
 
-func TestEnsure_toReturnNoErrorIfEnvvarsAreComformToMetadata(t *testing.T) {
+func TestEnsure_toReturnNoErrorIfEnvvarsAreComplyToDefinition(t *testing.T) {
 	// given
-	metadata, _ := envvars.NewMetadata("testdata/envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/envvars.toml")
 	os.Setenv("NAME_1", "name1")
 	os.Setenv("NAME_2", "name2")
 
 	// when
-	err := envvars.Ensure(metadata)
+	err := envvars.Ensure(definition)
 
 	// then
 	assert.NoError(t, err)
@@ -23,12 +23,12 @@ func TestEnsure_toReturnNoErrorIfEnvvarsAreComformToMetadata(t *testing.T) {
 	os.Unsetenv("NAME_2")
 }
 
-func TestEnsure_toReturnErrorIfEnvvarsAreNotComformToMetadata(t *testing.T) {
+func TestEnsure_toReturnErrorIfEnvvarsDoNotComplyToDefinition(t *testing.T) {
 	// given
-	metadata, _ := envvars.NewMetadata("testdata/envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/envvars.toml")
 
 	// when
-	err := envvars.Ensure(metadata)
+	err := envvars.Ensure(definition)
 
 	// then
 	expectedErrorMsg, _ := ioutil.ReadFile("testdata/ensure_error_message.golden")

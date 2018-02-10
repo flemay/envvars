@@ -6,24 +6,24 @@ import (
 	"testing"
 )
 
-func TestNewMetadata_toReturnTheContentOfValidEnvvarsFile(t *testing.T) {
+func TestNewDefinition_toReturnTheContentOfValidEnvvarsFile(t *testing.T) {
 	// given
 	envvarsFilePath := "testdata/envvars.toml"
 
 	// when
-	m, err := envvars.NewMetadata(envvarsFilePath)
+	m, err := envvars.NewDefinition(envvarsFilePath)
 
 	// then
 	assert.NoError(t, err)
 	assert.NotNil(t, m)
 	assert.Len(t, m.Envvars, 2)
 }
-func TestNewMetadata_toReturnErrorIfMalformatedEnvvarsFile(t *testing.T) {
+func TestNewDefinition_toReturnErrorIfMalformatedEnvvarsFile(t *testing.T) {
 	// given
 	envvarsFilePath := "testdata/malformated_envvars.toml"
 
 	// when
-	m, err := envvars.NewMetadata(envvarsFilePath)
+	m, err := envvars.NewDefinition(envvarsFilePath)
 
 	// then
 	assert.Error(t, err)

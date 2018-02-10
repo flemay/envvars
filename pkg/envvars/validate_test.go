@@ -7,20 +7,20 @@ import (
 	"testing"
 )
 
-func TestValidate_toReturnNoErrorIfValidMetadata(t *testing.T) {
+func TestValidate_toReturnNoErrorIfValidDefinition(t *testing.T) {
 	// given
-	metadata, _ := envvars.NewMetadata("testdata/envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/envvars.toml")
 	// when
-	err := envvars.Validate(metadata)
+	err := envvars.Validate(definition)
 	// then
 	assert.NoError(t, err)
 }
 
-func TestValidate_toReturnErrorIfInvalidMetadata(t *testing.T) {
+func TestValidate_toReturnErrorIfInvalidDefinition(t *testing.T) {
 	// given
-	metadata, _ := envvars.NewMetadata("testdata/invalid_envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/invalid_envvars.toml")
 	// when
-	err := envvars.Validate(metadata)
+	err := envvars.Validate(definition)
 	// then
 	expectedErrorMsg, _ := ioutil.ReadFile("testdata/validate_error_message.golden")
 	assert.EqualError(t, err, string(expectedErrorMsg))
