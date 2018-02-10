@@ -3,7 +3,6 @@ package envvars_test
 import (
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
 	"testing"
 )
 
@@ -22,6 +21,6 @@ func TestValidate_toReturnErrorIfInvalidDefinition(t *testing.T) {
 	// when
 	err := envvars.Validate(definition)
 	// then
-	expectedErrorMsg, _ := ioutil.ReadFile("testdata/validate_error_message.golden")
-	assert.EqualError(t, err, string(expectedErrorMsg))
+	expectedErrorMsg := readFile(t, "testdata/validate_error_message.golden")
+	assert.EqualError(t, err, expectedErrorMsg)
 }

@@ -3,7 +3,6 @@ package envvars_test
 import (
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
 	"os"
 	"testing"
 )
@@ -31,6 +30,6 @@ func TestEnsure_toReturnErrorIfEnvvarsDoNotComplyWithDefinition(t *testing.T) {
 	err := envvars.Ensure(definition)
 
 	// then
-	expectedErrorMsg, _ := ioutil.ReadFile("testdata/ensure_error_message.golden")
-	assert.EqualError(t, err, string(expectedErrorMsg))
+	expectedErrorMsg := readFile(t, "testdata/ensure_error_message.golden")
+	assert.EqualError(t, err, expectedErrorMsg)
 }
