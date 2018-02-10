@@ -6,25 +6,25 @@ import (
 	"os"
 )
 
-// Dotenv generates a .env file (dotenvPath) that can be overwritten.
+// Envfile generates an env file that can be overwritten.
 // It returns an error if the file already exists unless overwrite is true
-func Dotenv(definition *Definition, dotenvPath string, overwrite bool) error {
-	fileinfo, err := os.Stat(dotenvPath)
+func Envfile(definition *Definition, name string, overwrite bool) error {
+	fileinfo, err := os.Stat(name)
 	if err != nil && os.IsNotExist(err) == false {
 		return err
 	}
 	if err == nil && overwrite == false {
-		return fmt.Errorf("error: %s already exist", dotenvPath)
+		return fmt.Errorf("error: %s already exist", name)
 	}
 	if err == nil && fileinfo.IsDir() {
-		return fmt.Errorf("error: %s is a folder, not a file", dotenvPath)
+		return fmt.Errorf("error: %s is a folder, not a file", name)
 	}
 
-	return writeDotenv(definition, dotenvPath)
+	return writeEnvfile(definition, name)
 }
 
-func writeDotenv(definition *Definition, dotenvPath string) error {
-	f, err := os.Create(dotenvPath)
+func writeEnvfile(definition *Definition, name string) error {
+	f, err := os.Create(name)
 	if err != nil {
 		return err
 	}
