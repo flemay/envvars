@@ -1,0 +1,7 @@
+[[envvars]]
+  name="NAME_1"
+  desc="desc of NAME_1"
+
+[[envvars]]
+  name="NAME_2"
+  desc="desc of NAME_2"
