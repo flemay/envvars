@@ -3,7 +3,6 @@ package envvars_test
 import (
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
 	"testing"
 )
 
@@ -68,8 +67,8 @@ func TestNewDefinitionAndValidate_toReturnErrorIfInvalidEnvvarsFile(t *testing.T
 	// then
 	assert.Error(t, err)
 	assert.NotNil(t, definition)
-	expectedErrorMsg, _ := ioutil.ReadFile("testdata/validate_error_message.golden")
-	assert.EqualError(t, err, string(expectedErrorMsg))
+	expectedErrorMsg := readFile(t, "testdata/validate_error_message.golden")
+	assert.EqualError(t, err, expectedErrorMsg)
 }
 
 func TestNewDefinitionAndValidate_toReturnErrorIfMalformatedEnvvarsFile(t *testing.T) {
