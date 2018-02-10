@@ -9,7 +9,7 @@ import (
 
 func TestEnsure_toReturnNoErrorIfEnvvarsAreComplyWithDefinition(t *testing.T) {
 	// given
-	definition, _ := envvars.NewDefinition("testdata/envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
 	os.Setenv("NAME_1", "name1")
 	os.Setenv("NAME_2", "name2")
 
@@ -24,7 +24,7 @@ func TestEnsure_toReturnNoErrorIfEnvvarsAreComplyWithDefinition(t *testing.T) {
 
 func TestEnsure_toReturnErrorIfEnvvarsDoNotComplyWithDefinition(t *testing.T) {
 	// given
-	definition, _ := envvars.NewDefinition("testdata/envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
 
 	// when
 	err := envvars.Ensure(definition)

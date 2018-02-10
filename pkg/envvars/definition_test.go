@@ -8,7 +8,7 @@ import (
 
 func TestNewDefinition_toReturnDefinitionBasedOnEnvvarsFile(t *testing.T) {
 	// given
-	envvarsFilePath := "testdata/envvars.toml"
+	envvarsFilePath := "testdata/definition_envvars.toml"
 
 	// when
 	definition, err := envvars.NewDefinition(envvarsFilePath)
@@ -20,7 +20,7 @@ func TestNewDefinition_toReturnDefinitionBasedOnEnvvarsFile(t *testing.T) {
 }
 func TestNewDefinition_toReturnErrorIfMalformatedEnvvarsFile(t *testing.T) {
 	// given
-	envvarsFilePath := "testdata/malformated_envvars.toml"
+	envvarsFilePath := "testdata/definition_malformated_envvars.toml"
 
 	// when
 	definition, err := envvars.NewDefinition(envvarsFilePath)
@@ -46,7 +46,7 @@ func TestNewDefinition_toReturnErrorIfFileNotFound(t *testing.T) {
 
 func TestNewDefinitionAndValidate_toReturnDefinitionBasedOnValidEnvvarsFile(t *testing.T) {
 	// given
-	envvarsFilePath := "testdata/envvars.toml"
+	envvarsFilePath := "testdata/definition_envvars.toml"
 
 	// when
 	definition, err := envvars.NewDefinitionAndValidate(envvarsFilePath)
@@ -59,7 +59,7 @@ func TestNewDefinitionAndValidate_toReturnDefinitionBasedOnValidEnvvarsFile(t *t
 
 func TestNewDefinitionAndValidate_toReturnErrorIfInvalidEnvvarsFile(t *testing.T) {
 	// given
-	envvarsFilePath := "testdata/invalid_envvars.toml"
+	envvarsFilePath := "testdata/definition_invalid_envvars.toml"
 
 	// when
 	definition, err := envvars.NewDefinitionAndValidate(envvarsFilePath)
@@ -67,13 +67,13 @@ func TestNewDefinitionAndValidate_toReturnErrorIfInvalidEnvvarsFile(t *testing.T
 	// then
 	assert.Error(t, err)
 	assert.NotNil(t, definition)
-	expectedErrorMsg := readFile(t, "testdata/validate_error_message.golden")
+	expectedErrorMsg := readFile(t, "testdata/definition_validate_error_message.golden")
 	assert.EqualError(t, err, expectedErrorMsg)
 }
 
 func TestNewDefinitionAndValidate_toReturnErrorIfMalformatedEnvvarsFile(t *testing.T) {
 	// given
-	envvarsFilePath := "testdata/malformated_envvars.toml"
+	envvarsFilePath := "testdata/definition_malformated_envvars.toml"
 
 	// when
 	definition, err := envvars.NewDefinitionAndValidate(envvarsFilePath)
