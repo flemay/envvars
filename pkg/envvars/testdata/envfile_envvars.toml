@@ -1,7 +1,7 @@
 [[envvars]]
-  name="NAME_1"
-  desc="desc of NAME_1"
+  name="ENVVAR_1"
+  desc="desc of ENVVAR_1"
 
 [[envvars]]
-  name="NAME_2"
-  desc="desc of NAME_2"
+  name="ENVVAR_2"
+  desc="desc of ENVVAR_2"
