@@ -1,4 +1,4 @@
-Envvar #2: name cannot be blank; desc cannot be blank
-Envvar #3: name cannot be blank; desc cannot be blank
-Envvar #4: name must be unique
-Envvar #5: name must be unique
+Envvar '' (#2): name cannot be blank; desc cannot be blank
+Envvar '' (#3): name cannot be blank; desc cannot be blank
+Envvar 'NAME_2' (#4): name must be unique
+Envvar 'NAME_2' (#5): name must be unique

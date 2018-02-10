@@ -7,14 +7,14 @@ import (
 )
 
 // Validate ensures the Definition is without any error.
-// Consumer should always validate before doing any action with the Definition
+// Consumer should always validate before doing any action with the Definition.
 func Validate(definition *Definition) error {
 	errorAppender := errorappender.NewErrorAppender("\n")
 	for i, ev := range definition.Envvars {
 		evErrorAppender := errorappender.NewErrorAppender("; ")
 		evErrorAppender.AppendError(validateEnvvar(ev))
-		evErrorAppender.AppendError(validateNameUniqueness(ev.Name, definition.Envvars))
-		errorAppender.AppendError(evErrorAppender.Wrap(fmt.Sprintf("Envvar #%d: ", i+1)))
+		evErrorAppender.AppendError(validateEnvvarNameUniqueness(ev.Name, definition.Envvars))
+		errorAppender.AppendError(evErrorAppender.Wrap(fmt.Sprintf("Envvar '%s' (#%d): ", ev.Name, i+1)))
 	}
 
 	return errorAppender.Error()
@@ -31,7 +31,7 @@ func validateEnvvar(ev *Envvar) error {
 	return errorAppender.Error()
 }
 
-func validateNameUniqueness(name string, evs []*Envvar) error {
+func validateEnvvarNameUniqueness(name string, evs []*Envvar) error {
 	if name == "" {
 		return nil
 	}
