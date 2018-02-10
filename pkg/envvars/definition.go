@@ -8,11 +8,19 @@ import (
 // Definition describes the environment variables.
 // envvars.toml follows this structure.
 type Definition struct {
+	Tags    []*Tag
 	Envvars []*Envvar
 }
 
-// Envvar contains the information of a single environment variable
+// Envvar contains the information of a single environment variable.
 type Envvar struct {
+	Name string
+	Desc string
+	Tags []string
+}
+
+// Tag allows targetting environnement variables for a specific purpose.
+type Tag struct {
 	Name string
 	Desc string
 }

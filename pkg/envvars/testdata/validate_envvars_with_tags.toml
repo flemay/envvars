@@ -1,0 +1,12 @@
+[[tags]]
+  name="TAG_1"
+  desc="desc of TAG_1"
+
+[[envvars]]
+  name="ENVVARS_1"
+  desc="desc of ENVVARS_1"
+  tags=["TAG_1"]
+
+[[envvars]]
+  name="ENVVAR_2"
+  desc="desc of ENVVAR_2"
