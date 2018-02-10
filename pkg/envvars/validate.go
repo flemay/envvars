@@ -3,14 +3,15 @@ package envvars
 import (
 	"errors"
 	"fmt"
+	"github.com/flemay/envvars/pkg/errorappender"
 )
 
 // Validate ensures the metadata is without any error.
 // Consumer should always validate before doing any action with the Metadata
 func Validate(metadata *Metadata) error {
-	errorAppender := NewErrorAppender("\n")
+	errorAppender := errorappender.NewErrorAppender("\n")
 	for i, ev := range metadata.Envvars {
-		evErrorAppender := NewErrorAppender("; ")
+		evErrorAppender := errorappender.NewErrorAppender("; ")
 		evErrorAppender.AppendError(validateEnvvar(ev))
 		evErrorAppender.AppendError(validateNameUniqueness(ev.Name, metadata.Envvars))
 		errorAppender.AppendError(evErrorAppender.Wrap(fmt.Sprintf("Envvar #%d: ", i+1)))
@@ -20,7 +21,7 @@ func Validate(metadata *Metadata) error {
 }
 
 func validateEnvvar(ev *Envvar) error {
-	errorAppender := NewErrorAppender("; ")
+	errorAppender := errorappender.NewErrorAppender("; ")
 	if ev.Name == "" {
 		errorAppender.AppendString("name cannot be blank")
 	}

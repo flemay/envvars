@@ -1,7 +1,7 @@
 package envvars_test
 
 import (
-	"github.com/flemay/envvars"
+	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
