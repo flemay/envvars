@@ -8,15 +8,15 @@ import (
 
 func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
-	d := givenDefinition(t, "dotenv_envvars.toml")
-	name := "testdata/dotenv_file.tmp"
+	d := givenDefinition(t, "envfile_envvars.toml")
+	name := "testdata/envfile_file.tmp"
 
 	// when
 	err := envvars.Envfile(d, name, false)
 
 	// then
 	assert.NoError(t, err)
-	expected := readFile(t, "testdata/dotenv_file.golden")
+	expected := readFile(t, "testdata/envfile_file.golden")
 	actual := readFile(t, name)
 	assert.Equal(t, expected, actual)
 	removeFileOrDir(t, name)
@@ -24,8 +24,8 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 	// given
-	d := givenDefinition(t, "dotenv_envvars.toml")
-	name := "testdata/dotenv_file.tmp"
+	d := givenDefinition(t, "envfile_envvars.toml")
+	name := "testdata/envfile_file.tmp"
 	createEmptyFile(t, name)
 
 	// when
@@ -33,7 +33,7 @@ func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 
 	// then
 	assert.NoError(t, err)
-	expected := readFile(t, "testdata/dotenv_file.golden")
+	expected := readFile(t, "testdata/envfile_file.golden")
 	actual := readFile(t, name)
 	assert.Equal(t, expected, actual)
 	removeFileOrDir(t, name)
@@ -41,8 +41,8 @@ func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 	// given
-	d := givenDefinition(t, "dotenv_envvars.toml")
-	name := "testdata/dotenv_file.tmp"
+	d := givenDefinition(t, "envfile_envvars.toml")
+	name := "testdata/envfile_file.tmp"
 	createEmptyFile(t, name)
 
 	// when
@@ -56,7 +56,7 @@ func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
 	// given
-	d := givenDefinition(t, "dotenv_envvars.toml")
+	d := givenDefinition(t, "envfile_envvars.toml")
 	name := "testdata/tmp"
 	createDir(t, name)
 
