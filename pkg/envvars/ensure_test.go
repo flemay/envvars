@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestEnsure_toReturnNoErrorIfEnvvarsAreComplyToDefinition(t *testing.T) {
+func TestEnsure_toReturnNoErrorIfEnvvarsAreComplyWithDefinition(t *testing.T) {
 	// given
 	definition, _ := envvars.NewDefinition("testdata/envvars.toml")
 	os.Setenv("NAME_1", "name1")
@@ -23,7 +23,7 @@ func TestEnsure_toReturnNoErrorIfEnvvarsAreComplyToDefinition(t *testing.T) {
 	os.Unsetenv("NAME_2")
 }
 
-func TestEnsure_toReturnErrorIfEnvvarsDoNotComplyToDefinition(t *testing.T) {
+func TestEnsure_toReturnErrorIfEnvvarsDoNotComplyWithDefinition(t *testing.T) {
 	// given
 	definition, _ := envvars.NewDefinition("testdata/envvars.toml")
 
