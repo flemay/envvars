@@ -12,7 +12,7 @@ var rootCmd = &cobra.Command{
 	Use:   "envvars",
 	Short: "envvars gives your environment variables the love they deserve",
 	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
+		cmd.Help()
 	},
 }
 
@@ -26,4 +26,5 @@ func Execute() {
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&definitionFileRootFlag, "file", "f", "envvars.toml", "definition file")
 	rootCmd.AddCommand(ensureCmd)
+	rootCmd.AddCommand(envfileCmd)
 }
