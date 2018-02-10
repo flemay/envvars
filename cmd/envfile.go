@@ -22,5 +22,5 @@ var envfileCmd = &cobra.Command{
 
 func init() {
 	envfileCmd.Flags().StringVar(&envfileName, "env-file", ".env", "env file to be generated")
-	envfileCmd.Flags().BoolVar(&overwriteEnvfile, "overwrite", false, "Overwrite the env file if it exists")
+	envfileCmd.Flags().BoolVar(&overwriteEnvfile, "overwrite", true, "Overwrite the env file if it exists")
 }
