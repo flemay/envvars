@@ -47,7 +47,7 @@
 # invalid ENVVAR_NAME_NOT_UNIQUE is not unique
 [[envvars]]
   name = "ENVVAR_NAME_NOT_UNIQUE"
-  desc = "Desc of NAME_3"
+  desc = "Desc of ENVVAR_NAME_NOT_UNIQUE"
 
 # valid
 [[envvars]]
