@@ -27,7 +27,7 @@ func Validate(definition *Definition) error {
 	return errorAppender.Error()
 }
 
-func validateEnvvar(ev *Envvar, tags []*Tag) error {
+func validateEnvvar(ev *Envvar, tags TagCollection) error {
 	errorAppender := errorappender.NewErrorAppender("; ")
 	if ev.Name == "" {
 		errorAppender.AppendString("name cannot be blank")
@@ -36,31 +36,15 @@ func validateEnvvar(ev *Envvar, tags []*Tag) error {
 		errorAppender.AppendString("desc cannot be blank")
 	}
 	for _, tagName := range ev.Tags {
-		tagNotDefined := true
-		for _, tag := range tags {
-			if tag.Name == tagName {
-				tagNotDefined = false
-				break
-			}
-		}
-		if tagNotDefined {
+		if tags.Get(tagName) == nil {
 			errorAppender.AppendString("tag '" + tagName + "' is not defined")
 		}
 	}
 	return errorAppender.Error()
 }
 
-func validateEnvvarNameUniqueness(name string, evs []*Envvar) error {
-	if name == "" {
-		return nil
-	}
-	duplicateNb := 0
-	for _, ev := range evs {
-		if name == ev.Name {
-			duplicateNb++
-		}
-	}
-	if duplicateNb > 1 {
+func validateEnvvarNameUniqueness(name string, c EnvvarCollection) error {
+	if len(c.GetAll(name)) > 1 {
 		return errors.New("name must be unique")
 	}
 	return nil
@@ -77,37 +61,16 @@ func validateTag(t *Tag) error {
 	return errorAppender.Error()
 }
 
-func validateTagNameUniqueness(name string, tags []*Tag) error {
-	if name == "" {
-		return nil
-	}
-	duplicateNb := 0
-	for _, tag := range tags {
-		if name == tag.Name {
-			duplicateNb++
-		}
-	}
-	if duplicateNb > 1 {
+func validateTagNameUniqueness(name string, tags TagCollection) error {
+	if len(tags.GetAll(name)) > 1 {
 		return errors.New("name must be unique")
 	}
 	return nil
 }
 
-func validateTagUsage(name string, evs []*Envvar) error {
-	if name == "" {
-		return nil
-	}
-	notUsed := true
-	for i := 0; i < len(evs) && notUsed; i++ {
-		for _, tagName := range evs[i].Tags {
-			if tagName == name {
-				notUsed = false
-				break
-			}
-		}
-	}
-	if notUsed {
-		return errors.New("defined but not used")
+func validateTagUsage(name string, c EnvvarCollection) error {
+	if len(c.WithTag(name)) == 0 {
+		return errors.New("is not used")
 	}
 	return nil
 }
