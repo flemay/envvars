@@ -96,3 +96,21 @@ func TestNewDefinitionAndValidate_toReturnErrorIfFileNotFound(t *testing.T) {
 	assert.Nil(t, definition)
 	assert.Contains(t, err.Error(), "open nosuchfile.toml: no such file or directory")
 }
+
+func TestEnvvar_HasTag_toReturnTrueIfTagIsPresent(t *testing.T) {
+	// given
+	ev := envvars.Envvar{Tags: []string{"T1", "T2"}}
+	// when
+	hasTag := ev.HasTag("T1")
+	// then
+	assert.True(t, hasTag)
+}
+
+func TestEnvvar_HasTag_toReturnFalseIfTagIsNotPresent(t *testing.T) {
+	// given
+	ev := envvars.Envvar{Tags: []string{"T1", "T2"}}
+	// when
+	hasTag := ev.HasTag("TAG_NOT_THERE")
+	// then
+	assert.False(t, hasTag)
+}
