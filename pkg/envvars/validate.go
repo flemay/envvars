@@ -35,11 +35,8 @@ func validateEnvvar(ev *Envvar, tags TagCollection) error {
 	if ev.Desc == "" {
 		errorAppender.AppendString("desc cannot be blank")
 	}
-	for _, tagName := range ev.Tags {
-		if tags.Get(tagName) == nil {
-			errorAppender.AppendString("tag '" + tagName + "' is not defined")
-		}
-	}
+	errorAppender.AppendError(validateTagNameList(ev.Tags, tags))
+
 	return errorAppender.Error()
 }
 
@@ -73,4 +70,25 @@ func validateTagUsage(name string, c EnvvarCollection) error {
 		return errors.New("is not used")
 	}
 	return nil
+}
+
+func validateTagNameList(names []string, tags TagCollection) error {
+	errorAppender := errorappender.NewErrorAppender("; ")
+	counts := make(map[string]int)
+	for _, name := range names {
+		if name == "" {
+			errorAppender.AppendString("tag '' is empty")
+			continue
+		}
+		if tags.Get(name) == nil {
+			errorAppender.AppendError(fmt.Errorf("tag '%v' is not defined", name))
+		}
+		counts[name] = counts[name] + 1
+	}
+	for name, counts := range counts {
+		if counts > 1 {
+			errorAppender.AppendError(fmt.Errorf("tag '%v' is duplicated", name))
+		}
+	}
+	return errorAppender.Error()
 }

@@ -59,10 +59,16 @@
 [[envvars]]
   name = "ENVVAR_4"
   desc = "Desc of ENVVAR_4"
-  tags = ["","TAG_NOT_DEFINED", "TAG_NAME_NOT_UNIQUE"]
+  tags = ["TAG_NOT_DEFINED", "TAG_NAME_NOT_UNIQUE"]
 
 # invalid because tag TAG_NOT_DEFINED is not defined
 [[envvars]]
   name = "ENVVAR_5"
   desc = "Desc of ENVVAR_5"
   tags = ["TAG_1","TAG_NOT_DEFINED"]
+
+# invalid because it has the same tag more than once, 1 tag is empty
+[[envvars]]
+  name = "ENVVAR_6"
+  desc = "Desc of ENVVAR_6"
+  tags = ["TAG_1","TAG_1",""]
