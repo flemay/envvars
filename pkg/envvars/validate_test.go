@@ -40,5 +40,12 @@ func TestValidate_toReturnErrorIfDefinitionIsEmpty(t *testing.T) {
 	// when
 	err := envvars.Validate(definition)
 	// then
-	assert.Error(t, err)
+	assert.NoError(t, err)
+}
+
+func TestValidate_toReturnErrorIfDefinitionIsNil(t *testing.T) {
+	// when
+	err := envvars.Validate(nil)
+	// then
+	assert.EqualError(t, err, "definition is nil")
 }
