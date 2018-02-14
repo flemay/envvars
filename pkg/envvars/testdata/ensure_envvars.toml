@@ -15,3 +15,7 @@
   name="ENVVAR_2"
   desc="desc of ENVVAR_2"
   tags=["TAG_2"]
+
+[[envvars]]
+  name="ENVVAR_3"
+  desc="desc of ENVVAR_3"
