@@ -6,6 +6,19 @@ import (
 	"testing"
 )
 
+func TestEnvfile_toReturnErrorIfInvalidDefinitionAndTagNameList(t *testing.T) {
+	// given
+	d, _ := envvars.NewDefinition("testdata/invalid_envvars.toml")
+	invalidList := givenInvalidTagNameList()
+
+	// when
+	err := envvars.Envfile(d, "", false, invalidList...)
+
+	// then
+	expectedErrorMsg := readFile(t, "testdata/invalid_envvars_with_tag_name_list_error_message.golden")
+	assert.EqualError(t, err, expectedErrorMsg)
+}
+
 func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
 	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
@@ -17,6 +30,22 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// then
 	assert.NoError(t, err)
 	expected := readFile(t, "testdata/envfile_file.golden")
+	actual := readFile(t, name)
+	assert.Equal(t, expected, actual)
+	removeFileOrDir(t, name)
+}
+
+func TestEnvfile_toGenerateFileWithOnlySpecifiedTags(t *testing.T) {
+	// given
+	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
+	name := "testdata/envfile_file_with_tag.tmp"
+
+	// when
+	err := envvars.Envfile(d, name, false, "TAG_1")
+
+	// then
+	assert.NoError(t, err)
+	expected := readFile(t, "testdata/envfile_file_with_tag.golden")
 	actual := readFile(t, name)
 	assert.Equal(t, expected, actual)
 	removeFileOrDir(t, name)
