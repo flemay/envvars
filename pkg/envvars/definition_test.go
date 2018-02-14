@@ -20,7 +20,7 @@ func TestNewDefinition_toReturnDefinitionBasedOnEnvvarsFile(t *testing.T) {
 }
 func TestNewDefinition_toReturnErrorIfMalformatedEnvvarsFile(t *testing.T) {
 	// given
-	envvarsFilePath := "testdata/definition_malformated_envvars.toml"
+	envvarsFilePath := "testdata/malformated_envvars.toml"
 
 	// when
 	definition, err := envvars.NewDefinition(envvarsFilePath)
