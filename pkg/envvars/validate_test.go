@@ -33,3 +33,12 @@ func TestValidate_toReturnErrorIfInvalidDefinition(t *testing.T) {
 	expectedErrorMsg := readFile(t, "testdata/invalid_envvars_error_message.golden")
 	assert.EqualError(t, err, expectedErrorMsg)
 }
+
+func TestValidate_toReturnErrorIfDefinitionIsEmpty(t *testing.T) {
+	// given
+	definition, _ := envvars.NewDefinition("testdata/validate_empty_envvars_file.toml")
+	// when
+	err := envvars.Validate(definition)
+	// then
+	assert.Error(t, err)
+}
