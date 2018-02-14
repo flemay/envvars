@@ -12,7 +12,7 @@ var envfileCmd = &cobra.Command{
 	Use:   "envfile",
 	Short: "Generate an env file based on the definition file",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		definition, err := envvars.NewDefinitionAndValidate(definitionFileRootFlag)
+		definition, err := envvars.NewDefinition(definitionFileRootFlag)
 		if err != nil {
 			return err
 		}
