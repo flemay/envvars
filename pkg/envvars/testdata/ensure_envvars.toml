@@ -1,7 +1,17 @@
+[[tags]]
+  name="TAG_1"
+  desc="Desc of TAG_1"
+
+[[tags]]
+  name="TAG_2"
+  desc="Desc of TAG_2"
+
 [[envvars]]
   name="ENVVAR_1"
   desc="desc of ENVVAR_1"
+  tags=["TAG_1"]
 
 [[envvars]]
   name="ENVVAR_2"
   desc="desc of ENVVAR_2"
+  tags=["TAG_2"]
