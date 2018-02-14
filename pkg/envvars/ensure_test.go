@@ -25,6 +25,7 @@ func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 	definition, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
 	os.Setenv("ENVVAR_1", "name1")
 	os.Setenv("ENVVAR_2", "name2")
+	os.Setenv("ENVVAR_3", "name3")
 
 	// when
 	err := envvars.Ensure(definition)
@@ -33,6 +34,7 @@ func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 	assert.NoError(t, err)
 	os.Unsetenv("ENVVAR_1")
 	os.Unsetenv("ENVVAR_2")
+	os.Unsetenv("ENVVAR_3")
 }
 
 func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
