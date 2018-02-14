@@ -5,10 +5,14 @@ import (
 	"os"
 )
 
-// Ensure verifies that the environment variables comply to their Definition.
-func Ensure(definition *Definition) error {
+// Ensure verifies that the environment variables comply to their Definition. Tags can be passed along to only ensure environment variables with the tags
+func Ensure(d *Definition, tags ...string) error {
+	c, err := List(d, tags...)
+	if err != nil {
+		return err
+	}
 	errorAppender := errorappender.NewErrorAppender("\n")
-	for _, ev := range definition.Envvars {
+	for _, ev := range c {
 		errorAppender.AppendError(ensureEnvvar(ev))
 	}
 	return errorAppender.Error()

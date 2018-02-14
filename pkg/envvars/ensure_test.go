@@ -7,7 +7,20 @@ import (
 	"testing"
 )
 
-func TestEnsure_toReturnNoErrorIfEnvvarsAreComplyWithDefinition(t *testing.T) {
+func TestEnsure_toReturnErrorIfInvalidDefinitionAndTagNameList(t *testing.T) {
+	// given
+	d, _ := envvars.NewDefinition("testdata/invalid_envvars.toml")
+	invalidList := givenInvalidTagNameList()
+
+	// when
+	err := envvars.Ensure(d, invalidList...)
+
+	// then
+	expectedErrorMsg := readFile(t, "testdata/invalid_envvars_with_tag_name_list_error_message.golden")
+	assert.EqualError(t, err, expectedErrorMsg)
+}
+
+func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 	// given
 	definition, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
 	os.Setenv("ENVVAR_1", "name1")
@@ -22,7 +35,7 @@ func TestEnsure_toReturnNoErrorIfEnvvarsAreComplyWithDefinition(t *testing.T) {
 	os.Unsetenv("ENVVAR_2")
 }
 
-func TestEnsure_toReturnErrorIfEnvvarsDoNotComplyWithDefinition(t *testing.T) {
+func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 	// given
 	definition, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
 
@@ -32,4 +45,25 @@ func TestEnsure_toReturnErrorIfEnvvarsDoNotComplyWithDefinition(t *testing.T) {
 	// then
 	expectedErrorMsg := readFile(t, "testdata/ensure_error_message.golden")
 	assert.EqualError(t, err, expectedErrorMsg)
+}
+
+func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
+	// given
+	d, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
+	os.Setenv("ENVVAR_2", "name2")
+	// when
+	err := envvars.Ensure(d, "TAG_2")
+	// then
+	assert.NoError(t, err)
+	os.Unsetenv("ENVVAR_2")
+}
+
+func TestEnsure_toReturnErrorIfTaggedEnvvarsDoNotComply(t *testing.T) {
+	// given
+	d, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
+	os.Setenv("ENVVAR_2", "name2")
+	// when
+	err := envvars.Ensure(d, "TAG_1")
+	// then
+	assert.EqualError(t, err, "environment variable ENVVAR_1 must be set")
 }
