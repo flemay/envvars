@@ -8,7 +8,7 @@ import (
 
 func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
-	d := givenDefinition(t, "envfile_envvars.toml")
+	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
 	name := "testdata/envfile_file.tmp"
 
 	// when
@@ -24,7 +24,7 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 	// given
-	d := givenDefinition(t, "envfile_envvars.toml")
+	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
 	name := "testdata/envfile_file.tmp"
 	createEmptyFile(t, name)
 
@@ -41,7 +41,7 @@ func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 	// given
-	d := givenDefinition(t, "envfile_envvars.toml")
+	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
 	name := "testdata/envfile_file.tmp"
 	createEmptyFile(t, name)
 
@@ -56,7 +56,7 @@ func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
 	// given
-	d := givenDefinition(t, "envfile_envvars.toml")
+	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
 	name := "testdata/tmp"
 	createDir(t, name)
 

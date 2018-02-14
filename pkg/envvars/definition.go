@@ -42,13 +42,3 @@ func NewDefinition(filepath string) (*Definition, error) {
 	}
 	return &definition, nil
 }
-
-// NewDefinitionAndValidate reads a definition file and creates the environment variables Definition out of it.
-// It also makes sure the Definition is valid.
-func NewDefinitionAndValidate(filepath string) (*Definition, error) {
-	definition, err := NewDefinition(filepath)
-	if err != nil {
-		return nil, err
-	}
-	return definition, Validate(definition)
-}

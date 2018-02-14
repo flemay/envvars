@@ -1,18 +1,17 @@
 package envvars_test
 
 import (
-	"github.com/flemay/envvars/pkg/envvars"
 	"io/ioutil"
 	"os"
 	"testing"
 )
 
-func givenDefinition(t *testing.T, name string) *envvars.Definition {
-	definition, err := envvars.NewDefinitionAndValidate("testdata/" + name)
-	if err != nil {
-		t.Fatalf(err.Error())
-	}
-	return definition
+func givenInvalidTagNameList() []string {
+	return []string{"TAG_NOT_THERE", "TAG_DUPLICATED", "TAG_DUPLICATED", ""}
+}
+
+func expectedInvalidTagNameListErrorMessage() string {
+	return "tag 'TAG_NOT_THERE' is not defined; tag 'TAG_DUPLICATED' is not defined; tag 'TAG_DUPLICATED' is not defined; tag '' is empty; tag 'TAG_DUPLICATED' is duplicated"
 }
 
 func removeFileOrDir(t *testing.T, name string) {

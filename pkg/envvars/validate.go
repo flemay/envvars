@@ -8,22 +8,33 @@ import (
 
 // Validate ensures the Definition is without any error.
 // Consumer should always validate before doing any action with the Definition.
-func Validate(definition *Definition) error {
+func Validate(d *Definition) error {
+	return validateDefinitionAndTagNameList(d)
+}
+
+func validateDefinition(d *Definition) error {
 	errorAppender := errorappender.NewErrorAppender("\n")
-	for i, tag := range definition.Tags {
+	for i, tag := range d.Tags {
 		tagErrorAppender := errorappender.NewErrorAppender("; ")
 		tagErrorAppender.AppendError(validateTag(tag))
-		tagErrorAppender.AppendError(validateTagNameUniqueness(tag.Name, definition.Tags))
-		tagErrorAppender.AppendError(validateTagUsage(tag.Name, definition.Envvars))
+		tagErrorAppender.AppendError(validateTagNameUniqueness(tag.Name, d.Tags))
+		tagErrorAppender.AppendError(validateTagUsage(tag.Name, d.Envvars))
 		errorAppender.AppendError(tagErrorAppender.Wrap(fmt.Sprintf("Tag '%s' (#%d): ", tag.Name, i+1)))
 	}
-	for i, ev := range definition.Envvars {
+	for i, ev := range d.Envvars {
 		evErrorAppender := errorappender.NewErrorAppender("; ")
-		evErrorAppender.AppendError(validateEnvvar(ev, definition.Tags))
-		evErrorAppender.AppendError(validateEnvvarNameUniqueness(ev.Name, definition.Envvars))
+		evErrorAppender.AppendError(validateEnvvar(ev, d.Tags))
+		evErrorAppender.AppendError(validateEnvvarNameUniqueness(ev.Name, d.Envvars))
 		errorAppender.AppendError(evErrorAppender.Wrap(fmt.Sprintf("Envvar '%s' (#%d): ", ev.Name, i+1)))
 	}
 
+	return errorAppender.Error()
+}
+
+func validateDefinitionAndTagNameList(d *Definition, tagNames ...string) error {
+	errorAppender := errorappender.NewErrorAppender("\n")
+	errorAppender.AppendError(validateDefinition(d))
+	errorAppender.AppendError(validateTagNameList(tagNames, d.Tags))
 	return errorAppender.Error()
 }
 

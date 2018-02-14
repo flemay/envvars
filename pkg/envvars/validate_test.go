@@ -26,10 +26,10 @@ func TestValidate_toReturnNoErrorIfValidDefinitionWithTags(t *testing.T) {
 
 func TestValidate_toReturnErrorIfInvalidDefinition(t *testing.T) {
 	// given
-	definition, _ := envvars.NewDefinition("testdata/validate_invalid_envvars.toml")
+	definition, _ := envvars.NewDefinition("testdata/invalid_envvars.toml")
 	// when
 	err := envvars.Validate(definition)
 	// then
-	expectedErrorMsg := readFile(t, "testdata/validate_error_message.golden")
+	expectedErrorMsg := readFile(t, "testdata/invalid_envvars_error_message.golden")
 	assert.EqualError(t, err, expectedErrorMsg)
 }
