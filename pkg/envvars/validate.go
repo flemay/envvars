@@ -32,6 +32,9 @@ func validateDefinition(d *Definition) error {
 }
 
 func validateDefinitionAndTagNameList(d *Definition, tagNames ...string) error {
+	if d == nil {
+		return errors.New("definition is nil")
+	}
 	errorAppender := errorappender.NewErrorAppender("\n")
 	errorAppender.AppendError(validateDefinition(d))
 	errorAppender.AppendError(validateTagNameList(tagNames, d.Tags))
