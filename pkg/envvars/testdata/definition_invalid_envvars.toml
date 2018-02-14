@@ -1,9 +1,0 @@
-# valid
-[[envvars]]
-  name = "ENVVAR_1"
-  desc = "Desc of ENVVAR_1"
-
-# invalid because required fields are empty
-[[envvars]]
-  name = ""
-  desc = ""
