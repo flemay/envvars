@@ -13,6 +13,6 @@ var ensureCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		return envvars.Ensure(definition)
+		return envvars.Ensure(definition, tagsRootFlag...)
 	},
 }
