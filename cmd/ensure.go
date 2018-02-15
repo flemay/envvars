@@ -16,3 +16,7 @@ var ensureCmd = &cobra.Command{
 		return envvars.Ensure(definition, tagsRootFlag...)
 	},
 }
+
+func init() {
+	rootCmd.AddCommand(ensureCmd)
+}

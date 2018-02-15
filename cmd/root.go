@@ -27,7 +27,4 @@ func Execute() {
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&definitionFileRootFlag, "file", "f", "envvars.toml", "definition file")
 	rootCmd.PersistentFlags().StringSliceVarP(&tagsRootFlag, "tags", "t", nil, "execute subcommands against environment variables that have the tags (ex: --tags test,build)")
-	rootCmd.AddCommand(ensureCmd)
-	rootCmd.AddCommand(envfileCmd)
-	rootCmd.AddCommand(listCmd)
 }
