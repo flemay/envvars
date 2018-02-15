@@ -10,7 +10,7 @@ import (
 
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "Display the definition of each environment variable in a table",
+	Short: "Display the definition of each environment variable",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		definition, err := envvars.NewDefinition(definitionFileRootFlag)
 		if err != nil {
