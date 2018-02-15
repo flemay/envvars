@@ -29,3 +29,7 @@ var listCmd = &cobra.Command{
 		return nil
 	},
 }
+
+func init() {
+	rootCmd.AddCommand(listCmd)
+}
