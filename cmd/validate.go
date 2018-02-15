@@ -8,7 +8,7 @@ import (
 var validateCmd = &cobra.Command{
 	Use:   "validate",
 	Short: "Check if the definition file contains any error",
-	Long:  "The flat tags has no effect with this command",
+	Long:  "The flag tags has no effect with this command",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		definition, err := envvars.NewDefinition(definitionFileRootFlag)
 		if err != nil {

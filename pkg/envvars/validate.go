@@ -19,13 +19,13 @@ func validateDefinition(d *Definition) error {
 		tagErrorAppender.AppendError(validateTag(tag))
 		tagErrorAppender.AppendError(validateTagNameUniqueness(tag.Name, d.Tags))
 		tagErrorAppender.AppendError(validateTagUsage(tag.Name, d.Envvars))
-		errorAppender.AppendError(tagErrorAppender.Wrap(fmt.Sprintf("Tag '%s' (#%d): ", tag.Name, i+1)))
+		errorAppender.AppendError(tagErrorAppender.Wrap(fmt.Sprintf("tag '%s' (#%d): ", tag.Name, i+1)))
 	}
 	for i, ev := range d.Envvars {
 		evErrorAppender := errorappender.NewErrorAppender("; ")
 		evErrorAppender.AppendError(validateEnvvar(ev, d.Tags))
 		evErrorAppender.AppendError(validateEnvvarNameUniqueness(ev.Name, d.Envvars))
-		errorAppender.AppendError(evErrorAppender.Wrap(fmt.Sprintf("Envvar '%s' (#%d): ", ev.Name, i+1)))
+		errorAppender.AppendError(evErrorAppender.Wrap(fmt.Sprintf("envvar '%s' (#%d): ", ev.Name, i+1)))
 	}
 
 	return errorAppender.Error()
