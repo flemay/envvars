@@ -20,6 +20,18 @@
   version = "v1.0"
 
 [[projects]]
+  name = "github.com/mattn/go-runewidth"
+  packages = ["."]
+  revision = "9e777a8366cce605130a531d2cd6363d07ad7317"
+  version = "v0.0.2"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/olekukonko/tablewriter"
+  packages = ["."]
+  revision = "b8a9be070da40449e501c3c4730a889e42d87a9e"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
@@ -46,6 +58,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "faacf07b43f0a888c8697fe2493458ae5f8a32a3f29e3c004f00bca91a2fb0b4"
+  inputs-digest = "b43e59644cd4a3c30a91baa60fe23aa9c7b1b8ceea23d5842bd32e9ce12a691d"
   solver-name = "gps-cdcl"
   solver-version = 1
