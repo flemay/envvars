@@ -29,6 +29,10 @@ dockerRun:
 	docker run --rm $(IMAGE_NAME)
 .PHONY: dockerRun
 
+dockerRemove:
+	docker rmi -f $(IMAGE_NAME)
+.PHONY: dockerRemove
+
 tag:
 	-git tag -d $(VERSION)
 	-git push origin :refs/tags/$(VERSION)
