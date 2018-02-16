@@ -42,7 +42,7 @@ $ envvars --help
 
 ## Definition File
 
-The Definition File is the core of envvars. It defines all the environment variables of a given project. It is written in [TOML](https://github.com/toml-lang/toml).
+The Definition File (written in [TOML](https://github.com/toml-lang/toml)) is the core of envvars. It defines all the environment variables of a given project.
 
 envvars is looking for `envvars.toml` by default but a different file can be passed with the flag `-f path/to/definitionfile.toml`.
 
