@@ -1,6 +1,6 @@
 # envvars
 
-envvars gives your environment variables the love they deserve.
+envvars gives the environment variables the love they deserve.
 
 ## Installation
 
@@ -22,6 +22,7 @@ $ envvars ensure
 # set ECHO
 $ export ECHO="helloworld"
 $ envvars ensure
+
 # create an env file
 $ envvars envfile
 $ cat .env
