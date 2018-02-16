@@ -4,6 +4,14 @@ envvars gives the environment variables the love they deserve.
 
 ## Installation
 
+```bash
+# with go get
+$ go get github.com/flemay/envvars
+
+# or use the tiny docker image
+$ docker run flemay/envvars
+```
+
 ## Usage
 
 ```bash
