@@ -14,6 +14,14 @@ install:
 	go install
 .PHONY: install
 
-dockerImage:
+buildForScratch:
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o bin/envvars
+.PHONY: buildForScratch
+
+dockerBuild:
 	docker build --no-cache -t flemay/envvars .
-.PHONY: dockerImage
+.PHONY: dockerBuild
+
+dockerRun:
+	docker run --rm flemay/envvars
+.PHONY: dockerRun
