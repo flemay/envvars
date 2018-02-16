@@ -8,7 +8,7 @@ envvars gives the environment variables the love they deserve.
 # with go get
 $ go get github.com/flemay/envvars
 
-# or use the very tiny (4.51MB) docker image
+# or use the very tiny docker image (< 5 MB)
 $ docker run --rm flemay/envvars:0.0.1
 ```
 
