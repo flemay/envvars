@@ -2,6 +2,8 @@
 
 envvars gives the environment variables the love they deserve.
 
+It documents the environment variables of a project to help the team to understand them. It makes sure they are defined before testing, building, deploying, and running. It can also generates an env file to be used by other applications such as Docker and Compose.
+
 ## Installation
 
 ```bash
@@ -42,7 +44,7 @@ $ envvars --help
 
 ## Definition File
 
-The Definition File (written in [TOML](https://github.com/toml-lang/toml)) is the core of envvars. It defines all the environment variables of a given project.
+The Definition File (written in [TOML](https://github.com/toml-lang/toml)) is the core of envvars. It defines all the environment variables used by project.
 
 envvars is looking for `envvars.toml` by default but a different file can be passed with the flag `-f path/to/definitionfile.toml`.
 
