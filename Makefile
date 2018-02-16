@@ -1,3 +1,6 @@
+VERSION = 0.0.1
+IMAGE_NAME ?= flemay/envvars:$(VERSION)
+
 deps:
 	dep ensure
 .PHONY: deps
@@ -19,9 +22,16 @@ buildForScratch:
 .PHONY: buildForScratch
 
 dockerBuild:
-	docker build --no-cache -t flemay/envvars .
+	docker build --no-cache -t $(IMAGE_NAME) .
 .PHONY: dockerBuild
 
 dockerRun:
-	docker run --rm flemay/envvars
+	docker run --rm $(IMAGE_NAME)
 .PHONY: dockerRun
+
+tag:
+	-git tag -d $(VERSION)
+	-git push origin :refs/tags/$(VERSION)
+	git tag $(VERSION)
+	git push origin $(VERSION)
+.PHONY: tag
