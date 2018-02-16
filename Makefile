@@ -35,3 +35,7 @@ tag:
 	git tag $(VERSION)
 	git push origin $(VERSION)
 .PHONY: tag
+
+clean:
+	rm -f bin vendor
+.PHONY: clean
