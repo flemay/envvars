@@ -1,25 +1,18 @@
 VERSION = 0.0.1
 IMAGE_NAME ?= flemay/envvars:$(VERSION)
+GOLANG_DEPS_DIR = vendor
 
 deps:
-	dep ensure
+	docker-compose run --rm golang make _deps
 .PHONY: deps
 
-test:
-	go test -cover ./...
+test: $(GOLANG_DEPS_DIR)
+	docker-compose run --rm golang make _test
 .PHONY: test
 
-build:
-	go build -o bin/envvars
+build: $(GOLANG_DEPS_DIR)
+	docker-compose run --rm golang make _build
 .PHONY: build
-
-install:
-	go install
-.PHONY: install
-
-buildForScratch:
-	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o bin/envvars
-.PHONY: buildForScratch
 
 dockerBuild:
 	docker build --no-cache -t $(IMAGE_NAME) .
@@ -41,5 +34,25 @@ tag:
 .PHONY: tag
 
 clean:
-	rm -f bin vendor
+	rm -fr bin vendor
 .PHONY: clean
+
+_deps:
+	dep ensure
+.PHONY: _deps
+
+_test:
+	go test -cover ./...
+.PHONY: _test
+
+_buildForScratch:
+	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o bin/envvars
+.PHONY: _buildForScratch
+
+_build:
+	go build -o bin/envvars
+.PHONY: _build
+
+_install:
+	go install
+.PHONY: _install
