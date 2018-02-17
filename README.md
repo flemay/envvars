@@ -10,7 +10,7 @@ It documents the environment variables of a project to help the team to understa
 # with go get
 $ go get github.com/flemay/envvars
 
-# or use the very tiny docker image (< 5 MB)
+# or use the tiny docker image (< 5 MB)
 $ docker run --rm flemay/envvars:0.0.1
 ```
 
