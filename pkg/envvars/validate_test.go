@@ -40,7 +40,8 @@ func TestValidate_toReturnErrorIfDefinitionIsEmpty(t *testing.T) {
 	// when
 	err := envvars.Validate(definition)
 	// then
-	assert.NoError(t, err)
+	assert.Error(t, err)
+	assert.EqualError(t, err, "definition must at least have 1 envvars")
 }
 
 func TestValidate_toReturnErrorIfDefinitionIsNil(t *testing.T) {
