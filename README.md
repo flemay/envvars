@@ -78,4 +78,11 @@ envvars is looking for `envvars.toml` by default but a different file can be pas
 
 ## Principles
 
-- Documentation is your best friend: `desc` is required and `[[tags]]` must be defined if used.
+envvars has strict rules which follows some principles.
+
+### Documentation is your best friend
+
+envvars forces you to have `desc` for `[[envvars]]` and `[[tags]]`. This helps anyone new to the project or juggling with many projects at once to understand every environment variables and tags as long as `desc` is meaningful.
+
+### You ain't gonna need it
+envvars will complain if `[[tags]]` is defined but not being used by `[[envvars]]`. It will also throw an error if an `[[envvars]]` uses a tag that is not defined. Lastly, it will not like it if a tag passed as parameter to a command does not exist in the Definition File. All of this helps to prevent issues down the track.
