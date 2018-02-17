@@ -21,6 +21,11 @@ func validateDefinition(d *Definition) error {
 		tagErrorAppender.AppendError(validateTagUsage(tag.Name, d.Envvars))
 		errorAppender.AppendError(tagErrorAppender.Wrap(fmt.Sprintf("tag '%s' (#%d): ", tag.Name, i+1)))
 	}
+
+	if len(d.Envvars) == 0 {
+		errorAppender.AppendString("definition must at least have 1 envvars")
+	}
+
 	for i, ev := range d.Envvars {
 		evErrorAppender := errorappender.NewErrorAppender("; ")
 		evErrorAppender.AppendError(validateEnvvar(ev, d.Tags))

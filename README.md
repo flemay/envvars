@@ -75,3 +75,7 @@ envvars is looking for `envvars.toml` by default but a different file can be pas
   name="ENVVAR_1"
   desc="description of ENVVAR_1"
 ```
+
+## Principles
+
+- Documentation is your best friend: `desc` is required and `[[tags]]` must be defined if used.
