@@ -1,12 +1,12 @@
 tag '' (#2): name cannot be blank; desc cannot be blank; name must be unique
 tag '' (#3): name cannot be blank; desc cannot be blank; name must be unique
-tag 'TAG_NAME_NOT_UNIQUE' (#4): name must be unique
-tag 'TAG_NAME_NOT_UNIQUE' (#5): name must be unique
-tag 'TAG_NOT_USED' (#6): is not used
+tag 'tagNameNotUnique' (#4): name must be unique
+tag 'tagNameNotUnique' (#5): name must be unique
+tag 'tagNotUsed' (#6): is not used
 envvar '' (#2): name cannot be blank; desc cannot be blank; name must be unique
 envvar '' (#3): name cannot be blank; desc cannot be blank; name must be unique
 envvar 'ENVVAR_NAME_NOT_UNIQUE' (#4): name must be unique
 envvar 'ENVVAR_NAME_NOT_UNIQUE' (#5): name must be unique
-envvar 'ENVVAR_4' (#7): tag 'TAG_NOT_DEFINED' is not defined
-envvar 'ENVVAR_5' (#8): tag 'TAG_NOT_DEFINED' is not defined
-envvar 'ENVVAR_6' (#9): tag '' is empty; tag 'TAG_1' is duplicated
+envvar 'ENVVAR_4' (#7): tag 'tagNotDeclared' is not declared
+envvar 'ENVVAR_5' (#8): tag 'tagNotDeclared' is not declared
+envvar 'ENVVAR_6' (#9): tag '' is empty; tag 'tag1' is duplicated

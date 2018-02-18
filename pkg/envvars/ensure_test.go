@@ -54,7 +54,7 @@ func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
 	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.toml")
 	os.Setenv("ENVVAR_2", "name2")
 	// when
-	err := envvars.Ensure(d, "TAG_2")
+	err := envvars.Ensure(d, "tag2")
 	// then
 	assert.NoError(t, err)
 	os.Unsetenv("ENVVAR_2")
@@ -65,7 +65,7 @@ func TestEnsure_toReturnErrorIfTaggedEnvvarsDoNotComply(t *testing.T) {
 	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.toml")
 	os.Setenv("ENVVAR_2", "name2")
 	// when
-	err := envvars.Ensure(d, "TAG_1")
+	err := envvars.Ensure(d, "tag1")
 	// then
 	assert.EqualError(t, err, "environment variable ENVVAR_1 must be set")
 }

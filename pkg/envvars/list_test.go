@@ -20,7 +20,7 @@ func TestList_toReturnTaggedEnvvarsIfTagsSpecified(t *testing.T) {
 	// given
 	d, _ := envvars.NewDeclaration("testdata/list_declaration_file.toml")
 	// when
-	c, err := envvars.List(d, "TAG_1")
+	c, err := envvars.List(d, "tag1")
 	// then
 	assert.NoError(t, err)
 	assert.Len(t, c, 2)

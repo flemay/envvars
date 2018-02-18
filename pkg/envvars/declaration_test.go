@@ -57,7 +57,7 @@ func TestEnvvar_HasTag_toReturnFalseIfTagIsNotPresent(t *testing.T) {
 	// given
 	ev := envvars.Envvar{Tags: []string{"T1", "T2"}}
 	// when
-	hasTag := ev.HasTag("TAG_NOT_THERE")
+	hasTag := ev.HasTag("tagNotThere")
 	// then
 	assert.False(t, hasTag)
 }
