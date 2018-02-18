@@ -1,11 +1,11 @@
 [[tags]]
-  name="TAG_1"
-  desc="Desc of TAG_1"
+  name="tag1"
+  desc="Desc of tag1"
 
 [[envvars]]
   name="ENVVAR_1"
   desc="desc of ENVVAR_1"
-  tags=["TAG_1"]
+  tags=["tag1"]
 
 [[envvars]]
   name="ENVVAR_2"
@@ -14,4 +14,4 @@
 [[envvars]]
   name="ENVVAR_3"
   desc="desc of ENVVAR_3"
-  tags=["TAG_1"]
+  tags=["tag1"]

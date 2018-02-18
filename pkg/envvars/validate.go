@@ -99,7 +99,7 @@ func validateTagNameList(names []string, tags TagCollection) error {
 			continue
 		}
 		if tags.Get(name) == nil {
-			errorAppender.AppendError(fmt.Errorf("tag '%v' is not defined", name))
+			errorAppender.AppendError(fmt.Errorf("tag '%v' is not declared", name))
 		}
 		counts[name] = counts[name] + 1
 	}

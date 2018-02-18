@@ -1,7 +1,7 @@
 # valid
 [[tags]]
-  name = "TAG_1"
-  desc = "Desc of TAG_1"
+  name = "tag1"
+  desc = "Desc of tag1"
 
 # invalid because required fields are empty
 [[tags]]
@@ -11,20 +11,20 @@
 # invalid because required fields are not defined
 [[tags]]
 
-# invalid TAG_NAME_NOT_UNIQUE is not unique
+# invalid tagNameNotUnique is not unique
 [[tags]]
-  name = "TAG_NAME_NOT_UNIQUE"
-  desc = "Desc of TAG_NAME_NOT_UNIQUE"
+  name = "tagNameNotUnique"
+  desc = "Desc of tagNameNotUnique"
 
-# invalid TAG_NAME_NOT_UNIQUE is not unique
+# invalid tagNameNotUnique is not unique
 [[tags]]
-  name = "TAG_NAME_NOT_UNIQUE"
-  desc = "Desc of TAG_NAME_NOT_UNIQUE"
+  name = "tagNameNotUnique"
+  desc = "Desc of tagNameNotUnique"
 
-# invalid TAG_NOT_USED is not used
+# invalid tagNotUsed is not used
 [[tags]]
-  name = "TAG_NOT_USED"
-  desc = "Desc of TAG_NOT_USED"
+  name = "tagNotUsed"
+  desc = "Desc of tagNotUsed"
 
 # valid
 [[envvars]]
@@ -53,22 +53,22 @@
 [[envvars]]
   name = "ENVVAR_3"
   desc = "Desc of ENVVAR_3"
-  tags = ["TAG_1"]
+  tags = ["tag1"]
 
 # invalid because tags are not defined
 [[envvars]]
   name = "ENVVAR_4"
   desc = "Desc of ENVVAR_4"
-  tags = ["TAG_NOT_DEFINED", "TAG_NAME_NOT_UNIQUE"]
+  tags = ["tagNotDeclared", "tagNameNotUnique"]
 
-# invalid because tag TAG_NOT_DEFINED is not defined
+# invalid because tag tagNotDeclared is not declared
 [[envvars]]
   name = "ENVVAR_5"
   desc = "Desc of ENVVAR_5"
-  tags = ["TAG_1","TAG_NOT_DEFINED"]
+  tags = ["tag1","tagNotDeclared"]
 
 # invalid because it has the same tag more than once, 1 tag is empty
 [[envvars]]
   name = "ENVVAR_6"
   desc = "Desc of ENVVAR_6"
-  tags = ["TAG_1","TAG_1",""]
+  tags = ["tag1","tag1",""]

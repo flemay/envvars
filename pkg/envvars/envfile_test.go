@@ -41,7 +41,7 @@ func TestEnvfile_toGenerateFileWithOnlySpecifiedTags(t *testing.T) {
 	name := "testdata/envfile_file_with_tag.tmp"
 
 	// when
-	err := envvars.Envfile(d, name, false, "TAG_1")
+	err := envvars.Envfile(d, name, false, "tag1")
 
 	// then
 	assert.NoError(t, err)

@@ -7,11 +7,11 @@ import (
 )
 
 func givenInvalidTagNameList() []string {
-	return []string{"TAG_NOT_THERE", "TAG_DUPLICATED", "TAG_DUPLICATED", ""}
+	return []string{"tagNotThere", "tagDuplicated", "tagDuplicated", ""}
 }
 
 func expectedInvalidTagNameListErrorMessage() string {
-	return "tag 'TAG_NOT_THERE' is not defined; tag 'TAG_DUPLICATED' is not defined; tag 'TAG_DUPLICATED' is not defined; tag '' is empty; tag 'TAG_DUPLICATED' is duplicated"
+	return "tag 'tagNotThere' is not declared; tag 'tagDuplicated' is not declared; tag 'tagDuplicated' is not declared; tag '' is empty; tag 'tagDuplicated' is duplicated"
 }
 
 func removeFileOrDir(t *testing.T, name string) {
