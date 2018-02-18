@@ -10,13 +10,13 @@ var overwriteEnvfile bool
 
 var envfileCmd = &cobra.Command{
 	Use:   "envfile",
-	Short: "Generate an env file based on the definition file",
+	Short: "Generate an env file based on the declaration file",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		definition, err := envvars.NewDefinition(definitionFileRootFlag)
+		d, err := envvars.NewDeclaration(declarationFileRootFlag)
 		if err != nil {
 			return err
 		}
-		return envvars.Envfile(definition, envfileName, overwriteEnvfile, tagsRootFlag...)
+		return envvars.Envfile(d, envfileName, overwriteEnvfile, tagsRootFlag...)
 	},
 }
 

@@ -2,8 +2,8 @@ package envvars
 
 // List returns a list of Envvar matching the tags or all if no tags is provided.
 // Returns error if any tag is not matching an Envvar.
-func List(d *Definition, tags ...string) (EnvvarCollection, error) {
-	if err := validateDefinitionAndTagNameList(d, tags...); err != nil {
+func List(d *Declaration, tags ...string) (EnvvarCollection, error) {
+	if err := validateDeclarationAndTagNameList(d, tags...); err != nil {
 		return nil, err
 	}
 

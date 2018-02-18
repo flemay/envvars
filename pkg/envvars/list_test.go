@@ -8,7 +8,7 @@ import (
 
 func TestList_toReturnAllEnvvarsIfNoTagsSpecified(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/list_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/list_declaration_file.toml")
 	// when
 	c, err := envvars.List(d)
 	// then
@@ -18,7 +18,7 @@ func TestList_toReturnAllEnvvarsIfNoTagsSpecified(t *testing.T) {
 
 func TestList_toReturnTaggedEnvvarsIfTagsSpecified(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/list_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/list_declaration_file.toml")
 	// when
 	c, err := envvars.List(d, "TAG_1")
 	// then
@@ -26,16 +26,16 @@ func TestList_toReturnTaggedEnvvarsIfTagsSpecified(t *testing.T) {
 	assert.Len(t, c, 2)
 }
 
-func TestList_toReturnErrorIfInvalidDefinitionAndTagNameList(t *testing.T) {
+func TestList_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/invalid_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.toml")
 	invalidList := givenInvalidTagNameList()
 
 	// when
 	c, err := envvars.List(d, invalidList...)
 
 	// then
-	expectedErrorMsg := readFile(t, "testdata/invalid_envvars_with_tag_name_list_error_message.golden")
+	expectedErrorMsg := readFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
 	assert.EqualError(t, err, expectedErrorMsg)
 	assert.Len(t, c, 0)
 }
