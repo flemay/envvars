@@ -17,16 +17,16 @@ $ docker run --rm flemay/envvars:0.0.1
 ## Usage
 
 ```bash
-# create a definition file envvars.toml
+# create a declaration file envvars.toml
 # [[envvars]]
 #   name="ECHO"
 #   desc="env var ECHO"
 $ printf "[[envvars]]\n  name=\"ECHO\"\n  desc=\"env var ECHO\"" > envvars.toml
 
-# validate the definition file if it contains errors
+# validate the declaration file if it contains errors
 $ envvars validate
 
-# ensure the environment variables comply with the definition file
+# ensure the environment variables comply with the declaration file
 $ envvars ensure
 # Error: environment variable ECHO must be set
 # set ECHO
@@ -42,33 +42,33 @@ $ cat .env
 $ envvars --help
 ```
 
-## Definition File
+## Declaration File
 
-The Definition File (written in [TOML](https://github.com/toml-lang/toml)) is the core of envvars. It defines all the environment variables used by project.
+The declaration file (written in [TOML](https://github.com/toml-lang/toml)) is the core of envvars. It declares all the environment variables used by a project.
 
-envvars is looking for `envvars.toml` by default but a different file can be passed with the flag `-f path/to/definitionfile.toml`.
+envvars is looking for `envvars.toml` by default but a different file can be passed with the flag `-f path/to/declarationfile.toml`.
 
 ```toml
-# This is just an example to illustrate what a Definition File looks like
+# This is just an example to illustrate what a declaration file looks like
 
-# [[tags]] defines a tag.
+# [[tags]] declares a tag.
 # They are optional but an error will be thrown if
-#  - a [[tags]] is defined but no [[envvars]] uses it
-#  - an [[envvars]] uses a tag that is not defined with [[tags]]
+#  - a [[tags]] is declared but no [[envvars]] uses it
+#  - an [[envvars]] uses a tag that is not declared with [[tags]]
 [[tags]]
   # name of the tag
   name="deploy"
   # description of the tag
   desc="tag used when deploying"
 
-# [[envvars]] defines an environment variable
+# [[envvars]] declares an environment variable
 [[envvars]]
   # name of the environment variable
   name="ENV"
   # description of the environment variable
   desc="Application's stage (dev, qa, preprod, prod)"
   # tags of the environment variable
-  # they are optional but if present, must be defined in [[tags]]
+  # they are optional but if present, must be declared in [[tags]]
   tags=["deploy"]
 
 [[envvars]]
@@ -82,7 +82,8 @@ envvars has strict rules which follows some principles.
 
 ### Documentation is your best friend
 
-envvars forces you to have `desc` for `[[envvars]]` and `[[tags]]`. This helps anyone new to the project or juggling with many projects at once to understand every environment variables and tags as long as `desc` is meaningful.
+envvars forces you to have `desc` for `[[envvars]]` and `[[tags]]`. This helps anyone new to the project, or juggling with many projects at once, to understand every environment variable and tag as long as its `desc` is meaningful.
 
 ### You ain't gonna need it
-envvars will complain if `[[tags]]` is defined but not being used by `[[envvars]]`. It will also throw an error if an `[[envvars]]` uses a tag that is not defined. Lastly, it will not like it if a tag passed as parameter to a command does not exist in the Definition File. All of this helps to prevent issues down the track.
+
+envvars will complain if `[[tags]]` is declared but not being used by `[[envvars]]`. It will also throw an error if an `[[envvars]]` uses a tag that is not declared. Lastly, it will not like it if a tag passed as parameter to a command does not exist in the declaration file. All of this helps to prevent issues down the track.

@@ -10,13 +10,13 @@ import (
 
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "Display the definition of each environment variable",
+	Short: "Display the declaration of each environment variable",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		definition, err := envvars.NewDefinition(definitionFileRootFlag)
+		d, err := envvars.NewDeclaration(declarationFileRootFlag)
 		if err != nil {
 			return err
 		}
-		c, err := envvars.List(definition, tagsRootFlag...)
+		c, err := envvars.List(d, tagsRootFlag...)
 		if err != nil {
 			return err
 		}

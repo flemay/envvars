@@ -5,9 +5,8 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
-// Definition describes the environment variables.
-// envvars.toml follows this structure.
-type Definition struct {
+// Declaration describes the environment variables.
+type Declaration struct {
 	Tags    TagCollection
 	Envvars EnvvarCollection
 }
@@ -34,11 +33,11 @@ type Tag struct {
 	Desc string
 }
 
-// NewDefinition reads a definition file and creates the environment variables Definition out of it.
-func NewDefinition(filepath string) (*Definition, error) {
-	var definition Definition
-	if _, err := toml.DecodeFile(filepath, &definition); err != nil {
+// NewDeclaration reads a declaration file and returns a Declaration.
+func NewDeclaration(filepath string) (*Declaration, error) {
+	var d Declaration
+	if _, err := toml.DecodeFile(filepath, &d); err != nil {
 		return nil, fmt.Errorf("error occurred when opening the file %s: %s", filepath, err.Error())
 	}
-	return &definition, nil
+	return &d, nil
 }

@@ -7,28 +7,28 @@ import (
 	"testing"
 )
 
-func TestEnsure_toReturnErrorIfInvalidDefinitionAndTagNameList(t *testing.T) {
+func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/invalid_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.toml")
 	invalidList := givenInvalidTagNameList()
 
 	// when
 	err := envvars.Ensure(d, invalidList...)
 
 	// then
-	expectedErrorMsg := readFile(t, "testdata/invalid_envvars_with_tag_name_list_error_message.golden")
+	expectedErrorMsg := readFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
 	assert.EqualError(t, err, expectedErrorMsg)
 }
 
 func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 	// given
-	definition, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.toml")
 	os.Setenv("ENVVAR_1", "name1")
 	os.Setenv("ENVVAR_2", "name2")
 	os.Setenv("ENVVAR_3", "name3")
 
 	// when
-	err := envvars.Ensure(definition)
+	err := envvars.Ensure(d)
 
 	// then
 	assert.NoError(t, err)
@@ -39,10 +39,10 @@ func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 
 func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 	// given
-	definition, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.toml")
 
 	// when
-	err := envvars.Ensure(definition)
+	err := envvars.Ensure(d)
 
 	// then
 	expectedErrorMsg := readFile(t, "testdata/ensure_error_message.golden")
@@ -51,7 +51,7 @@ func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 
 func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.toml")
 	os.Setenv("ENVVAR_2", "name2")
 	// when
 	err := envvars.Ensure(d, "TAG_2")
@@ -62,7 +62,7 @@ func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
 
 func TestEnsure_toReturnErrorIfTaggedEnvvarsDoNotComply(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/ensure_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.toml")
 	os.Setenv("ENVVAR_2", "name2")
 	// when
 	err := envvars.Ensure(d, "TAG_1")

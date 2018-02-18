@@ -6,41 +6,41 @@ import (
 	"testing"
 )
 
-func TestNewDefinition_toReturnDefinitionBasedOnEnvvarsFile(t *testing.T) {
+func TestNewDeclaration_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) {
 	// given
-	envvarsFilePath := "testdata/definition_envvars.toml"
+	declarationFilePath := "testdata/declaration_file.toml"
 
 	// when
-	definition, err := envvars.NewDefinition(envvarsFilePath)
+	d, err := envvars.NewDeclaration(declarationFilePath)
 
 	// then
 	assert.NoError(t, err)
-	assert.NotNil(t, definition)
-	assert.Len(t, definition.Envvars, 2)
+	assert.NotNil(t, d)
+	assert.Len(t, d.Envvars, 2)
 }
-func TestNewDefinition_toReturnErrorIfMalformatedEnvvarsFile(t *testing.T) {
+func TestNewDeclaration_toReturnErrorIfMalformatedDeclarationFile(t *testing.T) {
 	// given
-	envvarsFilePath := "testdata/malformated_envvars.toml"
+	declarationFilePath := "testdata/malformated_declaration_file.toml"
 
 	// when
-	definition, err := envvars.NewDefinition(envvarsFilePath)
+	d, err := envvars.NewDeclaration(declarationFilePath)
 
 	// then
 	assert.Error(t, err)
-	assert.Nil(t, definition)
-	assert.Contains(t, err.Error(), "error occurred when opening the file "+envvarsFilePath)
+	assert.Nil(t, d)
+	assert.Contains(t, err.Error(), "error occurred when opening the file "+declarationFilePath)
 }
 
-func TestNewDefinition_toReturnErrorIfFileNotFound(t *testing.T) {
+func TestNewDeclaration_toReturnErrorIfFileNotFound(t *testing.T) {
 	// given
 	noSuchFilePath := "nosuchfile.toml"
 
 	// when
-	definition, err := envvars.NewDefinition(noSuchFilePath)
+	d, err := envvars.NewDeclaration(noSuchFilePath)
 
 	// then
 	assert.Error(t, err)
-	assert.Nil(t, definition)
+	assert.Nil(t, d)
 	assert.Contains(t, err.Error(), "open nosuchfile.toml: no such file or directory")
 }
 

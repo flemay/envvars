@@ -7,14 +7,14 @@ import (
 
 var validateCmd = &cobra.Command{
 	Use:   "validate",
-	Short: "Check if the definition file contains any error",
+	Short: "Check if the declaration file contains any error",
 	Long:  "The flag tags has no effect with this command",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		definition, err := envvars.NewDefinition(definitionFileRootFlag)
+		d, err := envvars.NewDeclaration(declarationFileRootFlag)
 		if err != nil {
 			return err
 		}
-		return envvars.Validate(definition)
+		return envvars.Validate(d)
 	},
 }
 

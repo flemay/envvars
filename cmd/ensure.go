@@ -7,13 +7,13 @@ import (
 
 var ensureCmd = &cobra.Command{
 	Use:   "ensure",
-	Short: "Verify that the environment variables comply to their definition",
+	Short: "Verify that the environment variables comply to their declaration",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		definition, err := envvars.NewDefinition(definitionFileRootFlag)
+		d, err := envvars.NewDeclaration(declarationFileRootFlag)
 		if err != nil {
 			return err
 		}
-		return envvars.Ensure(definition, tagsRootFlag...)
+		return envvars.Ensure(d, tagsRootFlag...)
 	},
 }
 

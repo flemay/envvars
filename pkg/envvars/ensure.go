@@ -5,8 +5,8 @@ import (
 	"os"
 )
 
-// Ensure verifies that the environment variables comply to their Definition. Tags can be passed along to only ensure environment variables with the tags
-func Ensure(d *Definition, tags ...string) error {
+// Ensure verifies that the environment variables comply to their Declaration. Tags can be passed along to only ensure environment variables with the tags
+func Ensure(d *Declaration, tags ...string) error {
 	c, err := List(d, tags...)
 	if err != nil {
 		return err

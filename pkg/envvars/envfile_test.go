@@ -6,22 +6,22 @@ import (
 	"testing"
 )
 
-func TestEnvfile_toReturnErrorIfInvalidDefinitionAndTagNameList(t *testing.T) {
+func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/invalid_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.toml")
 	invalidList := givenInvalidTagNameList()
 
 	// when
 	err := envvars.Envfile(d, "", false, invalidList...)
 
 	// then
-	expectedErrorMsg := readFile(t, "testdata/invalid_envvars_with_tag_name_list_error_message.golden")
+	expectedErrorMsg := readFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
 	assert.EqualError(t, err, expectedErrorMsg)
 }
 
 func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
 	name := "testdata/envfile_file.tmp"
 
 	// when
@@ -37,7 +37,7 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 
 func TestEnvfile_toGenerateFileWithOnlySpecifiedTags(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
 	name := "testdata/envfile_file_with_tag.tmp"
 
 	// when
@@ -53,7 +53,7 @@ func TestEnvfile_toGenerateFileWithOnlySpecifiedTags(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
 	name := "testdata/envfile_file.tmp"
 	createEmptyFile(t, name)
 
@@ -70,7 +70,7 @@ func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
 	name := "testdata/envfile_file.tmp"
 	createEmptyFile(t, name)
 
@@ -85,7 +85,7 @@ func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
 	// given
-	d, _ := envvars.NewDefinition("testdata/envfile_envvars.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
 	name := "testdata/tmp"
 	createDir(t, name)
 

@@ -8,7 +8,7 @@ import (
 
 // Envfile generates an env file that can be overwritten.
 // It returns an error if the file already exists unless overwrite is true
-func Envfile(d *Definition, name string, overwrite bool, tags ...string) error {
+func Envfile(d *Declaration, name string, overwrite bool, tags ...string) error {
 	c, err := List(d, tags...)
 	if err != nil {
 		return err

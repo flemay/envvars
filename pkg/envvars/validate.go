@@ -6,13 +6,12 @@ import (
 	"github.com/flemay/envvars/pkg/errorappender"
 )
 
-// Validate ensures the Definition is without any error.
-// Consumer should always validate before doing any action with the Definition.
-func Validate(d *Definition) error {
-	return validateDefinitionAndTagNameList(d)
+// Validate ensures the Declaration is without any error.
+func Validate(d *Declaration) error {
+	return validateDeclarationAndTagNameList(d)
 }
 
-func validateDefinition(d *Definition) error {
+func validateDeclaration(d *Declaration) error {
 	errorAppender := errorappender.NewErrorAppender("\n")
 	for i, tag := range d.Tags {
 		tagErrorAppender := errorappender.NewErrorAppender("; ")
@@ -23,7 +22,7 @@ func validateDefinition(d *Definition) error {
 	}
 
 	if len(d.Envvars) == 0 {
-		errorAppender.AppendString("definition must at least have 1 envvars")
+		errorAppender.AppendString("declaration must at least have 1 envvars")
 	}
 
 	for i, ev := range d.Envvars {
@@ -36,12 +35,12 @@ func validateDefinition(d *Definition) error {
 	return errorAppender.Error()
 }
 
-func validateDefinitionAndTagNameList(d *Definition, tagNames ...string) error {
+func validateDeclarationAndTagNameList(d *Declaration, tagNames ...string) error {
 	if d == nil {
-		return errors.New("definition is nil")
+		return errors.New("declaration is nil")
 	}
 	errorAppender := errorappender.NewErrorAppender("\n")
-	errorAppender.AppendError(validateDefinition(d))
+	errorAppender.AppendError(validateDeclaration(d))
 	errorAppender.AppendError(validateTagNameList(tagNames, d.Tags))
 	return errorAppender.Error()
 }
