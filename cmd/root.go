@@ -11,8 +11,8 @@ var tagsRootFlag []string
 
 var rootCmd = &cobra.Command{
 	Use:   "envvars",
-	Short: "envvars gives your environment variables the love they deserve",
-	Long: `A way to define environment variables and ensure they comply
+	Short: "Envvars gives your environment variables the love they deserve",
+	Long: `A way to declare environment variables and ensure they comply
 Usage examples
   validate the declaration file if it contains errors
     $ envvars validate
@@ -32,5 +32,5 @@ func Execute() {
 
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&declarationFileRootFlag, "file", "f", "envvars.toml", "declaration file")
-	rootCmd.PersistentFlags().StringSliceVarP(&tagsRootFlag, "tags", "t", nil, "execute subcommands against environment variables with the tags (ex: --tags test,build)")
+	rootCmd.PersistentFlags().StringSliceVarP(&tagsRootFlag, "tags", "t", nil, "list of tags targetting a subset of environment variables (ex: --tags test,build)")
 }

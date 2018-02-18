@@ -1,6 +1,6 @@
-# envvars
+# Envvars
 
-envvars gives the environment variables the love they deserve.
+Envvars gives the environment variables the love they deserve.
 
 It documents the environment variables of a project to help the team to understand them. It makes sure they are defined before testing, building, deploying, and running. It can also generates an env file to be used by other applications such as Docker and Compose.
 
@@ -44,13 +44,11 @@ $ envvars --help
 
 ## Declaration File
 
-The declaration file (written in [TOML](https://github.com/toml-lang/toml)) is the core of envvars. It declares all the environment variables used by a project.
+The declaration file (written in [TOML](https://github.com/toml-lang/toml)) is the core of Envvars. It declares all the environment variables used by a project.
 
-envvars is looking for `envvars.toml` by default but a different file can be passed with the flag `-f path/to/declarationfile.toml`.
+Envvars is looking for the declaration file `envvars.toml` by default. A different file can be passed with the flag `-f path/to/declarationfile.toml`.
 
 ```toml
-# This is just an example to illustrate what a declaration file looks like
-
 # [[tags]] declares a tag.
 # They are optional but an error will be thrown if
 #  - a [[tags]] is declared but no [[envvars]] uses it
@@ -78,12 +76,12 @@ envvars is looking for `envvars.toml` by default but a different file can be pas
 
 ## Principles
 
-envvars has strict rules which follows some principles.
+Envvars has strict rules which follows some principles.
 
 ### Documentation is your best friend
 
-envvars forces you to have `desc` for `[[envvars]]` and `[[tags]]`. This helps anyone new to the project, or juggling with many projects at once, to understand every environment variable and tag as long as its `desc` is meaningful.
+Envvars forces you to have `desc` for `[[envvars]]` and `[[tags]]`. This helps anyone new to the project, or juggling with many projects at once, to understand every environment variable, and tag, as long as its `desc` is meaningful.
 
 ### You ain't gonna need it
 
-envvars will complain if `[[tags]]` is declared but not being used by `[[envvars]]`. It will also throw an error if an `[[envvars]]` uses a tag that is not declared. Lastly, it will not like it if a tag passed as parameter to a command does not exist in the declaration file. All of this helps to prevent issues down the track.
+Envvars will complain if `[[tags]]` is declared but not being used by `[[envvars]]`. It will also throw an error if an `[[envvars]]` uses a tag that is not declared. Lastly, it will not like it if a tag passed as parameter to a command does not exist in the declaration file. All of this helps to prevent issues down the track.
