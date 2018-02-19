@@ -17,7 +17,7 @@ There are 2 approaches to make your changes:
 - [3 Musketeers](https://github.com/flemay/3musketeers) which uses Make, Docker, and Compose
 - a Go environment with dep
 
-#### 3 Musketeers
+#### Development with the 3 Musketeers
 
 ##### Prerequisites
 
@@ -49,7 +49,7 @@ $ make run
 $ git push origin meaningful_branch_name
 ```
 
-#### Go environment
+#### Development with Go environment
 
 ##### Prerequisites
 
@@ -85,3 +85,5 @@ $ git push origin meaningful_branch_name
 ```
 
 ### 3. Create a Pull Request
+
+Time to create a new Pull Request...
