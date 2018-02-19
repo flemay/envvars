@@ -1,6 +1,7 @@
 VERSION = 0.0.1
 IMAGE_NAME ?= flemay/envvars:$(VERSION)
 GOLANG_DEPS_DIR = vendor
+EXECUTABLE = bin/envvars
 
 deps:
 	docker-compose run --rm golang make _deps
@@ -13,6 +14,10 @@ test: $(GOLANG_DEPS_DIR)
 build: $(GOLANG_DEPS_DIR)
 	docker-compose run --rm golang make _build
 .PHONY: build
+
+run: $(EXECUTABLE)
+	docker-compose run --rm golang make _run
+.PHONY: run
 
 dockerBuild:
 	docker build --no-cache -t $(IMAGE_NAME) .
@@ -52,6 +57,10 @@ _buildForScratch:
 _build:
 	go build -o bin/envvars
 .PHONY: _build
+
+_run:
+	./$(EXECUTABLE)
+.PHONY: _run
 
 _install:
 	go install
