@@ -37,6 +37,45 @@ func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 	os.Unsetenv("ENVVAR_3")
 }
 
+func TestEnsure_toReturnNoErrorIfOptionalEnvvarIsNotDefined(t *testing.T) {
+	// given
+	d := &envvars.Declaration{
+		Envvars: []*envvars.Envvar{
+			&envvars.Envvar{
+				Name:     "NAME",
+				Desc:     "Desc",
+				Optional: true,
+			},
+		},
+	}
+
+	// when
+	err := envvars.Ensure(d)
+
+	// then
+	assert.NoError(t, err)
+}
+
+func TestEnsure_toReturnNoErrorIfOptionalEnvvarHasEmptyValue(t *testing.T) {
+	// given
+	d := &envvars.Declaration{
+		Envvars: []*envvars.Envvar{
+			&envvars.Envvar{
+				Name:     "NAME",
+				Desc:     "Desc",
+				Optional: true,
+			},
+		},
+	}
+	os.Setenv("NAME", "")
+	// when
+	err := envvars.Ensure(d)
+
+	// then
+	os.Unsetenv("NAME")
+	assert.NoError(t, err)
+}
+
 func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 	// given
 	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.toml")
