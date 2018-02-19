@@ -8,7 +8,7 @@ It documents the environment variables of a project to help the team to understa
 
 ```bash
 # with go get
-$ go get github.com/flemay/envvars
+$ go get -u github.com/flemay/envvars
 
 # or use the tiny docker image (< 5 MB)
 $ docker run --rm flemay/envvars:0.0.1
@@ -85,3 +85,11 @@ Envvars forces you to have `desc` for `[[envvars]]` and `[[tags]]`. This helps a
 ### You ain't gonna need it
 
 Envvars will complain if `[[tags]]` is declared but not being used by `[[envvars]]`. It will also throw an error if an `[[envvars]]` uses a tag that is not declared. Lastly, it will not like it if a tag passed as parameter to a command does not exist in the declaration file. All of this helps to prevent issues down the track.
+
+## Feedback
+
+Feedback is greatly appreciated. At this stage, the maintainers are most interested in feedback centered on the user experience (UX) of the tool. Do you have workflows that the tool supports well, or doesn't support at all? Do any of the commands have surprising effects, output, or results? Let us know by filing an issue, describing what you did or wanted to do, what you expected to happen, and what actually happened.
+
+## Contributing
+
+Contributions are greatly appreciated. See [CONTRIBUTING.md](http://github.com/flemay/envvars/CONTRIBUTING.md) for more details.
