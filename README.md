@@ -88,8 +88,8 @@ Envvars will complain if `[[tags]]` is declared but not being used by `[[envvars
 
 ## Feedback
 
-Feedback is greatly appreciated. At this stage, the maintainers are most interested in feedback centered on the user experience (UX) of the tool. Do you have workflows that the tool supports well, or doesn't support at all? Do any of the commands have surprising effects, output, or results? Let us know by filing an issue, describing what you did or wanted to do, what you expected to happen, and what actually happened.
+Feedback is greatly appreciated. Do you have workflows that the tool supports well, or doesn't support at all? Do any of the commands have surprising effects, output, or results? Let us know by filing an issue, describing what you did or wanted to do, what you expected to happen, and what actually happened.
 
 ## Contributing
 
-Contributions are greatly appreciated. See [CONTRIBUTING.md](http://github.com/flemay/envvars/CONTRIBUTING.md) for more details.
+Contributions are greatly appreciated. See [CONTRIBUTING.md](https://github.com/flemay/envvars/blob/master/CONTRIBUTING.md) for more details.
