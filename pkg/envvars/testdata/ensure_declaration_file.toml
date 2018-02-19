@@ -19,3 +19,8 @@
 [[envvars]]
   name="ENVVAR_3"
   desc="desc of ENVVAR_3"
+
+[[envvars]]
+  name="OPTIONAL_ENVVAR"
+  desc="desc of OPTIONAL_ENVVAR"
+  optional=true

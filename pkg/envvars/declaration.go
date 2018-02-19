@@ -13,9 +13,10 @@ type Declaration struct {
 
 // Envvar contains the information of a single environment variable.
 type Envvar struct {
-	Name string
-	Desc string
-	Tags []string
+	Name     string
+	Desc     string
+	Tags     []string
+	Optional bool
 }
 
 func (ev *Envvar) HasTag(name string) bool {

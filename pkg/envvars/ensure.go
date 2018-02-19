@@ -19,6 +19,9 @@ func Ensure(d *Declaration, tags ...string) error {
 }
 
 func ensureEnvvar(ev *Envvar) error {
+	if ev.Optional {
+		return nil
+	}
 	errorAppender := errorappender.NewErrorAppender("; ")
 	value, found := os.LookupEnv(ev.Name)
 	if found == false {
