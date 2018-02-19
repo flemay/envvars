@@ -20,9 +20,12 @@ func Ensure(d *Declaration, tags ...string) error {
 
 func ensureEnvvar(ev *Envvar) error {
 	errorAppender := errorappender.NewErrorAppender("; ")
-	_, found := os.LookupEnv(ev.Name)
+	value, found := os.LookupEnv(ev.Name)
 	if found == false {
-		errorAppender.AppendString("must be set")
+		errorAppender.AppendString("is not defined")
+	} else if value == "" {
+		errorAppender.AppendString("is empty")
 	}
+
 	return errorAppender.Wrap("environment variable " + ev.Name + " ")
 }
