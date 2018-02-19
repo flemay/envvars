@@ -28,8 +28,12 @@ $ envvars validate
 
 # ensure the environment variables comply with the declaration file
 $ envvars ensure
-# Error: environment variable ECHO must be set
-# set ECHO
+# Error: environment variable ECHO is not defined
+# set ECHO with empty value
+$ export ECHO=""
+$ envvars ensure
+# Error: environment variable ECHO is empty
+# set ECHO with non-empty value
 $ export ECHO="helloworld"
 $ envvars ensure
 
@@ -72,6 +76,8 @@ Envvars is looking for the declaration file `envvars.toml` by default. A differe
 [[envvars]]
   name="ENVVAR_1"
   desc="description of ENVVAR_1"
+  # optional allows an environment variable to be empty or not defined. It is best to avoid it unless you accept an empty value.
+  optional=true
 ```
 
 ## Principles
