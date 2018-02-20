@@ -23,9 +23,9 @@ dockerBuild:
 	docker build --no-cache -t $(IMAGE_NAME) .
 .PHONY: dockerBuild
 
-dockerRun:
+dockerTest:
 	docker run --rm $(IMAGE_NAME)
-.PHONY: dockerRun
+.PHONY: dockerTest
 
 dockerRemove:
 	docker rmi -f $(IMAGE_NAME)
