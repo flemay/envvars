@@ -1,14 +1,28 @@
 # Contributing to Envvars
 
-Envvars is an open source project and contributions are greatly appreciated. Before starting any work, please either comment on an existing issue, or file a new one.
+Envvars is an open source project and contributions are greatly appreciated.
+
+There are few ways to contribute to this project.
+
+## Star it
+
+If you like the project, go on [GitHub](https://github.com/flemay/envvars) and ⭐️ it!
+
+## Share it
+
+If you think Envvars can benefit your friends, teammates, and company, share it!
+
+## Feedback
+
+Feedback is greatly appreciated. Do you have workflows that the tool supports well, or doesn't support at all? Do any of the commands have surprising effects, output, or results? Let us know by filing an issue, describing what you did or wanted to do, what you expected to happen, and what actually happened.
 
 ## Contributing code
 
-The project follows the typical GitHub pull request model.
+The project follows the typical GitHub pull request model. Before starting any work, please either comment on an existing issue, or file a new one.
 
 ### 1. Fork
 
-Create a fork of Envvars on GitHub so that you can commit your changes and create a Pull Request.
+[Fork Envvars](https://github.com/flemay/envvars/fork) on GitHub so that you can commit your changes and create a Pull Request.
 
 ### 2. Development
 
@@ -86,4 +100,4 @@ $ git push origin meaningful_branch_name
 
 ### 3. Create a Pull Request
 
-Time to create a new Pull Request...
+Happy with all your precious changes? Create a [Pull Request](https://help.github.com/articles/creating-a-pull-request/)!
