@@ -50,12 +50,8 @@ _test:
 	go test -cover ./...
 .PHONY: _test
 
-_buildForScratch:
-	CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o bin/envvars
-.PHONY: _buildForScratch
-
 _build:
-	go build -o bin/envvars
+	VERSION=$(VERSION) ./scripts/build.sh
 .PHONY: _build
 
 _run:

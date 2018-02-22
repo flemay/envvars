@@ -24,7 +24,10 @@ Usage examples
 	},
 }
 
-func Execute() {
+func Execute(version, commitHash, buildDate string) {
+	envvarsVersion = version
+	envvarsCommitHash = commitHash
+	envvarsBuildDate = buildDate
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
