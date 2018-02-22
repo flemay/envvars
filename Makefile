@@ -25,6 +25,7 @@ dockerBuild:
 
 dockerTest:
 	docker run --rm $(IMAGE_NAME)
+	docker run --rm $(IMAGE_NAME) version
 .PHONY: dockerTest
 
 dockerRemove:
