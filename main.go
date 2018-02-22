@@ -4,6 +4,12 @@ import (
 	"github.com/flemay/envvars/cmd"
 )
 
+var (
+	version    string
+	buildDate  string
+	commitHash string
+)
+
 func main() {
-	cmd.Execute()
+	cmd.Execute(version, commitHash, buildDate)
 }

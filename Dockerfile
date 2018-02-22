@@ -2,7 +2,8 @@ FROM flemay/golang:1.10.0-stretch AS builder
 WORKDIR /go/src/github.com/flemay
 RUN git clone https://github.com/flemay/envvars.git
 WORKDIR /go/src/github.com/flemay/envvars
-RUN make _deps _test _buildForScratch
+ENV IS_SCRATCH_IMAGE true
+RUN make _deps _test _build
 
 FROM scratch
 LABEL maintainer="Frederic Lemay"
