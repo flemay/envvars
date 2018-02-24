@@ -2,3 +2,4 @@
 .env*
 envvars.toml
 bin/
+.DS_Store
