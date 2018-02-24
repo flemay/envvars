@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	version    string
+	version    = "devel"
 	buildDate  string
 	commitHash string
 )
