@@ -6,6 +6,6 @@ ENV IS_SCRATCH_IMAGE true
 RUN make _deps _test _build
 
 FROM scratch
-LABEL maintainer="Frederic Lemay"
+LABEL maintainer "@flemay"
 COPY --from=builder /go/src/github.com/flemay/envvars/bin/envvars /
 ENTRYPOINT [ "/envvars" ]
