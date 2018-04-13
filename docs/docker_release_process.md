@@ -26,6 +26,6 @@ This section is a step-by-step guide on how I configured Docker Hub for building
 1. Build the image locally `$ make dockerBuild`
 1. Test the image locally `$ make dockerTest`
 1. Commit the changes and push
-1. Run `$ git tag`
+1. Run `$ make tag`
 1. Go to [flemay/envvars](https://hub.docker.com/r/flemay/envvars) on Docker Hub
 1. In `Build Details` tab, you should now see the build kicking off
