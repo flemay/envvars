@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/yml"
 	"github.com/spf13/cobra"
 )
 
@@ -12,7 +13,7 @@ var envfileCmd = &cobra.Command{
 	Use:   "envfile",
 	Short: "Generate an env file based on the declaration file",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		d, err := envvars.NewDeclaration(declarationFileRootFlag)
+		d, err := yml.NewDeclaration(declarationFileRootFlag)
 		if err != nil {
 			return err
 		}

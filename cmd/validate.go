@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/yml"
 	"github.com/spf13/cobra"
 )
 
@@ -10,7 +11,7 @@ var validateCmd = &cobra.Command{
 	Short: "Check if the declaration file contains any error",
 	Long:  "The flag tags has no effect with this command",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		d, err := envvars.NewDeclaration(declarationFileRootFlag)
+		d, err := yml.NewDeclaration(declarationFileRootFlag)
 		if err != nil {
 			return err
 		}

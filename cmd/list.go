@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/yml"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
 	"os"
@@ -12,7 +13,7 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Display the declaration of each environment variable",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		d, err := envvars.NewDeclaration(declarationFileRootFlag)
+		d, err := yml.NewDeclaration(declarationFileRootFlag)
 		if err != nil {
 			return err
 		}
