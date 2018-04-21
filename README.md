@@ -11,7 +11,7 @@ Envvars, a command line tool written in Go, provides a way to describe the envir
 $ go get -u github.com/flemay/envvars
 
 # or use the tiny docker image (< 5 MB)
-$ docker run --rm flemay/envvars:0.0.1
+$ docker run --rm flemay/envvars:0.0.2
 ```
 
 ## Usage
