@@ -8,7 +8,7 @@ import (
 
 func TestList_toReturnAllEnvvarsIfNoTagsSpecified(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/list_declaration_file.toml")
+	d, _ := envvars.NewDeclaration("testdata/list_declaration_file.yml")
 	// when
 	c, err := envvars.List(d)
 	// then
@@ -18,7 +18,7 @@ func TestList_toReturnAllEnvvarsIfNoTagsSpecified(t *testing.T) {
 
 func TestList_toReturnTaggedEnvvarsIfTagsSpecified(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/list_declaration_file.toml")
+	d, _ := envvars.NewDeclaration("testdata/list_declaration_file.yml")
 	// when
 	c, err := envvars.List(d, "tag1")
 	// then
@@ -28,7 +28,7 @@ func TestList_toReturnTaggedEnvvarsIfTagsSpecified(t *testing.T) {
 
 func TestList_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.toml")
+	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.yml")
 	invalidList := givenInvalidTagNameList()
 
 	// when

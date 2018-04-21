@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	// "fmt"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -34,6 +33,6 @@ func Execute(version, commitHash, buildDate string) {
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&declarationFileRootFlag, "file", "f", "envvars.toml", "declaration file")
+	rootCmd.PersistentFlags().StringVarP(&declarationFileRootFlag, "file", "f", "envvars.yml", "declaration file")
 	rootCmd.PersistentFlags().StringSliceVarP(&tagsRootFlag, "tags", "t", nil, "list of tags targetting a subset of environment variables (ex: --tags test,build)")
 }

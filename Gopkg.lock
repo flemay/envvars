@@ -2,12 +2,6 @@
 
 
 [[projects]]
-  name = "github.com/BurntSushi/toml"
-  packages = ["."]
-  revision = "b26d9c308763d68093482582cea63d69be07a0f0"
-  version = "v0.3.0"
-
-[[projects]]
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   revision = "346938d642f2ec3594ed81d874461961cd0faa76"
@@ -55,9 +49,15 @@
   revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
   version = "v1.2.1"
 
+[[projects]]
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
+  version = "v2.2.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6fcd99353f5805dcfcfa066d99675981f67639645673ecd339ad23e7a3076976"
+  inputs-digest = "24909549e2e3614c485ad1648085e11dffa9ce3837c915bcca4ac3090d28891e"
   solver-name = "gps-cdcl"
   solver-version = 1

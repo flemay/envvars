@@ -1,13 +1,15 @@
 tag '' (#2): name cannot be blank; desc cannot be blank; name must be unique
-tag '' (#3): name cannot be blank; desc cannot be blank; name must be unique
-tag 'tagNameNotUnique' (#4): name must be unique
+tag 'tag2' (#3): desc cannot be blank; is not used
+tag '' (#4): name cannot be blank; name must be unique
 tag 'tagNameNotUnique' (#5): name must be unique
-tag 'tagNotUsed' (#6): is not used
+tag 'tagNameNotUnique' (#6): name must be unique
+tag 'tagNotUsed' (#7): is not used
 envvar '' (#2): name cannot be blank; desc cannot be blank; name must be unique
-envvar '' (#3): name cannot be blank; desc cannot be blank; name must be unique
-envvar 'ENVVAR_NAME_NOT_UNIQUE' (#4): name must be unique
+envvar 'ENVVAR_2' (#3): desc cannot be blank
+envvar '' (#4): name cannot be blank; desc cannot be blank; name must be unique
 envvar 'ENVVAR_NAME_NOT_UNIQUE' (#5): name must be unique
-envvar 'ENVVAR_4' (#7): tag 'tagNotDeclared' is not declared
-envvar 'ENVVAR_5' (#8): tag 'tagNotDeclared' is not declared
-envvar 'ENVVAR_6' (#9): tag '' is empty; tag 'tag1' is duplicated
+envvar 'ENVVAR_NAME_NOT_UNIQUE' (#6): name must be unique
+envvar 'ENVVAR_4' (#8): tag 'tagNotDeclared' is not declared
+envvar 'ENVVAR_5' (#9): tag 'tagNotDeclared' is not declared
+envvar 'ENVVAR_6' (#10): tag '' is empty; tag 'tag1' is duplicated
 tag 'tagNotThere' is not declared; tag 'tagDuplicated' is not declared; tag 'tagDuplicated' is not declared; tag '' is empty; tag 'tagDuplicated' is duplicated
