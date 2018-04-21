@@ -54,7 +54,7 @@ Envvars is looking for the declaration file `envvars.yml` by default. A differen
 
 ```yml
 tags: # optional
-  - name: deploy # required, must be used in at least 1 envvar
+  - name: deploy # required, must be used by at least 1 envvar
     desc: tag used when deploying # required
 
 envvars: # list of environment variable, required
