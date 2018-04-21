@@ -2,6 +2,7 @@ package envvars_test
 
 import (
 	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/yml"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
@@ -9,7 +10,7 @@ import (
 
 func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.yml")
+	d, _ := yml.NewDeclaration("testdata/declaration_file_invalid.yml")
 	invalidList := givenInvalidTagNameList()
 
 	// when
@@ -22,7 +23,7 @@ func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 
 func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.yml")
+	d, _ := yml.NewDeclaration("testdata/ensure_declaration_file.yml")
 	os.Setenv("ENVVAR_1", "name1")
 	os.Setenv("ENVVAR_2", "name2")
 	os.Setenv("ENVVAR_3", "name3")
@@ -78,7 +79,7 @@ func TestEnsure_toReturnNoErrorIfOptionalEnvvarHasEmptyValue(t *testing.T) {
 
 func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.yml")
+	d, _ := yml.NewDeclaration("testdata/ensure_declaration_file.yml")
 	os.Setenv("ENVVAR_2", "")
 
 	// when
@@ -92,7 +93,7 @@ func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 
 func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.yml")
+	d, _ := yml.NewDeclaration("testdata/ensure_declaration_file.yml")
 	os.Setenv("ENVVAR_2", "name2")
 	// when
 	err := envvars.Ensure(d, "tag2")
@@ -103,7 +104,7 @@ func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
 
 func TestEnsure_toReturnErrorIfTaggedEnvvarsDoNotComply(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/ensure_declaration_file.yml")
+	d, _ := yml.NewDeclaration("testdata/ensure_declaration_file.yml")
 	os.Setenv("ENVVAR_2", "name2")
 	// when
 	err := envvars.Ensure(d, "tag1")

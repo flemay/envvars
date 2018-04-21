@@ -1,11 +1,5 @@
 package envvars
 
-import (
-	"fmt"
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
-)
-
 // Declaration describes the environment variables.
 type Declaration struct {
 	Tags    TagCollection
@@ -33,18 +27,4 @@ func (ev *Envvar) HasTag(name string) bool {
 type Tag struct {
 	Name string
 	Desc string
-}
-
-// NewDeclaration reads a declaration file and returns a Declaration.
-func NewDeclaration(filepath string) (*Declaration, error) {
-	data, err := ioutil.ReadFile(filepath)
-	if err != nil {
-		return nil, fmt.Errorf("error occurred when reading the file %s: %s", filepath, err.Error())
-	}
-
-	var d Declaration
-	if err := yaml.Unmarshal(data, &d); err != nil {
-		return nil, fmt.Errorf("error occurred when parsing the file %s: %s", filepath, err.Error())
-	}
-	return &d, nil
 }

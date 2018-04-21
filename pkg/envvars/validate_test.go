@@ -2,13 +2,14 @@ package envvars_test
 
 import (
 	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/yml"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestValidate_toReturnNoErrorIfValidDeclaration(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/validate_declaration_file.yml")
+	d, _ := yml.NewDeclaration("testdata/validate_declaration_file.yml")
 	// when
 	err := envvars.Validate(d)
 	// then
@@ -17,7 +18,7 @@ func TestValidate_toReturnNoErrorIfValidDeclaration(t *testing.T) {
 
 func TestValidate_toReturnNoErrorIfValidDeclarationWithTags(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/validate_declaration_file_with_tags.yml")
+	d, _ := yml.NewDeclaration("testdata/validate_declaration_file_with_tags.yml")
 	// when
 	err := envvars.Validate(d)
 	// then
@@ -26,7 +27,7 @@ func TestValidate_toReturnNoErrorIfValidDeclarationWithTags(t *testing.T) {
 
 func TestValidate_toReturnErrorIfInvalidDeclaration(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.yml")
+	d, _ := yml.NewDeclaration("testdata/declaration_file_invalid.yml")
 	// when
 	err := envvars.Validate(d)
 	// then
@@ -36,7 +37,7 @@ func TestValidate_toReturnErrorIfInvalidDeclaration(t *testing.T) {
 
 func TestValidate_toReturnErrorIfDeclarationIsEmpty(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/declaration_file_empty.yml")
+	d, _ := yml.NewDeclaration("testdata/declaration_file_empty.yml")
 	// when
 	err := envvars.Validate(d)
 	// then
