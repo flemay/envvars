@@ -8,7 +8,7 @@ import (
 
 func TestNewDeclaration_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) {
 	// given
-	declarationFilePath := "testdata/declaration_file.toml"
+	declarationFilePath := "testdata/declaration_file.yml"
 
 	// when
 	d, err := envvars.NewDeclaration(declarationFilePath)
@@ -20,7 +20,7 @@ func TestNewDeclaration_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) 
 }
 func TestNewDeclaration_toReturnErrorIfMalformatedDeclarationFile(t *testing.T) {
 	// given
-	declarationFilePath := "testdata/malformated_declaration_file.toml"
+	declarationFilePath := "testdata/malformated_declaration_file.yml"
 
 	// when
 	d, err := envvars.NewDeclaration(declarationFilePath)
@@ -28,12 +28,12 @@ func TestNewDeclaration_toReturnErrorIfMalformatedDeclarationFile(t *testing.T) 
 	// then
 	assert.Error(t, err)
 	assert.Nil(t, d)
-	assert.Contains(t, err.Error(), "error occurred when opening the file "+declarationFilePath)
+	assert.Contains(t, err.Error(), "error occurred when reading the file "+declarationFilePath)
 }
 
 func TestNewDeclaration_toReturnErrorIfFileNotFound(t *testing.T) {
 	// given
-	noSuchFilePath := "nosuchfile.toml"
+	noSuchFilePath := "nosuchfile.yml"
 
 	// when
 	d, err := envvars.NewDeclaration(noSuchFilePath)
@@ -41,7 +41,7 @@ func TestNewDeclaration_toReturnErrorIfFileNotFound(t *testing.T) {
 	// then
 	assert.Error(t, err)
 	assert.Nil(t, d)
-	assert.Contains(t, err.Error(), "open nosuchfile.toml: no such file or directory")
+	assert.Contains(t, err.Error(), "open nosuchfile.yml: no such file or directory")
 }
 
 func TestEnvvar_HasTag_toReturnTrueIfTagIsPresent(t *testing.T) {

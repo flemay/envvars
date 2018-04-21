@@ -2,7 +2,8 @@ package envvars
 
 import (
 	"fmt"
-	"github.com/BurntSushi/toml"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
 )
 
 // Declaration describes the environment variables.
@@ -36,9 +37,14 @@ type Tag struct {
 
 // NewDeclaration reads a declaration file and returns a Declaration.
 func NewDeclaration(filepath string) (*Declaration, error) {
+	data, err := ioutil.ReadFile(filepath)
+	if err != nil {
+		return nil, fmt.Errorf("error occurred when reading the file %s: %s", filepath, err.Error())
+	}
+
 	var d Declaration
-	if _, err := toml.DecodeFile(filepath, &d); err != nil {
-		return nil, fmt.Errorf("error occurred when opening the file %s: %s", filepath, err.Error())
+	if err := yaml.Unmarshal(data, &d); err != nil {
+		return nil, fmt.Errorf("error occurred when parsing the file %s: %s", filepath, err.Error())
 	}
 	return &d, nil
 }

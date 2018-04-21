@@ -8,7 +8,7 @@ import (
 
 func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.toml")
+	d, _ := envvars.NewDeclaration("testdata/declaration_file_invalid.yml")
 	invalidList := givenInvalidTagNameList()
 
 	// when
@@ -21,7 +21,7 @@ func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.yml")
 	name := "testdata/envfile_file.tmp"
 
 	// when
@@ -37,7 +37,7 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 
 func TestEnvfile_toGenerateFileWithOnlySpecifiedTags(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.yml")
 	name := "testdata/envfile_file_with_tag.tmp"
 
 	// when
@@ -53,7 +53,7 @@ func TestEnvfile_toGenerateFileWithOnlySpecifiedTags(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.yml")
 	name := "testdata/envfile_file.tmp"
 	createEmptyFile(t, name)
 
@@ -70,7 +70,7 @@ func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.yml")
 	name := "testdata/envfile_file.tmp"
 	createEmptyFile(t, name)
 
@@ -85,7 +85,7 @@ func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
 	// given
-	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.toml")
+	d, _ := envvars.NewDeclaration("testdata/envfile_declaration_file.yml")
 	name := "testdata/tmp"
 	createDir(t, name)
 

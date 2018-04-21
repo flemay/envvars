@@ -1,0 +1,4 @@
+
+envvars
+  - name: ENVVAR
+    description="Description of ENVVAR"

@@ -1,0 +1,21 @@
+ tags:
+  - name: tag1
+    desc: desc of tag1
+
+  - name: tag2
+    desc: desc of tag2
+
+ envvars:
+  - name: ENVVAR_1
+    desc: desc of ENVVAR_1
+
+  - name: ENVVAR_2
+    desc: desc of ENVVAR_2
+    tags:
+    - tag1
+
+  - name: ENVVAR_3
+    desc: desc of ENVVAR_3
+    tags:
+    - tag1
+    - tag2

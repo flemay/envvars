@@ -1,0 +1,62 @@
+tags:
+  # valid
+  - name: tag1
+    desc: Desc of tag1
+  # invalid because required fields are empty
+  - name: ""
+    desc: ""
+  # invalid because required field desc is not defined
+  - name: tag2
+  # invalid because required field name is not defined
+  - desc: desc
+  # invalid tagNameNotUnique is not unique
+  - name: tagNameNotUnique
+    desc: Desc of tagNameNotUnique
+  # invalid tagNameNotUnique is not unique
+  - name: tagNameNotUnique
+    desc: Desc of tagNameNotUnique
+  # invalid tagNotUsed is not used
+  - name: tagNotUsed
+    desc: Desc of tagNotUsed
+
+envvars:
+  # valid
+  - name: ENVVAR_1
+    desc: Desc of ENVVAR_1
+  # invalid because required fields are empty
+  - name: ""
+    desc: ""
+  # invalid because required field desc is not defined
+  - name: ENVVAR_2
+  # invalid because required field name is not defined
+  - dec: desc
+  # invalid ENVVAR_NAME_NOT_UNIQUE is not unique
+  - name: ENVVAR_NAME_NOT_UNIQUE
+    desc: Desc of ENVVAR_NAME_NOT_UNIQUE
+  # invalid ENVVAR_NAME_NOT_UNIQUE is not unique
+  - name: ENVVAR_NAME_NOT_UNIQUE
+    desc: Desc of ENVVAR_NAME_NOT_UNIQUE
+  # valid
+  - name: ENVVAR_3
+    desc: Desc of ENVVAR_3
+    tags:
+      - tag1
+  # invalid because tags are not defined
+  - name: ENVVAR_4
+    desc: Desc of ENVVAR_4
+    tags:
+      - tagNotDeclared
+      - tagNameNotUnique
+  # invalid because tag tagNotDeclared is not declared
+  - name: ENVVAR_5
+    desc: Desc of ENVVAR_5
+    tags:
+      - tag1
+      - tagNotDeclared
+  # invalid because it has the same tag more than once, 1 tag is empty
+  - name: ENVVAR_6
+    desc: Desc of ENVVAR_6
+    tags:
+      - tag1
+      - tag1
+      - ""
