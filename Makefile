@@ -1,4 +1,4 @@
-VERSION = 0.0.1
+VERSION = 0.0.2
 IMAGE_NAME ?= flemay/envvars:$(VERSION)
 GOLANG_DEPS_DIR = vendor
 EXECUTABLE = bin/envvars
