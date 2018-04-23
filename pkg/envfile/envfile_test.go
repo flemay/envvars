@@ -2,12 +2,17 @@ package envfile_test
 
 import (
 	"github.com/flemay/envvars/pkg/envfile"
+	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/yml"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"testing"
 )
+
+func TestEnvfile_toImplementEnvfileWriterInterface(t *testing.T) {
+	assert.Implements(t, (*envvars.EnvfileWriter)(nil), new(envfile.Envfile))
+}
 
 func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
