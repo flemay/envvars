@@ -3,3 +3,4 @@
 envvars.yml
 bin/
 .DS_Store
+*.out

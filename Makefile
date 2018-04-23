@@ -48,7 +48,7 @@ _deps:
 .PHONY: _deps
 
 _test:
-	go test -cover ./...
+	go test -coverprofile=profile.out ./...
 .PHONY: _test
 
 _build:
