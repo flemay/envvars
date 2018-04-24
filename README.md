@@ -53,17 +53,30 @@ The declaration file (written in [YAML](http://yaml.org/spec/1.2/spec.html)) is 
 Envvars is looking for the declaration file `envvars.yml` by default. A different file can be passed with the flag `-f path/to/declarationfile.yml`.
 
 ```yml
-tags: # optional
-  - name: deploy # required, must be used by at least 1 envvar
-    desc: tag used when deploying # required
+tags:
+  - name: deploy
+    desc: tag used when deploying
 
-envvars: # list of environment variable, required
-  - name: ENV # required
-    desc: Application stage (dev, qa, preprod, prod) # required
-    tags: # optional
-      - deploy # must be declared in the tags list
-    optional: true # optional, allows an env var to be empty or not defined. It is best to avoid it unless you accept an empty value
+envvars:
+  - name: ENV
+    desc: Application stage (dev, qa, preprod, prod)
+    tags:
+      - deploy
+    optional: true
+    example: dev
 ```
+
+| Field            |      Type      | Required | Description                                                                                                                        |
+|------------------|:--------------:|:--------:|------------------------------------------------------------------------------------------------------------------------------------|
+| tags             |      list      |    no    | List of tags to be used for targeting a subset of environment variables                                                            |
+| tags.name        |     string     |    yes   | Unique tag name                                                                                                                    |
+| tags.desc        |     string     |    yes   | Meaningful description of the tag                                                                                                  |
+| envvars          |      list      |    yes   | List of environment variables                                                                                                      |
+| envvars.name     |     string     |    yes   | Unique environment variable name                                                                                                   |
+| envvars.desc     |     string     |    yes   | Meaningful description of the environment variable                                                                                 |
+| envvars.tags     | list of string |    no    | List of tags for the environment variable. Each tag must be declared in the "tags" field.                                          |
+| envvars.optional |      bool      |    no    | Allows the environment variable to be empty or not defined. It is best to avoid it unless your application accepts an empty value. |
+| envvars.example  |     string     |    no    | Example value for the environment variable.                                                                                        |
 
 ## Principles
 
