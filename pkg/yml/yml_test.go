@@ -1,6 +1,7 @@
 package yml_test
 
 import (
+	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/yml"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -8,7 +9,7 @@ import (
 
 func TestNewDeclaration_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) {
 	// given
-	declarationFilePath := "testdata/declaration_file.yml"
+	declarationFilePath := "testdata/envvars.yml"
 
 	// when
 	d, err := yml.NewDeclaration(declarationFilePath)
@@ -16,11 +17,32 @@ func TestNewDeclaration_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) 
 	// then
 	assert.NoError(t, err)
 	assert.NotNil(t, d)
-	assert.Len(t, d.Envvars, 2)
+	expectedTags := envvars.TagCollection{
+		&envvars.Tag{
+			Name: "tag1",
+			Desc: "desc of tag1",
+		},
+	}
+	assert.EqualValues(t, expectedTags, d.Tags)
+
+	expectedEnvvars := envvars.EnvvarCollection{
+		&envvars.Envvar{
+			Name: "ENVVAR_1",
+			Desc: "desc of ENVVAR_1",
+		},
+		&envvars.Envvar{
+			Name:     "ENVVAR_2",
+			Desc:     "desc of ENVVAR_2",
+			Optional: true,
+			Example:  "example1",
+		},
+	}
+
+	assert.EqualValues(t, expectedEnvvars, d.Envvars)
 }
 func TestNewDeclaration_toReturnErrorIfMalformatedDeclarationFile(t *testing.T) {
 	// given
-	declarationFilePath := "testdata/declaration_file_malformated.yml"
+	declarationFilePath := "testdata/envvars_malformated.yml"
 
 	// when
 	d, err := yml.NewDeclaration(declarationFilePath)
