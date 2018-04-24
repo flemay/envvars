@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/flemay/envvars/pkg/envfile"
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/yml"
 	"github.com/spf13/cobra"
@@ -17,7 +18,8 @@ var envfileCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		return envvars.Envfile(d, envfileName, overwriteEnvfile, tagsRootFlag...)
+		writer := envfile.NewEnvfile(envfileName, overwriteEnvfile)
+		return envvars.Envfile(d, writer, tagsRootFlag...)
 	},
 }
 

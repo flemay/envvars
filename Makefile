@@ -62,3 +62,7 @@ _run:
 _install:
 	go install
 .PHONY: _install
+
+_mock:
+	mockery -dir=pkg -all -case=underscore -output=pkg/mocks
+.PHONY: _mock
