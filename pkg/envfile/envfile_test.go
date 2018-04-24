@@ -16,8 +16,8 @@ func TestEnvfile_toImplementEnvfileWriterInterface(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
-	name := "testdata/envfile_file.tmp"
+	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	name := "testdata/envfile.tmp"
 	writer := envfile.NewEnvfile(name, false)
 
 	// when
@@ -25,7 +25,7 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 
 	// then
 	assert.NoError(t, err)
-	expected := readFile(t, "testdata/envfile_file.golden")
+	expected := readFile(t, "testdata/envfile.golden")
 	actual := readFile(t, name)
 	assert.Equal(t, expected, actual)
 	removeFileOrDir(t, name)
@@ -33,8 +33,8 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
-	name := "testdata/envfile_file.tmp"
+	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	name := "testdata/envfile.tmp"
 	createEmptyFile(t, name)
 	writer := envfile.NewEnvfile(name, true)
 
@@ -43,7 +43,7 @@ func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 
 	// then
 	assert.NoError(t, err)
-	expected := readFile(t, "testdata/envfile_file.golden")
+	expected := readFile(t, "testdata/envfile.golden")
 	actual := readFile(t, name)
 	assert.Equal(t, expected, actual)
 	removeFileOrDir(t, name)
@@ -51,8 +51,8 @@ func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
-	name := "testdata/envfile_file.tmp"
+	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	name := "testdata/envfile.tmp"
 	createEmptyFile(t, name)
 	writer := envfile.NewEnvfile(name, false)
 
@@ -67,7 +67,7 @@ func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
+	d, _ := yml.NewDeclaration("testdata/envvars.yml")
 	name := "testdata/tmp"
 	createDir(t, name)
 	writer := envfile.NewEnvfile(name, true)
