@@ -2,6 +2,7 @@ VERSION = 0.0.2
 IMAGE_NAME ?= flemay/envvars:$(VERSION)
 GOLANG_DEPS_DIR = vendor
 EXECUTABLE = bin/envvars
+PROFILE_NAME ?= profile.out
 
 deps:
 	docker-compose run --rm golang make _deps
@@ -48,7 +49,7 @@ _deps:
 .PHONY: _deps
 
 _test:
-	go test -coverprofile=profile.out ./...
+	go test -coverprofile=$(PROFILE_NAME) ./...
 .PHONY: _test
 
 _build:
@@ -66,3 +67,7 @@ _install:
 _mock:
 	mockery -dir=pkg -all -case=underscore -output=pkg/mocks
 .PHONY: _mock
+
+_htmlCover:
+	go tool cover -html=$(PROFILE_NAME)
+.PHONY: _htmlCover
