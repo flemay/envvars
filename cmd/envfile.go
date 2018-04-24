@@ -9,6 +9,7 @@ import (
 
 var envfileName string
 var overwriteEnvfile bool
+var example bool
 
 var envfileCmd = &cobra.Command{
 	Use:   "envfile",
@@ -18,13 +19,14 @@ var envfileCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		writer := envfile.NewEnvfile(envfileName, overwriteEnvfile)
+		writer := envfile.NewEnvfile(envfileName, example, overwriteEnvfile)
 		return envvars.Envfile(d, writer, tagsRootFlag...)
 	},
 }
 
 func init() {
 	envfileCmd.Flags().StringVar(&envfileName, "env-file", ".env", "env file to be generated")
+	envfileCmd.Flags().BoolVar(&example, "example", false, "include example values")
 	envfileCmd.Flags().BoolVar(&overwriteEnvfile, "overwrite", true, "overwrite the env file if it exists")
 	rootCmd.AddCommand(envfileCmd)
 }

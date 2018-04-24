@@ -18,7 +18,7 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
 	d, _ := yml.NewDeclaration("testdata/envvars.yml")
 	name := "testdata/envfile.tmp"
-	writer := envfile.NewEnvfile(name, false)
+	writer := envfile.NewEnvfile(name, false, false)
 
 	// when
 	err := writer.Write(d.Envvars)
@@ -31,12 +31,29 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	removeFileOrDir(t, name)
 }
 
+func TestEnvfile_toGenerateFileWithExampleIfItDoesNotExist(t *testing.T) {
+	// given
+	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	name := "testdata/envfile.tmp"
+	writer := envfile.NewEnvfile(name, true, false)
+
+	// when
+	err := writer.Write(d.Envvars)
+
+	// then
+	assert.NoError(t, err)
+	expected := readFile(t, "testdata/envfile_example.golden")
+	actual := readFile(t, name)
+	assert.Equal(t, expected, actual)
+	removeFileOrDir(t, name)
+}
+
 func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 	// given
 	d, _ := yml.NewDeclaration("testdata/envvars.yml")
 	name := "testdata/envfile.tmp"
 	createEmptyFile(t, name)
-	writer := envfile.NewEnvfile(name, true)
+	writer := envfile.NewEnvfile(name, false, true)
 
 	// when
 	err := writer.Write(d.Envvars)
@@ -54,7 +71,7 @@ func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 	d, _ := yml.NewDeclaration("testdata/envvars.yml")
 	name := "testdata/envfile.tmp"
 	createEmptyFile(t, name)
-	writer := envfile.NewEnvfile(name, false)
+	writer := envfile.NewEnvfile(name, false, false)
 
 	// when
 	err := writer.Write(d.Envvars)
@@ -70,7 +87,7 @@ func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
 	d, _ := yml.NewDeclaration("testdata/envvars.yml")
 	name := "testdata/tmp"
 	createDir(t, name)
-	writer := envfile.NewEnvfile(name, true)
+	writer := envfile.NewEnvfile(name, false, true)
 
 	// when
 	err := writer.Write(d.Envvars)
