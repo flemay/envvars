@@ -7,9 +7,10 @@ import (
 	"os"
 )
 
-// Envfile define a struct which is reponsible to generates an env file.
+// Envfile define a struct which is responsible to generates an env file.
 type Envfile struct {
 	filename  string
+	example   bool
 	overwrite bool
 }
 
@@ -34,7 +35,13 @@ func (e *Envfile) Write(c envvars.EnvvarCollection) error {
 	defer f.Close()
 	w := bufio.NewWriter(f)
 	for _, ev := range c {
-		if _, err := w.WriteString(ev.Name + "\n"); err != nil {
+		line := ev.Name
+		if e.example && ev.Example != "" {
+			line += "=" + ev.Example
+		}
+		line += "\n"
+
+		if _, err := w.WriteString(line); err != nil {
 			return err
 		}
 	}
@@ -42,6 +49,6 @@ func (e *Envfile) Write(c envvars.EnvvarCollection) error {
 }
 
 // NewEnvfile returns an Envfile struct
-func NewEnvfile(name string, overwrite bool) *Envfile {
-	return &Envfile{name, overwrite}
+func NewEnvfile(filename string, example bool, overwrite bool) *Envfile {
+	return &Envfile{filename, example, overwrite}
 }
