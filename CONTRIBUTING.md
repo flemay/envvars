@@ -16,30 +16,34 @@ If you think Envvars can benefit your friends, teammates, and company, share it!
 
 Feedback is greatly appreciated. Do you have workflows that the tool supports well, or doesn't support at all? Do any of the commands have surprising effects, output, or results? Let us know by filing an issue, describing what you did or wanted to do, what you expected to happen, and what actually happened.
 
-## Contributing code
+# Contributing code
 
 The project follows the typical GitHub pull request model. Before starting any work, please either comment on an existing issue, or file a new one.
 
-### 1. Fork
+## 1. Fork
 
 [Fork Envvars](https://github.com/flemay/envvars/fork) on GitHub so that you can commit your changes and create a Pull Request.
 
-### 2. Development
+## 2. Development
 
-There are 2 approaches to make your changes:
+There are 2 approaches (described below) to make your changes:
 
 - [3 Musketeers](https://github.com/flemay/3musketeers) which uses Make, Docker, and Compose
 - a Go environment with dep
 
-#### Development with the 3 Musketeers
+## 3. Create a Pull Request
 
-##### Prerequisites
+Happy with all your precious changes? Create a [Pull Request](https://help.github.com/articles/creating-a-pull-request/)!
+
+# Development with the 3 Musketeers
+
+## Prerequisites
 
 - Docker
 - Compose
 - Make
 
-##### Steps
+## Steps
 
 ```bash
 # clone the fork locally (location does not matter)
@@ -63,15 +67,15 @@ $ make run
 $ git push origin meaningful_branch_name
 ```
 
-#### Development with Go environment
+# Development with Go environment
 
-##### Prerequisites
+## Prerequisites
 
 - Go 1.10
 - [dep](https://github.com/golang/dep)
 - Make
 
-##### Steps
+## Steps
 
 ```bash
 # create folder
@@ -98,6 +102,10 @@ $ make _run
 $ git push origin meaningful_branch_name
 ```
 
-### 3. Create a Pull Request
+# Mocks
 
-Happy with all your precious changes? Create a [Pull Request](https://help.github.com/articles/creating-a-pull-request/)!
+[Mockery](https://github.com/vektra/mockery) is being used to generate mocks in the folder `pkg/mocks`.
+
+- Mockery must be installed locally
+- To generate all of them `$ make _mock`
+- Once generated, one would need to fix all the mocks imports

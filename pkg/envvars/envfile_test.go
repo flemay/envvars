@@ -2,8 +2,10 @@ package envvars_test
 
 import (
 	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/mocks"
 	"github.com/flemay/envvars/pkg/yml"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"testing"
 )
 
@@ -11,90 +13,38 @@ func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
 	d, _ := yml.NewDeclaration("testdata/declaration_file_invalid.yml")
 	invalidList := givenInvalidTagNameList()
-
+	mockWriter := new(mocks.EnvfileWriter)
 	// when
-	err := envvars.Envfile(d, "", false, invalidList...)
+	err := envvars.Envfile(d, mockWriter, invalidList...)
 
 	// then
 	expectedErrorMsg := readFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
 	assert.EqualError(t, err, expectedErrorMsg)
 }
 
-func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
+func TestEnvfile_toWriteEnvfile(t *testing.T) {
 	// given
 	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
-	name := "testdata/envfile_file.tmp"
+	mockWriter := new(mocks.EnvfileWriter)
+	mockWriter.On("Write", mock.Anything).Return(nil)
 
 	// when
-	err := envvars.Envfile(d, name, false)
+	err := envvars.Envfile(d, mockWriter)
 
 	// then
 	assert.NoError(t, err)
-	expected := readFile(t, "testdata/envfile_file.golden")
-	actual := readFile(t, name)
-	assert.Equal(t, expected, actual)
-	removeFileOrDir(t, name)
+	mockWriter.AssertCalled(t, "Write", d.Envvars)
 }
-
-func TestEnvfile_toGenerateFileWithOnlySpecifiedTags(t *testing.T) {
+func TestEnvfile_toWriteEnvfileWithOnlySpecifiedTags(t *testing.T) {
 	// given
 	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
-	name := "testdata/envfile_file_with_tag.tmp"
+	mockWriter := new(mocks.EnvfileWriter)
+	mockWriter.On("Write", mock.Anything).Return(nil)
 
 	// when
-	err := envvars.Envfile(d, name, false, "tag1")
+	err := envvars.Envfile(d, mockWriter, "tag1")
 
 	// then
 	assert.NoError(t, err)
-	expected := readFile(t, "testdata/envfile_file_with_tag.golden")
-	actual := readFile(t, name)
-	assert.Equal(t, expected, actual)
-	removeFileOrDir(t, name)
-}
-
-func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
-	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
-	name := "testdata/envfile_file.tmp"
-	createEmptyFile(t, name)
-
-	// when
-	err := envvars.Envfile(d, name, true)
-
-	// then
-	assert.NoError(t, err)
-	expected := readFile(t, "testdata/envfile_file.golden")
-	actual := readFile(t, name)
-	assert.Equal(t, expected, actual)
-	removeFileOrDir(t, name)
-}
-
-func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
-	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
-	name := "testdata/envfile_file.tmp"
-	createEmptyFile(t, name)
-
-	// when
-	err := envvars.Envfile(d, name, false)
-
-	// then
-	assert.Error(t, err)
-	assert.EqualError(t, err, "error: "+name+" already exist")
-	removeFileOrDir(t, name)
-}
-
-func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
-	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
-	name := "testdata/tmp"
-	createDir(t, name)
-
-	// when
-	err := envvars.Envfile(d, name, true)
-
-	// then
-	assert.Error(t, err)
-	assert.EqualError(t, err, "error: "+name+" is a folder, not a file")
-	removeFileOrDir(t, name)
+	mockWriter.AssertCalled(t, "Write", d.Envvars.WithTag("tag1"))
 }
