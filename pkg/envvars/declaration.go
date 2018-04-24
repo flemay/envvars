@@ -12,6 +12,7 @@ type Envvar struct {
 	Desc     string
 	Tags     []string
 	Optional bool
+	Example  string
 }
 
 func (ev *Envvar) HasTag(name string) bool {
