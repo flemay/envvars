@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/flemay/envvars.svg?branch=master)](https://travis-ci.org/flemay/envvars)
 [![Project status](https://img.shields.io/badge/version-0.0.3-green.svg)](https://github.com/flemay/envvars/releases)
+[![License](https://img.shields.io/dub/l/vibe-d.svg)](https://github.com/flemay/envvars/blob/master/LICENSE)
 
 # Envvars
 
