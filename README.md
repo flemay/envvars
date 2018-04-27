@@ -3,6 +3,9 @@
 [![Build Status](https://travis-ci.org/flemay/envvars.svg?branch=master)](https://travis-ci.org/flemay/envvars)
 [![Project status](https://img.shields.io/badge/version-0.0.3-green.svg)](https://github.com/flemay/envvars/releases)
 [![License](https://img.shields.io/dub/l/vibe-d.svg)](https://github.com/flemay/envvars/blob/master/LICENSE)
+[![Docker Build Status](https://img.shields.io/docker/build/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
+[![MicroBadger Size](https://img.shields.io/microbadger/image-size/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
+[![Docker Automated build](https://img.shields.io/docker/automated/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
 
 # Envvars
 
