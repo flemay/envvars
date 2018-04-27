@@ -4,6 +4,38 @@
 
 Envvars, a command line tool written in Go, provides a way to describe the environment variables of a project and ensures they are defined before testing, building, and deploying. It also generates an env file to be used by other applications such as Docker and Compose.
 
+## Declaration File
+
+The declaration file (written in [YAML](http://yaml.org/spec/1.2/spec.html)) is the core of Envvars. It declares all the environment variables used by a project.
+
+Envvars is looking for the declaration file `envvars.yml` by default. A different file can be passed with the flag `-f path/to/declarationfile.yml`.
+
+```yml
+tags:
+  - name: deploy
+    desc: tag used when deploying
+
+envvars:
+  - name: ENV
+    desc: Application stage (dev, qa, preprod, prod)
+    tags:
+      - deploy
+    optional: true
+    example: dev
+```
+
+| Field            |      Type      | Required | Description                                                                                                                        |
+|------------------|:--------------:|:--------:|------------------------------------------------------------------------------------------------------------------------------------|
+| tags             |      list      |    no    | List of tags to be used for targeting a subset of environment variables                                                            |
+| tags.name        |     string     |    yes   | Unique tag name                                                                                                                    |
+| tags.desc        |     string     |    yes   | Meaningful description of the tag                                                                                                  |
+| envvars          |      list      |    yes   | List of environment variables                                                                                                      |
+| envvars.name     |     string     |    yes   | Unique environment variable name                                                                                                   |
+| envvars.desc     |     string     |    yes   | Meaningful description of the environment variable                                                                                 |
+| envvars.tags     | list of string |    no    | List of tags for the environment variable. Each tag must be declared in the "tags" field.                                          |
+| envvars.optional |      bool      |    no    | Allows the environment variable to be empty or not defined. It is best to avoid it unless your application accepts an empty value. |
+| envvars.example  |     string     |    no    | Example value for the environment variable.                                                                                        |
+
 ## Installation
 
 ```bash
@@ -42,41 +74,21 @@ $ envvars envfile
 $ cat .env
 # ECHO
 
+# create a declaration file with example value
+# envvars:
+#   - name: ECHO
+#     desc: env var ECHO
+#     example: Hello World
+$ printf "envvars:\n  - name: ECHO\n    desc: env var ECHO\n    example: Hello World\n" > envvars.yml
+
+# create an env file with the example value
+$ envvars envfile -overwrite -example
+$ cat .env
+# ECHO=Hello World
+
 # explore
 $ envvars --help
 ```
-
-## Declaration File
-
-The declaration file (written in [YAML](http://yaml.org/spec/1.2/spec.html)) is the core of Envvars. It declares all the environment variables used by a project.
-
-Envvars is looking for the declaration file `envvars.yml` by default. A different file can be passed with the flag `-f path/to/declarationfile.yml`.
-
-```yml
-tags:
-  - name: deploy
-    desc: tag used when deploying
-
-envvars:
-  - name: ENV
-    desc: Application stage (dev, qa, preprod, prod)
-    tags:
-      - deploy
-    optional: true
-    example: dev
-```
-
-| Field            |      Type      | Required | Description                                                                                                                        |
-|------------------|:--------------:|:--------:|------------------------------------------------------------------------------------------------------------------------------------|
-| tags             |      list      |    no    | List of tags to be used for targeting a subset of environment variables                                                            |
-| tags.name        |     string     |    yes   | Unique tag name                                                                                                                    |
-| tags.desc        |     string     |    yes   | Meaningful description of the tag                                                                                                  |
-| envvars          |      list      |    yes   | List of environment variables                                                                                                      |
-| envvars.name     |     string     |    yes   | Unique environment variable name                                                                                                   |
-| envvars.desc     |     string     |    yes   | Meaningful description of the environment variable                                                                                 |
-| envvars.tags     | list of string |    no    | List of tags for the environment variable. Each tag must be declared in the "tags" field.                                          |
-| envvars.optional |      bool      |    no    | Allows the environment variable to be empty or not defined. It is best to avoid it unless your application accepts an empty value. |
-| envvars.example  |     string     |    no    | Example value for the environment variable.                                                                                        |
 
 ## Principles
 
