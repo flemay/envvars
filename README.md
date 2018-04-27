@@ -1,5 +1,6 @@
-[![Project status](https://img.shields.io/badge/version-0.0.3-green.svg)](https://github.com/flemay/envvars/releases)
 <p align="center"><img src="docs/envvars_gopher.png" width="360"></p>
+
+[![Project status](https://img.shields.io/badge/version-0.0.3-green.svg)](https://github.com/flemay/envvars/releases)
 
 # Envvars
 
