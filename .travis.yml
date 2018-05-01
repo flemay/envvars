@@ -6,7 +6,7 @@ services:
   - docker
 
 script:
-  - make deps test
+  - make deps test clean
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -f profile.out
