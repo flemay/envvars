@@ -41,6 +41,7 @@ tag:
 .PHONY: tag
 
 clean:
+	docker-compose down --remove-orphans
 	rm -fr bin vendor
 .PHONY: clean
 
