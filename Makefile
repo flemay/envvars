@@ -5,7 +5,7 @@ EXECUTABLE = bin/envvars
 PROFILE_NAME ?= profile.out
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 
-all: clean deps test build run
+all: deps test build run
 .PHONY: all
 
 deps:
