@@ -41,8 +41,8 @@ tag:
 .PHONY: tag
 
 clean:
+	docker-compose run --rm golang make _clean
 	docker-compose down --remove-orphans
-	rm -fr bin vendor
 .PHONY: clean
 
 _deps:
@@ -72,3 +72,7 @@ _mock:
 _htmlCover:
 	go tool cover -html=$(PROFILE_NAME)
 .PHONY: _htmlCover
+
+_clean:
+	rm -fr bin vendor
+.PHONY: _clean
