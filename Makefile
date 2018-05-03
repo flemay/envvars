@@ -3,21 +3,25 @@ IMAGE_NAME ?= flemay/envvars:$(VERSION)
 GOLANG_DEPS_DIR = vendor
 EXECUTABLE = bin/envvars
 PROFILE_NAME ?= profile.out
+COMPOSE_RUN_GOLANG = docker-compose run --rm golang
+
+all: clean deps test build run
+.PHONY: all
 
 deps:
-	docker-compose run --rm golang make _deps
+	$(COMPOSE_RUN_GOLANG) make _deps
 .PHONY: deps
 
 test: $(GOLANG_DEPS_DIR)
-	docker-compose run --rm golang make _test
+	$(COMPOSE_RUN_GOLANG) make _test
 .PHONY: test
 
 build: $(GOLANG_DEPS_DIR)
-	docker-compose run --rm golang make _build
+	$(COMPOSE_RUN_GOLANG) make _build
 .PHONY: build
 
 run: $(EXECUTABLE)
-	docker-compose run --rm golang make _run
+	$(COMPOSE_RUN_GOLANG) make _run
 .PHONY: run
 
 dockerBuild:
@@ -41,7 +45,7 @@ tag:
 .PHONY: tag
 
 clean:
-	docker-compose run --rm golang make _clean
+	$(COMPOSE_RUN_GOLANG) make _clean
 	docker-compose down --remove-orphans
 .PHONY: clean
 
