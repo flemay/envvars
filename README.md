@@ -13,6 +13,10 @@
 
 Envvars, a command line tool written in Go, provides a way to describe the environment variables of a project and ensures they are defined before testing, building, and deploying. It also generates an env file to be used by other applications such as Docker and Compose.
 
+## 3 Musketeers
+
+Envvars fits nicely with the [3 Musketeers](https://github.com/flemay/3musketeers) for managing the environment variables used by an application.
+
 ## Declaration File
 
 The declaration file (written in [YAML](http://yaml.org/spec/1.2/spec.html)) is the core of Envvars. It declares all the environment variables used by a project.

@@ -8,6 +8,10 @@ COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 all: deps test build run
 .PHONY: all
 
+# travis executes the commands when Travis CI builds
+travis: deps test dockerBuild dockerTest clean
+.PHONY: travis
+
 deps:
 	$(COMPOSE_RUN_GOLANG) make _deps
 .PHONY: deps
@@ -47,6 +51,7 @@ tag:
 clean:
 	$(COMPOSE_RUN_GOLANG) make _clean
 	docker-compose down --remove-orphans
+	-docker rmi -f $(IMAGE_NAME)
 .PHONY: clean
 
 _deps:
