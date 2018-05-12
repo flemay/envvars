@@ -98,6 +98,29 @@ func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
 	removeFileOrDir(t, name)
 }
 
+func TestEnvfile_toRemoveFileIfItExists(t *testing.T) {
+	// given
+	name := "testdata/envfile.tmp"
+	createEmptyFile(t, name)
+
+	// when
+	err := envfile.Remove(name)
+
+	// then
+	assert.NoError(t, err)
+}
+
+func TestEnvfile_Remove_toReturnErrorIfEnvfileNotPresent(t *testing.T) {
+	// given
+	name := "testdata/envfile.tmp"
+
+	// when
+	err := envfile.Remove(name)
+
+	// then
+	assert.Error(t, err)
+}
+
 func removeFileOrDir(t *testing.T, name string) {
 	if err := os.Remove(name); err != nil {
 		t.Fatalf(err.Error())
