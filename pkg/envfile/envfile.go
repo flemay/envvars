@@ -52,3 +52,8 @@ func (e *Envfile) Write(c envvars.EnvvarCollection) error {
 func NewEnvfile(filename string, example bool, overwrite bool) *Envfile {
 	return &Envfile{filename, example, overwrite}
 }
+
+// Remove removes the env file. Returns an error if the file does not exist or any permission issue.
+func Remove(filename string) error {
+	return os.Remove(filename)
+}
