@@ -4,9 +4,8 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/flemay/envvars)](https://goreportcard.com/report/github.com/flemay/envvars)
 [![codecov](https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg)](https://codecov.io/gh/flemay/envvars)
 [![Project status](https://img.shields.io/badge/version-0.0.3-green.svg)](https://github.com/flemay/envvars/releases)
-[![License](https://img.shields.io/dub/l/vibe-d.svg)](https://github.com/flemay/envvars/blob/master/LICENSE)
+[![License](https://img.shields.io/dub/l/vibe-d.svg)](LICENSE)
 [![Docker Build Status](https://img.shields.io/docker/build/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
-[![MicroBadger Size](https://img.shields.io/microbadger/image-size/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
 [![Docker Automated build](https://img.shields.io/docker/automated/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
 
 # Envvars
