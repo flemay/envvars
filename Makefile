@@ -5,12 +5,8 @@ EXECUTABLE = bin/envvars
 PROFILE_NAME ?= profile.out
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 
-all: deps test build run
+all: deps test build run dockerBuild dockerTest clean
 .PHONY: all
-
-# travis executes the commands when Travis CI builds
-travis: deps test dockerBuild dockerTest clean
-.PHONY: travis
 
 deps:
 	$(COMPOSE_RUN_GOLANG) make _deps
@@ -27,6 +23,10 @@ build: $(GOLANG_DEPS_DIR)
 run: $(EXECUTABLE)
 	$(COMPOSE_RUN_GOLANG) make _run
 .PHONY: run
+
+shell:
+	$(COMPOSE_RUN_GOLANG) bash
+.PHONY: shell
 
 dockerBuild:
 	docker build --no-cache -t $(IMAGE_NAME) .
@@ -51,7 +51,7 @@ tag:
 clean:
 	$(COMPOSE_RUN_GOLANG) make _clean
 	docker-compose down --remove-orphans
-	-docker rmi -f $(IMAGE_NAME)
+	-$(MAKE) dockerRemove
 .PHONY: clean
 
 _deps:
