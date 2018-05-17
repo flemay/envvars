@@ -54,6 +54,10 @@ clean:
 	-$(MAKE) dockerRemove
 .PHONY: clean
 
+mock: $(GOLANG_DEPS_DIR)
+	$(COMPOSE_RUN_GOLANG) make _mock
+.PHONY: mock
+
 _deps:
 	dep ensure
 .PHONY: _deps
@@ -75,6 +79,7 @@ _install:
 .PHONY: _install
 
 _mock:
+	go get -u github.com/vektra/mockery/.../
 	mockery -dir=pkg -all -case=underscore -output=pkg/mocks
 .PHONY: _mock
 
