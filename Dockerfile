@@ -1,4 +1,4 @@
-FROM flemay/golang:1.10.0-stretch AS builder
+FROM flemay/golang:1-stretch AS builder
 WORKDIR /go/src/github.com/flemay
 RUN git clone https://github.com/flemay/envvars.git
 WORKDIR /go/src/github.com/flemay/envvars
