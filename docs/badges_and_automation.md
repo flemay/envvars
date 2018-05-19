@@ -10,7 +10,7 @@ envvars is under MIT license.
 
 [![Build Status](https://travis-ci.org/flemay/envvars.svg?branch=master)](https://travis-ci.org/flemay/envvars)
 
-[Travis CI](https://travis-ci.org/flemay/envvars) is used to test envvars whenever a code change is committed to master. It uses the [3 Musketeer](https://github.com/flemay/3musketeers).
+[Travis CI](https://travis-ci.org/flemay/envvars) is used to test envvars whenever a code change is committed to master. It uses the [3 Musketeer](https://github.com/flemay/three-musketeers).
 
 ## Codecov
 
