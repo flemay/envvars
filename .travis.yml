@@ -6,7 +6,7 @@ services:
   - docker
 
 script:
-  - make
+  - make travis
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -f profile.out

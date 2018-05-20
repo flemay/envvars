@@ -5,3 +5,10 @@ services:
     volumes:
       - .:/go/src/github.com/flemay/envvars
     working_dir: /go/src/github.com/flemay/envvars
+
+  envvars:
+    image: flemay/envvars:0.0.3
+    env_file: .env
+    volumes:
+      - .:/opt/app
+    working_dir: /opt/app
