@@ -2,6 +2,7 @@ version: '3.4'
 services:
   golang:
     image: flemay/golang:1-stretch
+    env_file: .env
     volumes:
       - .:/go/src/github.com/flemay/envvars
     working_dir: /go/src/github.com/flemay/envvars
