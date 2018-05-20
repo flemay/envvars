@@ -5,7 +5,7 @@ EXECUTABLE = bin/envvars
 PROFILE_NAME ?= profile.out
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 ENVFILE = .env
-DOCKER_RUN_ENVVARS = docker run --rm -v $(PWD):/opt/app -w /opt/app flemay/envvars:$(VERSION)
+DOCKER_RUN_ENVVARS = docker run --rm -v $(PWD):/opt/app -w /opt/app flemay/envvars
 COMPOSE_RUN_ENVVARS = docker-compose run --rm envvars
 
 all: envfileExample deps test build run dockerBuild dockerTest clean
