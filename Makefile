@@ -7,7 +7,6 @@ COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 ENVFILE = .env
 DOCKER_RUN_ENVVARS = docker run --rm -v $(PWD):/opt/app -w /opt/app flemay/envvars:$(VERSION)
 COMPOSE_RUN_ENVVARS = docker-compose run --rm envvars
-COMPOSE_RUN_MUSKETEERS = docker-compose run --rm musketeers
 
 all: envfileExample deps test build run dockerBuild dockerTest clean
 .PHONY: all
@@ -74,8 +73,8 @@ mock: $(ENVFILE) $(GOLANG_DEPS_DIR)
 
 triggerDockerHubBuilds: $(ENVFILE)
 	$(COMPOSE_RUN_ENVVARS) ensure
-	$(COMPOSE_RUN_MUSKETEERS) make _triggerDockerHubBuildOnBranchMasterUpdate
-	$(COMPOSE_RUN_MUSKETEERS) make _triggerDockerHubBuildOnGitTagUpdate
+	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubBuildOnBranchMasterUpdate
+	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubBuildOnGitTagUpdate
 .PHONY: triggerDockerHubBuilds
 
 _deps:
