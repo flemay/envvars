@@ -1,4 +1,4 @@
-VERSION = 0.0.3
+VERSION = 0.0.4
 IMAGE_NAME ?= flemay/envvars:$(VERSION)
 GOLANG_DEPS_DIR = vendor
 EXECUTABLE = bin/envvars
@@ -120,7 +120,6 @@ _triggerDockerHubBuildOnBranchMasterUpdate:
 _triggerDockerHubBuildOnGitTagUpdate:
 	[ "$(TRAVIS_BRANCH)" != "master" ] \
 	&& [ -n "$(TRAVIS_TAG)" ] \
-	&& [ "$(TRAVIS_PULL_REQUEST)" = "false" ] \
 	&& curl --data '{"source_type": "Tag", "source_name": "$(TRAVIS_TAG)"}' -X POST $(DOCKERHUB_TRIGGER_URL) \
 	&& echo "TRIGGERED Docker build for tag $(TRAVIS_TAG)" \
 	|| echo "SKIPPED Docker builds for tag"

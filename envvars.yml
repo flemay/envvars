@@ -1,3 +1,4 @@
+# For more Travis CI environment variables https://docs.travis-ci.com/user/environment-variables/
 envvars:
   - name: DOCKERHUB_TRIGGER_URL
     desc: URL to trigger the build to docker hub
