@@ -6,6 +6,7 @@ envvars:
   - name: TRAVIS_BRANCH
     desc: variable comming from Travis
     example: master
+    optional: true
 
   - name: TRAVIS_TAG
     desc: variable comming from Travis
