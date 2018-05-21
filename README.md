@@ -3,9 +3,8 @@
 [![Build Status](https://travis-ci.org/flemay/envvars.svg?branch=master)](https://travis-ci.org/flemay/envvars)
 [![Go Report Card](https://goreportcard.com/badge/github.com/flemay/envvars)](https://goreportcard.com/report/github.com/flemay/envvars)
 [![codecov](https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg)](https://codecov.io/gh/flemay/envvars)
-[![License](https://img.shields.io/dub/l/vibe-d.svg)](LICENSE)
 [![Docker Build Status](https://img.shields.io/docker/build/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
-[![Docker Automated build](https://img.shields.io/docker/automated/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
+[![License](https://img.shields.io/dub/l/vibe-d.svg)](LICENSE)
 
 # Envvars
 
