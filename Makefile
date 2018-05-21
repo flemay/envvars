@@ -5,13 +5,20 @@ EXECUTABLE = bin/envvars
 PROFILE_NAME ?= profile.out
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 ENVFILE = .env
-DOCKER_RUN_ENVVARS = docker run --rm -v $(PWD):/opt/app -w /opt/app flemay/envvars
+DOCKER_RUN_ENVVARS = docker run --rm -v $(PWD):/opt/app -w /opt/app flemay/envvars:$(VERSION)
 COMPOSE_RUN_ENVVARS = docker-compose run --rm envvars
 
-all: envfileExample deps test build run dockerBuild dockerTest clean
+# all shows how the pipeline looks like.
+# dockerBuild dockerTest are first because other tasks will need a .env and
+# this is required when testing a new version which does not exist yet in
+# Docker Hub.
+all: dockerBuild dockerTest envfileExample deps test build run clean
 .PHONY: all
 
-travis: deps test build run dockerBuild dockerTest triggerDockerHubBuilds clean
+# travis is used by Travis CI for its build.
+# Given the Dockerfile test the application, there is no need to call deps,
+# test, build and run.
+travis: dockerBuild dockerTest triggerDockerHubBuilds clean
 .PHONY: travis
 
 .env:
@@ -41,6 +48,7 @@ shell: $(ENVFILE)
 	$(COMPOSE_RUN_GOLANG) bash
 .PHONY: shell
 
+# dockerBuild always builds the Docker image with no cache.
 dockerBuild:
 	docker build --no-cache -t $(IMAGE_NAME) .
 .PHONY: dockerBuild
