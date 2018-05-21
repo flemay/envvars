@@ -81,8 +81,9 @@ mock: $(ENVFILE) $(GOLANG_DEPS_DIR)
 
 triggerDockerHubBuilds: $(ENVFILE)
 	$(COMPOSE_RUN_ENVVARS) ensure
-	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubBuildOnBranchMasterUpdate
-	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubBuildOnGitTagUpdate
+	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubLatestBuildOnBranchMasterUpdate
+	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubTagBuildOnGitTagUpdate
+	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubAllBuildsIfCronJob
 .PHONY: triggerDockerHubBuilds
 
 _deps:
@@ -118,17 +119,26 @@ _clean:
 	rm -fr bin vendor
 .PHONY: _clean
 
-_triggerDockerHubBuildOnBranchMasterUpdate:
+_triggerDockerHubLatestBuildOnBranchMasterUpdate:
 	[ "$(TRAVIS_BRANCH)" = "master" ] \
 	&& curl -H "Content-Type: application/json" --data '{"docker_tag": "latest"}' -X POST $(DOCKERHUB_TRIGGER_URL) \
 	&& echo "TRIGGERED Docker build for branch master" \
 	|| echo "SKIPPED Docker build for branch master"
-.PHONY: _triggerDockerHubBuildOnBranchMasterUpdate
+.PHONY: _triggerDockerHubLatestBuildOnBranchMasterUpdate
 
-_triggerDockerHubBuildOnGitTagUpdate:
+_triggerDockerHubTagBuildOnGitTagUpdate:
 	[ "$(TRAVIS_BRANCH)" != "master" ] \
 	&& [ -n "$(TRAVIS_TAG)" ] \
 	&& curl --data '{"source_type": "Tag", "source_name": "$(TRAVIS_TAG)"}' -X POST $(DOCKERHUB_TRIGGER_URL) \
 	&& echo "TRIGGERED Docker build for tag $(TRAVIS_TAG)" \
 	|| echo "SKIPPED Docker builds for tag"
-.PHONY: _triggerDockerHubBuildOnGitTagUpdate
+.PHONY: _triggerDockerHubTagBuildOnGitTagUpdate
+
+_triggerDockerHubAllBuildsIfCronJob:
+	[ "$(TRAVIS_EVENT_TYPE)" = "cron" ] \
+	&& [ "$(TRAVIS_PULL_REQUEST)" = "false" ] \
+	&& [ "$(TRAVIS_BRANCH)" = "master" ] \
+	&& curl --data '{"build": true}' -X POST $(DOCKERHUB_TRIGGER_URL) \
+	&& echo " TRIGGERED Docker builds for all" \
+	||echo " SKIPPED Docker builds for all"
+.PHONY: _triggerDockerHubAllBuildsIfCronJob
