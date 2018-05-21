@@ -109,3 +109,35 @@ $ git push origin meaningful_branch_name
 - Mockery must be installed locally
 - To generate all of them `$ make _mock`
 - Once generated, one would need to fix all the mocks imports
+
+# Travis CI & Docker Hub
+
+Travis CI is used to test, build and trigger Docker Hub to build the Docker Image.
+
+> This assumes master contains the latest changes to be released.
+
+## Master and Latest
+
+Any changes to master branch will triggers Travis CI build which then call Docker Hub to build the `latest` image.
+
+1. Go to [Travis CI](https://travis-ci.org/flemay/envvars) and you should see the build trigger
+1. Once the build passed go to [flemay/envvars](https://hub.docker.com/r/flemay/envvars) on Docker Hub
+1. In `Build Details` tab, you should now see the build kicking off
+
+## Tag release
+
+Any push of a tag will trigger Travis CI build which then call Docker Hub to build the tag image
+
+1. Update version in Makefile
+1. Update version in README.md
+1. Build the image locally `$ make dockerBuild`
+1. Test the image locally `$ make dockerTest`
+1. Commit the changes and push
+1. Run `$ make tag`
+1. Go to [Travis CI](https://travis-ci.org/flemay/envvars) and you should see the build trigger
+1. Once the build passed go to [flemay/envvars](https://hub.docker.com/r/flemay/envvars) on Docker Hub
+1. In `Build Details` tab, you should now see the build kicking off
+
+## Monthly update
+
+There is a cron task in Travis CI to run the build which will trigger Docker Hub to rebuild all the images (latest and tags).
