@@ -48,20 +48,6 @@ shell: $(ENVFILE)
 	$(COMPOSE_RUN_GOLANG) bash
 .PHONY: shell
 
-# dockerBuild always builds the Docker image with no cache.
-dockerBuild:
-	docker build --no-cache -t $(IMAGE_NAME) .
-.PHONY: dockerBuild
-
-dockerTest:
-	docker run --rm $(IMAGE_NAME)
-	docker run --rm $(IMAGE_NAME) version
-.PHONY: dockerTest
-
-dockerRemove:
-	docker rmi -f $(IMAGE_NAME)
-.PHONY: dockerRemove
-
 tag:
 	-git tag -d $(VERSION)
 	-git push origin :refs/tags/$(VERSION)
@@ -74,17 +60,6 @@ clean: $(ENVFILE)
 	docker-compose down --remove-orphans
 	-$(MAKE) dockerRemove
 .PHONY: clean
-
-mock: $(ENVFILE) $(GOLANG_DEPS_DIR)
-	$(COMPOSE_RUN_GOLANG) make _mock
-.PHONY: mock
-
-triggerDockerHubBuilds: $(ENVFILE)
-	$(COMPOSE_RUN_ENVVARS) ensure
-	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubLatestBuildOnBranchMasterUpdate
-	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubTagBuildOnGitTagUpdate
-	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubAllBuildsIfCronJob
-.PHONY: triggerDockerHubBuilds
 
 _deps:
 	dep ensure
@@ -106,11 +81,6 @@ _install:
 	go install
 .PHONY: _install
 
-_mock:
-	go get -u github.com/vektra/mockery/.../
-	mockery -dir=pkg -all -case=underscore -output=pkg/mocks
-.PHONY: _mock
-
 _htmlCover:
 	go tool cover -html=$(PROFILE_NAME)
 .PHONY: _htmlCover
@@ -118,6 +88,48 @@ _htmlCover:
 _clean:
 	rm -fr bin vendor
 .PHONY: _clean
+
+################
+# DOCKER IMAGE #
+################
+
+# dockerBuild always builds the Docker image with no cache.
+dockerBuild:
+	docker build --no-cache -t $(IMAGE_NAME) .
+.PHONY: dockerBuild
+
+dockerTest:
+	docker run --rm $(IMAGE_NAME)
+	docker run --rm $(IMAGE_NAME) version
+.PHONY: dockerTest
+
+dockerRemove:
+	docker rmi -f $(IMAGE_NAME)
+.PHONY: dockerRemove
+
+###########
+# MOCKERY #
+###########
+
+mock: $(ENVFILE) $(GOLANG_DEPS_DIR)
+	$(COMPOSE_RUN_GOLANG) make _mock
+.PHONY: mock
+
+_mock:
+	go get -u github.com/vektra/mockery/.../
+	mockery -dir=pkg -all -case=underscore -output=pkg/mocks
+.PHONY: _mock
+
+#######################
+# DOCKER HUB TRIGGERS #
+#######################
+
+triggerDockerHubBuilds: $(ENVFILE)
+	$(COMPOSE_RUN_ENVVARS) ensure
+	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubLatestBuildOnBranchMasterUpdate
+	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubTagBuildOnGitTagUpdate
+	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubAllBuildsIfCronJob
+.PHONY: triggerDockerHubBuilds
 
 _triggerDockerHubLatestBuildOnBranchMasterUpdate:
 	[ "$(TRAVIS_BRANCH)" = "master" ] \
