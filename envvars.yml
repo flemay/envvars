@@ -18,3 +18,7 @@ envvars:
     desc: variable comming from Travis
     example: 1.0.0
     optional: true
+
+  - name: TRAVIS_EVENT_TYPE
+    desc: variable comming from Travis
+    example: cron
