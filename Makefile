@@ -17,7 +17,7 @@ all: envfileExample dockerBuild dockerTest deps test build run clean
 .PHONY: all
 
 # travis is used by Travis CI for its build.
-travis: envfile dockerBuild dockerTest triggerDockerHubBuilds deps test sendCoverage clean
+travis: envfile dockerBuild dockerTest deps test sendCoverage triggerDockerHubBuilds clean
 .PHONY: travis
 
 # envfile creates a .env with envvars unless ENVFILE is defined, in which case
