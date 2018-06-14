@@ -134,7 +134,7 @@ triggerDockerHubBuilds:
 	$(COMPOSE_RUN_ENVVARS) ensure
 	$(COMPOSE_RUN_GOLANG) make _triggerDockerHubLatestBuildOnBranchMasterUpdate \
 		_triggerDockerHubTagBuildOnGitTagUpdate \
-		_triggerDockerHubAllBuildsIfCronJob \
+		_triggerDockerHubAllBuildsIfCronJob
 .PHONY: triggerDockerHubBuilds
 
 _triggerDockerHubLatestBuildOnBranchMasterUpdate:
@@ -150,7 +150,7 @@ _triggerDockerHubTagBuildOnGitTagUpdate:
 	@if [ "$(TRAVIS_BRANCH)" != "master" ] && [ -n "$(TRAVIS_TAG)" ]; then \
 		if [ "$(TRAVIS_TAG)" != "$(GIT_TAG)" ]; then \
 			echo "TRAVIS_TAG ($(TRAVIS_TAG)) cannot be different than GIT_TAG ($(GIT_TAG))"; \
-			exit 1
+			exit 1; \
 		fi; \
 		curl -H "Content-Type: application/json" --data '{"source_type": "Tag", "source_name": "$(DOCKER_TAG)"}' -X POST $(DOCKERHUB_TRIGGER_URL); \
 		echo " TRIGGERED Docker build for tag $(DOCKER_TAG)"; \
