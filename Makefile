@@ -141,7 +141,7 @@ _triggerDockerHubLatestBuildOnBranchMasterUpdate:
 	@if [ "$(TRAVIS_BRANCH)" = "master" ]; then \
 		curl -H "Content-Type: application/json" --data '{"docker_tag": "latest"}' -X POST $(DOCKERHUB_TRIGGER_URL); \
 		echo " TRIGGERED Docker build for branch master"; \
-	else
+	else \
 		echo " SKIPPED Docker build for branch master"; \
 	fi;
 .PHONY: _triggerDockerHubLatestBuildOnBranchMasterUpdate
