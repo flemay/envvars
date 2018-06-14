@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/envvars_gopher.png" width="360"></p>
+<p align="center"><img src="docs/envvars_gopher.png" width="260"></p>
 
 [![Build Status](https://travis-ci.org/flemay/envvars.svg?branch=master)](https://travis-ci.org/flemay/envvars)
 [![Go Report Card](https://goreportcard.com/badge/github.com/flemay/envvars)](https://goreportcard.com/report/github.com/flemay/envvars)
@@ -9,10 +9,6 @@
 # Envvars
 
 Envvars, a command line tool written in Go, provides a way to describe the environment variables of a project and ensures they are defined before testing, building, and deploying. It also generates an env file to be used by other applications such as Docker and Compose.
-
-## 3 Musketeers
-
-Envvars fits nicely with the [3 Musketeers](https://github.com/flemay/3musketeers) for managing the environment variables used by an application.
 
 ## Declaration File
 
@@ -112,10 +108,14 @@ Envvars forces you to have `desc` for your environment variables and tags. This 
 
 Envvars will complain if a tag is declared but not being used by an environment variable. It will also throw an error if an environment variable uses a tag that is not declared. Lastly, it will not like it if a tag passed as parameter to a CLI command does not exist in the declaration file. All of this helps to prevent issues down the track.
 
+## The 3 Musketeers
+
+Envvars fits nicely with the [3 Musketeers](https://github.com/flemay/three-musketeers) for managing the environment variables used by an application.
+
 ## Feedback
 
 Feedback is greatly appreciated. Do you have workflows that the tool supports well, or doesn't support at all? Do any of the commands have surprising effects, output, or results? Let us know by filing an issue, describing what you did or wanted to do, what you expected to happen, and what actually happened.
 
 ## Contributing
 
-Contributions are greatly appreciated. See [CONTRIBUTING.md](https://github.com/flemay/envvars/blob/master/CONTRIBUTING.md) for more details.
+Contributions are greatly appreciated. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.

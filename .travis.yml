@@ -1,12 +1,6 @@
 sudo: required
-
 language: go
-
 services:
   - docker
-
 script:
   - make travis
-
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -f profile.out
