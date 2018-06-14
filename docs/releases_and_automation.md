@@ -1,10 +1,38 @@
 # Automation & Configuration
 
+## Releases
+
+Master is always releasable (unless tests are not passing).
+
+### Tag
+
+Any push of a tag will trigger Travis CI build which then call Docker Hub to build the tag image
+
+1. Update version in Makefile
+1. Update version in README.md
+1. Build the image locally `$ make dockerBuild`
+1. Test the image locally `$ make dockerTest`
+1. Commit the changes and push
+1. Run `$ make _tag`
+1. Go to [Travis CI](https://travis-ci.org/flemay/envvars) and you should see the build trigger
+1. Once the build passed go to [flemay/envvars](https://hub.docker.com/r/flemay/envvars) on Docker Hub
+1. In `Build Details` tab, you should now see the build kicking off
+
+### Monthly update
+
+There is a cron task in Travis CI to run the build which will trigger Docker Hub to rebuild all the images (latest and tags).
+
 ## Travis CI
 
 [![Build Status](https://travis-ci.org/flemay/envvars.svg?branch=master)](https://travis-ci.org/flemay/envvars)
 
-[Travis CI](https://travis-ci.org/flemay/envvars) is used to test envvars whenever a code change is committed to master. It uses the [3 Musketeer](https://github.com/flemay/three-musketeers).
+[Travis CI](https://travis-ci.org/flemay/envvars) tests envvars whenever a code change is committed to master. It uses the [3 Musketeer](https://github.com/flemay/three-musketeers).
+
+Once the test passed, Travis CI triggers a Docker Hub build for building a new image with the tag latest.
+
+1. Go to [Travis CI](https://travis-ci.org/flemay/envvars) and you should see the build trigger
+1. Once the build passed go to [flemay/envvars](https://hub.docker.com/r/flemay/envvars) on Docker Hub
+1. In `Build Details` tab, you should now see the build kicking off
 
 ## Docker Hub
 
