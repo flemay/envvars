@@ -112,10 +112,6 @@ Envvars will complain if a tag is declared but not being used by an environment 
 
 Envvars fits nicely with the [3 Musketeers](https://github.com/flemay/three-musketeers) for managing the environment variables used by an application.
 
-## Feedback
-
-Feedback is greatly appreciated. Do you have workflows that the tool supports well, or doesn't support at all? Do any of the commands have surprising effects, output, or results? Let us know by filing an issue, describing what you did or wanted to do, what you expected to happen, and what actually happened.
-
 ## Contributing
 
-Contributions are greatly appreciated. See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
+Contributions are greatly appreciated. Everyone can contribute and [here](CONTRIBUTING.md) are different ways.
