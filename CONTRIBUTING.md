@@ -2,7 +2,7 @@
 
 Envvars is an open source project and contributions are greatly appreciated.
 
-There are few ways to contribute to this project.
+There are different ways to contribute to this project.
 
 ## Star it
 
@@ -10,7 +10,7 @@ If you like the project, go on [GitHub](https://github.com/flemay/envvars) and â
 
 ## Share it
 
-If you think Envvars can benefit your friends, teammates, and company, share it!
+If you think the 3 Musketeers would be valuable to your friends, teammates, and company, share it!
 
 ## Feedback
 
