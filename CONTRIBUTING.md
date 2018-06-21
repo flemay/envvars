@@ -20,21 +20,16 @@ Feedback is greatly appreciated. Do you have workflows that the tool supports we
 
 The project follows the typical GitHub pull request model. Before starting any work, please either comment on an existing issue, or file a new one.
 
-> Any change must be releasable.
-
-### 1. Fork
-
-[Fork Envvars](https://github.com/flemay/envvars/fork) on GitHub so that you can commit your changes and create a Pull Request.
-
-### 2. Development
-
-envvars development uses the [3 Musketeers pattern](https://github.com/flemay/three-musketeers) which requires Docker, Compose, and Make.
+envvars development uses the [3 Musketeers pattern](https://github.com/flemay/three-musketeers) which requires Docker, Compose, and Make. Any change must be releasable.
 
 ```bash
-# clone the fork locally
-$ git clone git@github.com:username/envvars.git
-$ cd envvars
-# checkout a new branch
+# fork https://github.com/flemay/envvars -> github.com/my-id/project
+# get the project
+$ go get github.com/flemay/envvars
+# go inside the repo
+$ cd $GOPATH/src/github.com/flemay/envvars && git remote add fork git@github.com:my-id/project.git
+
+# checkout a new branch if you do not want to work on master(optional)
 $ git checkout -b meaningful_branch_name
 
 # download all the dependencies
@@ -49,12 +44,14 @@ $ make build
 $ make run
 
 # push your changes
-$ git push origin meaningful_branch_name
+$ git push fork master
+# or your branch
+$ git push fork meaningful_branch_name
+
+# create pull request https://help.github.com/articles/creating-a-pull-request/
 ```
 
-### 3. Create a Pull Request
-
-Happy with all your precious changes? Create a [Pull Request](https://help.github.com/articles/creating-a-pull-request/)!
+> Steps from [Francesc's tweet](https://mobile.twitter.com/francesc/status/1009487969198075905)
 
 ### Mocks
 
