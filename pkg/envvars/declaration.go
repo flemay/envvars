@@ -1,5 +1,15 @@
 package envvars
 
+// DeclarationReader is a reader interface to get a Declaration object
+type DeclarationReader interface {
+	Read() (*Declaration, error)
+}
+
+// DeclarationWriter is a writer interface to write a Declaration object
+type DeclarationWriter interface {
+	Write(d *Declaration, overwrite bool) error
+}
+
 // Declaration describes the environment variables.
 type Declaration struct {
 	Tags    TagCollection

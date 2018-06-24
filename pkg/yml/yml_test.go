@@ -7,12 +7,12 @@ import (
 	"testing"
 )
 
-func TestNewDeclaration_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) {
+func TestDeclarationYML_Read_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) {
 	// given
-	declarationFilePath := "testdata/envvars.yml"
+	declarationYML := yml.NewDeclarationYML("testdata/envvars.yml")
 
 	// when
-	d, err := yml.NewDeclaration(declarationFilePath)
+	d, err := declarationYML.Read()
 
 	// then
 	assert.NoError(t, err)
@@ -40,12 +40,13 @@ func TestNewDeclaration_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) 
 
 	assert.EqualValues(t, expectedEnvvars, d.Envvars)
 }
-func TestNewDeclaration_toReturnErrorIfMalformatedDeclarationFile(t *testing.T) {
+func TestDeclarationYML_Read_toReturnErrorIfMalformatedDeclarationFile(t *testing.T) {
 	// given
 	declarationFilePath := "testdata/envvars_malformated.yml"
+	declarationYML := yml.NewDeclarationYML(declarationFilePath)
 
 	// when
-	d, err := yml.NewDeclaration(declarationFilePath)
+	d, err := declarationYML.Read()
 
 	// then
 	assert.Error(t, err)
@@ -53,12 +54,13 @@ func TestNewDeclaration_toReturnErrorIfMalformatedDeclarationFile(t *testing.T) 
 	assert.Contains(t, err.Error(), "error occurred when parsing the file "+declarationFilePath)
 }
 
-func TestNewDeclaration_toReturnErrorIfFileNotFound(t *testing.T) {
+func TestDeclarationYML_Read_toReturnErrorIfFileNotFound(t *testing.T) {
 	// given
 	noSuchFilePath := "nosuchfile.yml"
+	declarationYML := yml.NewDeclarationYML(noSuchFilePath)
 
 	// when
-	d, err := yml.NewDeclaration(noSuchFilePath)
+	d, err := declarationYML.Read()
 
 	// then
 	assert.Error(t, err)
