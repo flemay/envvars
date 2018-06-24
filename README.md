@@ -12,7 +12,7 @@ Envvars, a command line tool written in Go, provides a way to describe the envir
 
 ## Current state
 
-Envvars is in its early stage and its API is not stable. The release of envvars 1.0.0 will be production ready.
+Envvars is in its early stage and its API is not stable. Envvars will be production ready when it reaches `v1.0.0`.
 
 You are encouraged to try envvars, [share your feedback and contribute to it](CONTRIBUTING.md).
 
