@@ -34,5 +34,9 @@ func (declarationYML *DeclarationYML) Read() (*envvars.Declaration, error) {
 // Write writes a Declaration object to a yml file.
 // Returns error if the file already exists unless overwrite is true
 func (declarationYML *DeclarationYML) Write(d *envvars.Declaration, overwrite bool) error {
-	return nil
+	data, err := yaml.Marshal(d)
+	if err != nil {
+		return err
+	}
+	return ioutil.WriteFile(declarationYML.filename, data, 0644)
 }
