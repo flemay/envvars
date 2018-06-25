@@ -7,8 +7,8 @@ type EnvfileWriter interface {
 
 // Envfile generates an env file that can be overwritten.
 // It returns an error if the file already exists unless overwrite is true
-func Envfile(d *Declaration, writer EnvfileWriter, tags ...string) error {
-	c, err := List(d, tags...)
+func Envfile(reader DeclarationReader, writer EnvfileWriter, tags ...string) error {
+	c, err := List(reader, tags...)
 	if err != nil {
 		return err
 	}

@@ -16,9 +16,10 @@ func TestEnvfile_toImplementEnvfileWriterInterface(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	reader := yml.NewDeclarationYML("testdata/envvars.yml")
 	name := "testdata/envfile.tmp"
 	writer := envfile.NewEnvfile(name, false, false)
+	d, _ := reader.Read()
 
 	// when
 	err := writer.Write(d.Envvars)
@@ -33,9 +34,10 @@ func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
 
 func TestEnvfile_toGenerateFileWithExampleIfItDoesNotExist(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	reader := yml.NewDeclarationYML("testdata/envvars.yml")
 	name := "testdata/envfile.tmp"
 	writer := envfile.NewEnvfile(name, true, false)
+	d, _ := reader.Read()
 
 	// when
 	err := writer.Write(d.Envvars)
@@ -50,10 +52,11 @@ func TestEnvfile_toGenerateFileWithExampleIfItDoesNotExist(t *testing.T) {
 
 func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	reader := yml.NewDeclarationYML("testdata/envvars.yml")
 	name := "testdata/envfile.tmp"
 	createEmptyFile(t, name)
 	writer := envfile.NewEnvfile(name, false, true)
+	d, _ := reader.Read()
 
 	// when
 	err := writer.Write(d.Envvars)
@@ -68,10 +71,11 @@ func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	reader := yml.NewDeclarationYML("testdata/envvars.yml")
 	name := "testdata/envfile.tmp"
 	createEmptyFile(t, name)
 	writer := envfile.NewEnvfile(name, false, false)
+	d, _ := reader.Read()
 
 	// when
 	err := writer.Write(d.Envvars)
@@ -84,10 +88,11 @@ func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
 
 func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envvars.yml")
+	reader := yml.NewDeclarationYML("testdata/envvars.yml")
 	name := "testdata/tmp"
 	createDir(t, name)
 	writer := envfile.NewEnvfile(name, false, true)
+	d, _ := reader.Read()
 
 	// when
 	err := writer.Write(d.Envvars)

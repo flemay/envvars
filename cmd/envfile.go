@@ -16,17 +16,14 @@ var envfileCmd = &cobra.Command{
 	Use:   "envfile",
 	Short: "Generate an env file based on the declaration file",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		d, err := yml.NewDeclaration(declarationFileRootFlag)
-		if err != nil {
-			return err
-		}
+		reader := yml.NewDeclarationYML(declarationFileRootFlag)
 
 		if removeEnvfile {
 			return envfile.Remove(envfileName)
 		}
 
 		writer := envfile.NewEnvfile(envfileName, example, overwriteEnvfile)
-		return envvars.Envfile(d, writer, tagsRootFlag...)
+		return envvars.Envfile(reader, writer, tagsRootFlag...)
 	},
 }
 

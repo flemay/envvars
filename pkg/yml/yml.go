@@ -36,17 +36,3 @@ func (declarationYML *DeclarationYML) Read() (*envvars.Declaration, error) {
 func (declarationYML *DeclarationYML) Write(d *envvars.Declaration, overwrite bool) error {
 	return nil
 }
-
-// NewDeclaration returns a Declaration from a yml file
-func NewDeclaration(filename string) (*envvars.Declaration, error) {
-	data, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, fmt.Errorf("error occurred when reading the file %s: %s", filename, err.Error())
-	}
-
-	var d envvars.Declaration
-	if err := yaml.Unmarshal(data, &d); err != nil {
-		return nil, fmt.Errorf("error occurred when parsing the file %s: %s", filename, err.Error())
-	}
-	return &d, nil
-}

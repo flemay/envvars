@@ -13,11 +13,8 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Display the declaration of each environment variable",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		d, err := yml.NewDeclaration(declarationFileRootFlag)
-		if err != nil {
-			return err
-		}
-		c, err := envvars.List(d, tagsRootFlag...)
+		reader := yml.NewDeclarationYML(declarationFileRootFlag)
+		c, err := envvars.List(reader, tagsRootFlag...)
 		if err != nil {
 			return err
 		}

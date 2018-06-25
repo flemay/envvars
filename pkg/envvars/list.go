@@ -2,7 +2,11 @@ package envvars
 
 // List returns a list of Envvar matching the tags or all if no tags is provided.
 // Returns error if any tag is not matching an Envvar.
-func List(d *Declaration, tags ...string) (EnvvarCollection, error) {
+func List(reader DeclarationReader, tags ...string) (EnvvarCollection, error) {
+	d, err := reader.Read()
+	if err != nil {
+		return nil, err
+	}
 	if err := validateDeclarationAndTagNameList(d, tags...); err != nil {
 		return nil, err
 	}

@@ -7,7 +7,11 @@ import (
 )
 
 // Validate ensures the Declaration is without any error.
-func Validate(d *Declaration) error {
+func Validate(reader DeclarationReader) error {
+	d, err := reader.Read()
+	if err != nil {
+		return err
+	}
 	return validateDeclarationAndTagNameList(d)
 }
 
