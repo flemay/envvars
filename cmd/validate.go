@@ -11,11 +11,8 @@ var validateCmd = &cobra.Command{
 	Short: "Check if the declaration file contains any error",
 	Long:  "The flag tags has no effect with this command",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		d, err := yml.NewDeclaration(declarationFileRootFlag)
-		if err != nil {
-			return err
-		}
-		return envvars.Validate(d)
+		reader := yml.NewDeclarationYML(declarationFileRootFlag)
+		return envvars.Validate(reader)
 	},
 }
 

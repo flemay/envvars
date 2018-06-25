@@ -11,11 +11,11 @@ import (
 
 func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/declaration_file_invalid.yml")
+	reader := yml.NewDeclarationYML("testdata/declaration_file_invalid.yml")
 	invalidList := givenInvalidTagNameList()
 	mockWriter := new(mocks.EnvfileWriter)
 	// when
-	err := envvars.Envfile(d, mockWriter, invalidList...)
+	err := envvars.Envfile(reader, mockWriter, invalidList...)
 
 	// then
 	expectedErrorMsg := readFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
@@ -24,27 +24,29 @@ func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 
 func TestEnvfile_toWriteEnvfile(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
+	reader := yml.NewDeclarationYML("testdata/envfile_declaration_file.yml")
 	mockWriter := new(mocks.EnvfileWriter)
 	mockWriter.On("Write", mock.Anything).Return(nil)
 
 	// when
-	err := envvars.Envfile(d, mockWriter)
+	err := envvars.Envfile(reader, mockWriter)
 
 	// then
 	assert.NoError(t, err)
+	d, _ := reader.Read()
 	mockWriter.AssertCalled(t, "Write", d.Envvars)
 }
 func TestEnvfile_toWriteEnvfileWithOnlySpecifiedTags(t *testing.T) {
 	// given
-	d, _ := yml.NewDeclaration("testdata/envfile_declaration_file.yml")
+	reader := yml.NewDeclarationYML("testdata/envfile_declaration_file.yml")
 	mockWriter := new(mocks.EnvfileWriter)
 	mockWriter.On("Write", mock.Anything).Return(nil)
 
 	// when
-	err := envvars.Envfile(d, mockWriter, "tag1")
+	err := envvars.Envfile(reader, mockWriter, "tag1")
 
 	// then
+	d, _ := reader.Read()
 	assert.NoError(t, err)
 	mockWriter.AssertCalled(t, "Write", d.Envvars.WithTag("tag1"))
 }
