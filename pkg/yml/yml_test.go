@@ -77,15 +77,61 @@ func TestDeclarationYML_Write_toWriteDeclarationInYMLFile(t *testing.T) {
 	d := &envvars.Declaration{
 		Envvars: []*envvars.Envvar{
 			&envvars.Envvar{
-				Name:     "ENVVAR_1",
-				Desc:     "desc of ENVVAR_1",
-				Optional: true,
+				Name: "ENVVAR_1",
+				Desc: "desc of ENVVAR_1",
 			},
 		},
 	}
 
 	// when
 	err := writer.Write(d, false)
+
+	// then
+	assert.NoError(t, err)
+	expectedFile := readFile(t, "testdata/envvars.yml.golden")
+	actualFile := readFile(t, filename)
+	assert.Equal(t, expectedFile, actualFile)
+	removeFileOrDir(t, filename)
+}
+
+func TestDeclarationYML_Write_toReturnErrorIfFileExists(t *testing.T) {
+	// given
+	filename := "testdata/envvars.yml.tmp"
+	writer := yml.NewDeclarationYML(filename)
+	d := &envvars.Declaration{
+		Envvars: []*envvars.Envvar{
+			&envvars.Envvar{
+				Name: "ENVVAR_1",
+				Desc: "desc of ENVVAR_1",
+			},
+		},
+	}
+	writer.Write(d, false)
+
+	// when
+	err := writer.Write(d, false)
+
+	// then
+	assert.EqualError(t, err, "open testdata/envvars.yml.tmp: file exists")
+	removeFileOrDir(t, filename)
+}
+
+func TestDeclarationYML_Write_toOverwriteExistingFile(t *testing.T) {
+	// given
+	filename := "testdata/envvars.yml.tmp"
+	writer := yml.NewDeclarationYML(filename)
+	d := &envvars.Declaration{
+		Envvars: []*envvars.Envvar{
+			&envvars.Envvar{
+				Name: "ENVVAR_1",
+				Desc: "desc of ENVVAR_1",
+			},
+		},
+	}
+	writer.Write(d, false)
+
+	// when
+	err := writer.Write(d, true)
 
 	// then
 	assert.NoError(t, err)

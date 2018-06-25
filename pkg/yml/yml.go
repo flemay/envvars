@@ -5,6 +5,7 @@ import (
 	"github.com/flemay/envvars/pkg/envvars"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"os"
 )
 
 // DeclarationYML handles read/write of a Declaration YML file
@@ -38,5 +39,15 @@ func (declarationYML *DeclarationYML) Write(d *envvars.Declaration, overwrite bo
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(declarationYML.filename, data, 0644)
+	flag := os.O_CREATE | os.O_WRONLY
+	if !overwrite {
+		flag |= os.O_EXCL
+	}
+	file, err := os.OpenFile(declarationYML.filename, flag, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	_, err = file.Write(data)
+	return err
 }
