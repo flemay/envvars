@@ -1,0 +1,3 @@
+envvars:
+- name: ENVVAR_1
+  desc: desc of ENVVAR_1

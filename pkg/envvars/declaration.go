@@ -12,7 +12,7 @@ type DeclarationWriter interface {
 
 // Declaration describes the environment variables.
 type Declaration struct {
-	Tags    TagCollection
+	Tags    TagCollection `yaml:",omitempty"`
 	Envvars EnvvarCollection
 }
 
@@ -20,9 +20,9 @@ type Declaration struct {
 type Envvar struct {
 	Name     string
 	Desc     string
-	Tags     []string
-	Optional bool
-	Example  string
+	Tags     []string `yaml:",omitempty"`
+	Optional bool     `yaml:",omitempty"`
+	Example  string   `yaml:",omitempty"`
 }
 
 func (ev *Envvar) HasTag(name string) bool {
