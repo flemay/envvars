@@ -65,7 +65,8 @@ $ docker run --rm flemay/envvars
 # envvars:
 #   - name: ECHO
 #     desc: env var ECHO
-$ printf "envvars:\n  - name: ECHO\n    desc: env var ECHO\n" > envvars.yml
+#     example: Hello World
+$ envvars init
 
 # validate the declaration file if it contains errors
 $ envvars validate
@@ -85,13 +86,6 @@ $ envvars ensure
 $ envvars envfile
 $ cat .env
 # ECHO
-
-# create a declaration file with example value
-# envvars:
-#   - name: ECHO
-#     desc: env var ECHO
-#     example: Hello World
-$ printf "envvars:\n  - name: ECHO\n    desc: env var ECHO\n    example: Hello World\n" > envvars.yml
 
 # create an env file with the example value
 $ envvars envfile -overwrite -example
