@@ -13,8 +13,9 @@ func TestInit_toCreateDeclarationFile(t *testing.T) {
 	expectedDeclaration := &envvars.Declaration{
 		Envvars: envvars.EnvvarCollection{
 			&envvars.Envvar{
-				Name: "ECHO",
-				Desc: "Description of ECHO",
+				Name:    "ECHO",
+				Desc:    "Description of ECHO",
+				Example: "Hello World",
 			},
 		},
 	}
@@ -34,8 +35,9 @@ func TestInit_toReturnErrorIfDeclarationExists(t *testing.T) {
 	expectedDeclaration := &envvars.Declaration{
 		Envvars: envvars.EnvvarCollection{
 			&envvars.Envvar{
-				Name: "ECHO",
-				Desc: "Description of ECHO",
+				Name:    "ECHO",
+				Desc:    "Description of ECHO",
+				Example: "Hello World",
 			},
 		},
 	}
