@@ -6,8 +6,9 @@ func Init(writer DeclarationWriter) error {
 	d := &Declaration{
 		Envvars: EnvvarCollection{
 			&Envvar{
-				Name: "ECHO",
-				Desc: "Description of ECHO",
+				Name:    "ECHO",
+				Desc:    "Description of ECHO",
+				Example: "Hello World",
 			},
 		},
 	}
