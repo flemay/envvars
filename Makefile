@@ -1,4 +1,4 @@
-VERSION = 0.0.4
+VERSION = 0.0.5
 GIT_TAG = v$(VERSION)
 DOCKER_TAG = $(VERSION)
 IMAGE_NAME = flemay/envvars:$(VERSION)
