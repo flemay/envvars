@@ -1,6 +1,3 @@
 envvars:
   - name: ENVVAR_1
-    desc: desc of ENVVAR_1
-
   - name: ENVVAR_2
-    desc: desc of ENVVAR_2

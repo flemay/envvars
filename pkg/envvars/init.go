@@ -7,7 +7,6 @@ func Init(writer DeclarationWriter) error {
 		Envvars: EnvvarCollection{
 			&Envvar{
 				Name:    "ECHO",
-				Desc:    "Description of ECHO",
 				Example: "Hello World",
 			},
 		},
