@@ -40,10 +40,10 @@ envvars:
 |------------------|:--------------:|:--------:|------------------------------------------------------------------------------------------------------------------------------------|
 | tags             |      list      |    no    | List of tags to be used for targeting a subset of environment variables                                                            |
 | tags.name        |     string     |    yes   | Unique tag name                                                                                                                    |
-| tags.desc        |     string     |    no   | Meaningful description of the tag                                                                                                  |
+| tags.desc        |     string     |    no    | Meaningful description of the tag                                                                                                  |
 | envvars          |      list      |    yes   | List of environment variables                                                                                                      |
 | envvars.name     |     string     |    yes   | Unique environment variable name                                                                                                   |
-| envvars.desc     |     string     |    no   | Meaningful description of the environment variable                                                                                 |
+| envvars.desc     |     string     |    no    | Meaningful description of the environment variable                                                                                 |
 | envvars.tags     | list of string |    no    | List of tags for the environment variable. Each tag must be declared in the "tags" field.                                          |
 | envvars.optional |      bool      |    no    | Allows the environment variable to be empty or not defined. It is best to avoid it unless your application accepts an empty value. |
 | envvars.example  |     string     |    no    | Example value for the environment variable.                                                                                        |
