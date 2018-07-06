@@ -40,10 +40,10 @@ envvars:
 |------------------|:--------------:|:--------:|------------------------------------------------------------------------------------------------------------------------------------|
 | tags             |      list      |    no    | List of tags to be used for targeting a subset of environment variables                                                            |
 | tags.name        |     string     |    yes   | Unique tag name                                                                                                                    |
-| tags.desc        |     string     |    yes   | Meaningful description of the tag                                                                                                  |
+| tags.desc        |     string     |    no   | Meaningful description of the tag                                                                                                  |
 | envvars          |      list      |    yes   | List of environment variables                                                                                                      |
 | envvars.name     |     string     |    yes   | Unique environment variable name                                                                                                   |
-| envvars.desc     |     string     |    yes   | Meaningful description of the environment variable                                                                                 |
+| envvars.desc     |     string     |    no   | Meaningful description of the environment variable                                                                                 |
 | envvars.tags     | list of string |    no    | List of tags for the environment variable. Each tag must be declared in the "tags" field.                                          |
 | envvars.optional |      bool      |    no    | Allows the environment variable to be empty or not defined. It is best to avoid it unless your application accepts an empty value. |
 | envvars.example  |     string     |    no    | Example value for the environment variable.                                                                                        |
@@ -64,7 +64,6 @@ $ docker run --rm flemay/envvars
 # create a declaration file envvars.yml
 # envvars:
 #   - name: ECHO
-#     desc: env var ECHO
 #     example: Hello World
 $ envvars init
 
@@ -96,17 +95,11 @@ $ cat .env
 $ envvars --help
 ```
 
-## Principles
-
-Envvars has strict rules which follows some principles.
+## Guidelines
 
 ### Documentation is your best friend
 
-Envvars forces you to have `desc` for your environment variables and tags. This helps anyone new to the project, or juggling with many projects at once, to understand every environment variable, and tag, as long as its `desc` is meaningful.
-
-### You ain't gonna need it
-
-Envvars will complain if a tag is declared but not being used by an environment variable. It will also throw an error if an environment variable uses a tag that is not declared. Lastly, it will not like it if a tag passed as parameter to a CLI command does not exist in the declaration file. All of this helps to prevent issues down the track.
+The field `desc` should be used if the name of the tag or environment variable is not self-explanatory. This helps anyone new to the project, or juggling with many projects at once, to understand every environment variable, and tag.
 
 ## The 3 Musketeers
 

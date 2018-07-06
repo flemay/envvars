@@ -54,9 +54,6 @@ func validateEnvvar(ev *Envvar, tags TagCollection) error {
 	if ev.Name == "" {
 		errorAppender.AppendString("name cannot be blank")
 	}
-	if ev.Desc == "" {
-		errorAppender.AppendString("desc cannot be blank")
-	}
 	errorAppender.AppendError(validateTagNameList(ev.Tags, tags))
 
 	return errorAppender.Error()
@@ -73,9 +70,6 @@ func validateTag(t *Tag) error {
 	errorAppender := errorappender.NewErrorAppender("; ")
 	if t.Name == "" {
 		errorAppender.AppendString("name cannot be blank")
-	}
-	if t.Desc == "" {
-		errorAppender.AppendString("desc cannot be blank")
 	}
 	return errorAppender.Error()
 }

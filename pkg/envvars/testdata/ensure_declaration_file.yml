@@ -1,24 +1,13 @@
 tags:
   - name: tag1
-    desc: Desc of tag1
-
   - name: tag2
-    desc: Desc of tag2
-
 envvars:
   - name: ENVVAR_1
-    desc: desc of ENVVAR_1
     tags:
       - tag1
-
   - name: ENVVAR_2
-    desc: desc of ENVVAR_2
     tags:
       - tag2
-
   - name: ENVVAR_3
-    desc: desc of ENVVAR_3
-
   - name: OPTIONAL_ENVVAR
-    desc: desc of OPTIONAL_ENVVAR
     optional: true
