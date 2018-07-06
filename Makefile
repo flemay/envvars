@@ -13,7 +13,7 @@ COMPOSE_RUN_ENVVARS = docker-compose run --rm envvars
 # dockerBuild dockerTest are first because other tasks will need a .env and
 # this is required when testing a new version which does not exist yet in
 # Docker Hub.
-all: envfileExample dockerBuild dockerTest deps test build run clean
+all: dockerBuild dockerTest envfileExample deps test build run clean
 .PHONY: all
 
 # travis is used by Travis CI for its build.
