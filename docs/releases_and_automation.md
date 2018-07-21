@@ -26,7 +26,7 @@ There is a cron task in Travis CI to run the build which will trigger Docker Hub
 
 [![Build Status](https://travis-ci.org/flemay/envvars.svg?branch=master)](https://travis-ci.org/flemay/envvars)
 
-[Travis CI](https://travis-ci.org/flemay/envvars) tests envvars whenever a code change is committed to master. It uses the [3 Musketeer](https://github.com/flemay/three-musketeers).
+[Travis CI](https://travis-ci.org/flemay/envvars) tests envvars whenever a code change is committed to master. It uses the [3 Musketeer](https://github.com/flemay/3musketeers).
 
 Once the test passed, Travis CI triggers a Docker Hub build for building a new image with the tag latest.
 

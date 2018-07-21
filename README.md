@@ -103,7 +103,7 @@ The field `desc` should be used if the name of the tag or environment variable i
 
 ## The 3 Musketeers
 
-Envvars fits nicely with the [3 Musketeers](https://github.com/flemay/three-musketeers) for managing the environment variables used by an application.
+Envvars fits nicely with the [3 Musketeers](https://github.com/flemay/3musketeers) for managing the environment variables used by an application.
 
 ## Contributing
 

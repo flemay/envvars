@@ -20,7 +20,7 @@ Feedback is greatly appreciated. Do you have workflows that the tool supports we
 
 The project follows the typical GitHub pull request model. Before starting any work, please either comment on an existing issue, or file a new one.
 
-envvars development uses the [3 Musketeers pattern](https://github.com/flemay/three-musketeers) which requires Docker, Compose, and Make. Any change must be releasable.
+envvars development uses the [3 Musketeers pattern](https://github.com/flemay/3musketeers) which requires Docker, Compose, and Make. Any change must be releasable.
 
 ```bash
 # fork https://github.com/flemay/envvars -> github.com/my-id/project
