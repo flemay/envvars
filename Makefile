@@ -80,7 +80,7 @@ testDockerImage:
 	docker run --rm $(IMAGE_NAME) version
 
 pushDockerImage:
-	./scripts/push.sh
+	IMAGE_NAME=$(IMAGE_NAME) ./scripts/push.sh
 
 removeDockerImage:
 	docker rmi -f $(IMAGE_NAME)
