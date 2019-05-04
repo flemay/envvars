@@ -11,7 +11,7 @@ ENVFILE ?= env.template
 all:
 	ENVFILE=env.example $(MAKE) envfile deps test build run buildDockerImage testDockerImage clean
 
-travis:
+_travis:
 	GIT_TAG=$(GIT_TAG) ./scripts/travis.sh
 
 onPullRequest: all
