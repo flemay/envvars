@@ -1,8 +1,14 @@
 version: '3.4'
 services:
   golang:
-    image: flemay/golang:1-stretch
+    image: golang:1-stretch
     env_file: .env
+    environment:
+      # Use go modules and vendor
+      # https://github.com/golang/go/wiki/Modules#how-do-i-use-vendoring-with-modules-is-vendoring-going-away
+      GO111MODULE: "on"
+      GOFLAGS: "-mod=vendor"
+      IS_SCRATCH_IMAGE: "true"
     volumes:
       - .:/go/src/github.com/flemay/envvars
     working_dir: /go/src/github.com/flemay/envvars
