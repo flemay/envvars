@@ -3,4 +3,4 @@ language: generic
 services:
   - docker
 script:
-  - make travis
+  - make _travis
