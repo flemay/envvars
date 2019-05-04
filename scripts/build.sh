@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+set -e
+set -u
+
 if [ -z ${VERSION+x} ]; then echo "VERSION is not set"; exit 1; fi
 
 COMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null)
