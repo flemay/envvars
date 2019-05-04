@@ -16,7 +16,7 @@ if [ ! -z "${TRAVIS_TAG}" ]; then
     echo "Error: TRAVIS_TAG '${TRAVIS_TAG}' differs from GIT_TAG '${GIT_TAG}'"
     exit 1
   fi
-elif [ ! -z "${TRAVIS_PULL_REQUEST}" ]; then
+elif [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
   echo "Triggered on Pull Request: ${TRAVIS_PULL_REQUEST}"
   make onPullRequest
 elif [ "${TRAVIS_BRANCH}" = "master" ]; then
