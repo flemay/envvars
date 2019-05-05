@@ -121,7 +121,7 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 [link3Musketeers]: https://3musketeers.io
 [linkTravisCIProjectBadge]: https://travis-ci.org/flemay/envvars.svg?branch=master
 [linkTravisCIProject]: https://travis-ci.org/flemay/envvars
-[linkDockerHubProjectBadge]: https://img.shields.io/badge/dockerhub-builds-blue.svg
+[linkDockerHubProjectBadge]: https://img.shields.io/badge/repository-dockerhub-blue.svg
 [linkDockerHubProject]: https://hub.docker.com/r/flemay/envvars
 [linkDockerHub]: https://hub.docker.com
 [linkCodecovProjectBadge]: https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg
