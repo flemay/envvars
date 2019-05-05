@@ -1,24 +1,27 @@
-<p align="center"><img src="docs/envvars_gopher.png" width="260"></p>
+<p align="center"><img src="./docs/envvars_gopher.png" width="260"></p>
 
-[![Build Status](https://travis-ci.org/flemay/envvars.svg?branch=master)](https://travis-ci.org/flemay/envvars)
-[![Go Report Card](https://goreportcard.com/badge/github.com/flemay/envvars)](https://goreportcard.com/report/github.com/flemay/envvars)
-[![codecov](https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg)](https://codecov.io/gh/flemay/envvars)
-[![Docker Build Status](https://img.shields.io/docker/build/flemay/envvars.svg)](https://hub.docker.com/r/flemay/envvars)
-[![License](https://img.shields.io/dub/l/vibe-d.svg)](LICENSE)
+[![Build Status][linkTravisCIProjectBadge]][linkTravisCIProject]
+[![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
+[![codecov][linkCodecovProjectBadge]][linkCodecovProject]
+[![GitHub Tag][linkGitHubProjectBadge]][linkGitHubProject]
+[![Docker Hub][linkDockerHubProjectBadge]][linkDockerHubProject]
+[![License][linkLicenseBadge]][linkLicense]
 
 # Envvars
 
 Envvars, a command line tool written in Go, provides a way to describe the environment variables of a project and ensures they are defined before testing, building, and deploying. It also generates an env file to be used by other applications such as Docker and Compose.
 
-## Current state
+## Releases and current state
 
 Envvars is in its early stage and its API is not stable. Envvars will be production ready when it reaches `v1.0.0`.
 
-You are encouraged to try envvars, [share your feedback and contribute to it](CONTRIBUTING.md).
+You are encouraged to try envvars, [share your feedback and contribute to it][linkContributing].
+
+More information can be found [here][linkReleasesAndAutomation].
 
 ## Declaration File
 
-The declaration file (written in [YAML](http://yaml.org/spec/1.2/spec.html)) is the core of Envvars. It declares all the environment variables used by a project.
+The declaration file (written in [YAML][linkYAML]) is the core of Envvars. It declares all the environment variables used by a project.
 
 Envvars is looking for the declaration file `envvars.yml` by default. A different file can be passed with the flag `-f path/to/declarationfile.yml`.
 
@@ -103,8 +106,28 @@ The field `desc` should be used if the name of the tag or environment variable i
 
 ## The 3 Musketeers
 
-Envvars fits nicely with the [3 Musketeers](https://github.com/flemay/3musketeers) for managing the environment variables used by an application.
+Envvars fits nicely with the [3 Musketeers][link3Musketeers] for managing the environment variables used by an application.
 
 ## Contributing
 
-Contributions are greatly appreciated. Everyone can contribute and [here](CONTRIBUTING.md) are different ways.
+Contributions are greatly appreciated. Everyone can contribute and [here][linkContributing] are different ways.
+
+
+[linkReleasesAndAutomation]: ./docs/releases_and_automation.md
+[linkLicense]: LICENSE
+[linkContributing]: CONTRIBUTING.md
+
+[linkYAML]: http://yaml.org/spec/1.2/spec.html
+[link3Musketeers]: https://3musketeers.io
+[linkTravisCIProjectBadge]: https://travis-ci.org/flemay/envvars.svg?branch=master
+[linkTravisCIProject]: https://travis-ci.org/flemay/envvars
+[linkDockerHubProjectBadge]: https://img.shields.io/badge/dockerhub-builds-blue.svg
+[linkDockerHubProject]: https://hub.docker.com/r/flemay/envvars
+[linkDockerHub]: https://hub.docker.com
+[linkCodecovProjectBadge]: https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg
+[linkCodecovProject]: https://codecov.io/gh/flemay/envvars
+[linkGoReportCardProjectBadge]: https://goreportcard.com/badge/github.com/flemay/envvars
+[linkGoReportCardProject]: https://goreportcard.com/report/github.com/flemay/envvars
+[linkLicenseBadge]: https://img.shields.io/dub/l/vibe-d.svg
+[linkGitHubProjectBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
+[linkGitHubProject]: https://github.com/flemay/envvars
