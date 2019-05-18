@@ -63,6 +63,11 @@ _clean:
 	rm -fr bin vendor
 
 _tag:
+	git tag $(GIT_TAG)
+	git push origin $(GIT_TAG)
+
+# this is to be used with caution
+_overwriteTag:
 	-git tag -d $(GIT_TAG)
 	-git push origin :refs/tags/$(GIT_TAG)
 	git tag $(GIT_TAG)
