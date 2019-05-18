@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"errors"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -18,8 +19,9 @@ Usage examples
   ensure the environment variables comply with the declaration file
     $ envvars ensure`,
 	SilenceUsage: true,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		cmd.Help()
+		return errors.New("A command needs to be provided to envvars")
 	},
 }
 
