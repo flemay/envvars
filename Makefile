@@ -76,7 +76,7 @@ buildDockerImage:
 	docker build --no-cache -t $(IMAGE_NAME) .
 
 testDockerImage:
-	docker run --rm $(IMAGE_NAME)
+	docker run --rm $(IMAGE_NAME) --help
 	docker run --rm $(IMAGE_NAME) version
 
 pushDockerImage:
