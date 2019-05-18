@@ -46,7 +46,7 @@ run: $(EXECUTABLE)
 	$(COMPOSE_RUN_GOLANG) make _run
 
 _run:
-	./$(EXECUTABLE)
+	./$(EXECUTABLE) --help
 
 shell:
 	$(COMPOSE_RUN_GOLANG) bash
