@@ -5,6 +5,7 @@
 [![codecov][linkCodecovProjectBadge]][linkCodecovProject]
 [![GitHub Tag][linkGitHubProjectBadge]][linkGitHubProject]
 [![Docker Hub][linkDockerHubProjectBadge]][linkDockerHubProject]
+[![Docker Hub Pulls Badge][LinkDockerHubProjectPullsBadge]][linkDockerHubProject]
 [![License][linkLicenseBadge]][linkLicense]
 
 # Envvars
@@ -123,6 +124,7 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 [linkTravisCIProject]: https://travis-ci.org/flemay/envvars
 [linkDockerHubProjectBadge]: https://img.shields.io/badge/repository-dockerhub-blue.svg
 [linkDockerHubProject]: https://hub.docker.com/r/flemay/envvars
+[LinkDockerHubProjectPullsBadge]: https://img.shields.io/docker/pulls/flemay/envvars
 [linkDockerHub]: https://hub.docker.com
 [linkCodecovProjectBadge]: https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg
 [linkCodecovProject]: https://codecov.io/gh/flemay/envvars
