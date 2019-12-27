@@ -18,7 +18,7 @@ Any push of a tag will trigger Travis CI build which then tests, builds, and pus
 1. Update version in README.md
 1. Test everything `$ make`
 1. Commit the changes and push
-1. Run `$ make _tag`
+1. Run `$ make tag`
 1. Go to [Travis CI][linkTravisCIProject] and you should see the build trigger
 1. Once the build passed go to [flemay/envvars][linkDockerHubProject] on Docker Hub
 1. In `Build Details` tab, you should now see the new Docker image version

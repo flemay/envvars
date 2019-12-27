@@ -2,9 +2,6 @@ VERSION ?= 0.0.6
 GIT_TAG = v$(VERSION)
 DOCKER_TAG = $(VERSION)
 IMAGE_NAME = flemay/envvars:$(VERSION)
-GOLANG_DEPS_DIR = vendor
-EXECUTABLE = bin/envvars
-PROFILE_NAME = profile.out
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 ENVFILE ?= env.template
 
@@ -24,58 +21,23 @@ envfile:
 	cp -f $(ENVFILE) .env
 
 deps:
-	$(COMPOSE_RUN_GOLANG) make _deps
+	docker-compose pull
+	$(COMPOSE_RUN_GOLANG) ./scripts/deps.sh
 
-_deps:
-	go mod download
-	go mod vendor
+mock:
+	$(COMPOSE_RUN_GOLANG) ./scripts/mock.sh
 
-test: $(GOLANG_DEPS_DIR)
-	$(COMPOSE_RUN_GOLANG) make _test
-
-_test:
-	go test -coverprofile=$(PROFILE_NAME) ./...
-
-build: $(GOLANG_DEPS_DIR)
-	$(COMPOSE_RUN_GOLANG) make _build
-
-_build:
-	VERSION=$(VERSION) ./scripts/build.sh
-
-run: $(EXECUTABLE)
-	$(COMPOSE_RUN_GOLANG) make _run
-
-_run:
-	./$(EXECUTABLE) --help
-
-shell:
-	$(COMPOSE_RUN_GOLANG) bash
+test:
+	$(COMPOSE_RUN_GOLANG) ./scripts/test.sh
 
 sendCoverage: $(PROFILE_NAME)
-	$(COMPOSE_RUN_GOLANG) bash -c 'bash <(curl -s https://codecov.io/bash) -f $(PROFILE_NAME)'
+	$(COMPOSE_RUN_GOLANG) ./scripts/coverage.sh
 
-clean:
-	$(COMPOSE_RUN_GOLANG) make _clean
-	docker-compose down --remove-orphans
-	-$(MAKE) removeDockerImage
+build:
+	$(COMPOSE_RUN_GOLANG) bash -c 'VERSION=$(VERSION) ./scripts/build.sh'
 
-_clean:
-	rm -fr bin vendor
-
-_tag:
-	git tag $(GIT_TAG)
-	git push origin $(GIT_TAG)
-
-# this is to be used with caution
-_overwriteTag:
-	-git tag -d $(GIT_TAG)
-	-git push origin :refs/tags/$(GIT_TAG)
-	git tag $(GIT_TAG)
-	git push origin $(GIT_TAG)
-
-################
-# DOCKER IMAGE #
-################
+run:
+	$(COMPOSE_RUN_GOLANG) ./scripts/run.sh
 
 buildDockerImage:
 	docker build --no-cache -t $(IMAGE_NAME) .
@@ -90,13 +52,22 @@ pushDockerImage:
 removeDockerImage:
 	docker rmi -f $(IMAGE_NAME)
 
-###########
-# MOCKERY #
-###########
+tag:
+	git tag $(GIT_TAG)
+	git push origin $(GIT_TAG)
 
-mock: $(GOLANG_DEPS_DIR)
-	$(COMPOSE_RUN_GOLANG) make _mock
+# this is to be used with caution
+overwriteTag:
+	-git tag -d $(GIT_TAG)
+	-git push origin :refs/tags/$(GIT_TAG)
+	git tag $(GIT_TAG)
+	git push origin $(GIT_TAG)
 
-_mock:
-	go get -u github.com/vektra/mockery/.../
-	mockery -dir=pkg -all -case=underscore -output=pkg/mocks
+clean:
+	$(COMPOSE_RUN_GOLANG) ./scripts/clean.sh
+	docker-compose down --remove-orphans
+	-$(MAKE) removeDockerImage
+	rm -f .env
+
+shell:
+	$(COMPOSE_RUN_GOLANG) bash
