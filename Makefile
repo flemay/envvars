@@ -8,11 +8,9 @@ ENVFILE ?= env.template
 all:
 	ENVFILE=env.example $(MAKE) envfile deps test build run buildDockerImage clean
 
-onPullRequest: all
+ciTest: envfile deps test sendCoverage build run buildDockerImage clean
 
-onMasterChange: envfile deps test sendCoverage build run buildDockerImage clean
-
-onGitTag: envfile deps test build run buildDockerImage pushDockerImage clean
+ciRelease: envfile deps test build run buildDockerImage pushDockerImage clean
 
 envfile:
 	cp -f $(ENVFILE) .env
