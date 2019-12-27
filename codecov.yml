@@ -1,4 +1,6 @@
 codecov:
+  ci:
+    - github.com
   require_ci_to_pass: yes
 
 coverage:
