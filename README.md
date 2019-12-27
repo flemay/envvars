@@ -1,9 +1,10 @@
 <p align="center"><img src="./docs/envvars_gopher.png" width="260"></p>
 
-[![Build Status][linkGitHubActionsProjectBadge]][linkGitHubActionsProject]
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
 [![codecov][linkCodecovProjectBadge]][linkCodecovProject]
-[![GitHub Tag][linkGitHubProjectBadge]][linkGitHubProject]
+[![GitHub Tag][linkGitHubProjectTagBadge]][linkGitHubProject]
+[![Build Status][linkGitHubActionsProjectTestBadge]][linkGitHubActionsProject]
+[![Build Status][linkGitHubActionsProjectReleaseBadge]][linkGitHubActionsProject]
 [![Docker Hub][linkDockerHubProjectBadge]][linkDockerHubProject]
 [![Docker Hub Pulls Badge][LinkDockerHubProjectPullsBadge]][linkDockerHubProject]
 [![License][linkLicenseBadge]][linkLicense]
@@ -120,7 +121,8 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 
 [linkYAML]: http://yaml.org/spec/1.2/spec.html
 [link3Musketeers]: https://3musketeers.io
-[linkGitHubActionsProjectBadge]: https://github.com/flemay/envvars/workflows/Deploy/badge.svg
+[linkGitHubActionsProjectTestBadge]: https://github.com/flemay/envvars/workflows/Test/badge.svg
+[linkGitHubActionsProjectReleaseBadge]: https://github.com/flemay/envvars/workflows/Release/badge.svg
 [linkGitHubActionsProject]: https://github.com/flemay/envvars/actions
 [linkDockerHubProjectBadge]: https://img.shields.io/badge/repository-dockerhub-blue.svg
 [linkDockerHubProject]: https://hub.docker.com/r/flemay/envvars
@@ -131,5 +133,5 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 [linkGoReportCardProjectBadge]: https://goreportcard.com/badge/github.com/flemay/envvars
 [linkGoReportCardProject]: https://goreportcard.com/report/github.com/flemay/envvars
 [linkLicenseBadge]: https://img.shields.io/dub/l/vibe-d.svg
-[linkGitHubProjectBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
+[linkGitHubProjectTagBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
 [linkGitHubProject]: https://github.com/flemay/envvars
