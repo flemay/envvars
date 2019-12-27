@@ -2,7 +2,8 @@
 
 ## GitHub Actions
 
-[![Build Status][linkGitHubActionsProjectBadge]][linkGitHubActionsProject]
+[![Build Status][linkGitHubActionsProjectTestBadge]][linkGitHubActionsProject]
+[![Build Status][linkGitHubActionsProjectReleaseBadge]][linkGitHubActionsProject]
 
 [GitHub Actions][linkGitHubActionsProject] is used to test, build, and push envvars Docker image.
 
@@ -11,6 +12,8 @@
 master is always releasable (unless tests are not passing). A change to master triggers a GitHub Action which tests the code, sends the code coverage, and builds a Docker image without pushing it.
 
 ## Git tag
+
+[![GitHub Tag][linkGitHubProjectTagBadge]][linkGitHubProject]
 
 A push of a tag triggers a GitHub Action which tests, builds, and pushes a new Docker image to Docker Hub.
 
@@ -61,7 +64,8 @@ The code coverage is uploaded to [Codecov][linkCodecovProject] after a successfu
 [Go Report Card][linkGoReportCardProject] reports the quality of envvars
 
 
-[linkGitHubActionsProjectBadge]: https://github.com/flemay/envvars/workflows/Deploy/badge.svg
+[linkGitHubActionsProjectTestBadge]: https://github.com/flemay/envvars/workflows/Test/badge.svg
+[linkGitHubActionsProjectReleaseBadge]: https://github.com/flemay/envvars/workflows/Release/badge.svg
 [linkGitHubActionsProject]: https://github.com/flemay/envvars/actions
 [linkDockerHubProjectBadge]: https://img.shields.io/badge/dockerhub-builds-blue.svg
 [linkDockerHubProject]: https://hub.docker.com/r/flemay/envvars
@@ -70,3 +74,5 @@ The code coverage is uploaded to [Codecov][linkCodecovProject] after a successfu
 [linkCodecovProject]: https://codecov.io/gh/flemay/envvars
 [linkGoReportCardProjectBadge]: https://goreportcard.com/badge/github.com/flemay/envvars
 [linkGoReportCardProject]: https://goreportcard.com/report/github.com/flemay/envvars
+[linkGitHubProjectTagBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
+[linkGitHubProject]: https://github.com/flemay/envvars
