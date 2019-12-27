@@ -6,16 +6,13 @@ COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 ENVFILE ?= env.template
 
 all:
-	ENVFILE=env.example $(MAKE) envfile deps test build run buildDockerImage testDockerImage clean
-
-_travis:
-	GIT_TAG=$(GIT_TAG) ./scripts/travis.sh
+	ENVFILE=env.example $(MAKE) envfile deps test build run buildDockerImage clean
 
 onPullRequest: all
 
-onMasterChange: envfile deps test sendCoverage build run buildDockerImage testDockerImage clean
+onMasterChange: envfile deps test sendCoverage build run buildDockerImage clean
 
-onGitTag: envfile deps test build run buildDockerImage testDockerImage pushDockerImage clean
+onGitTag: envfile deps test build run buildDockerImage pushDockerImage clean
 
 envfile:
 	cp -f $(ENVFILE) .env
@@ -41,8 +38,6 @@ run:
 
 buildDockerImage:
 	docker build --no-cache -t $(IMAGE_NAME) .
-
-testDockerImage:
 	docker run --rm $(IMAGE_NAME) --help
 	docker run --rm $(IMAGE_NAME) version
 
