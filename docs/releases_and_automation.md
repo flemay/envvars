@@ -6,11 +6,11 @@
 
 [GitHub Actions][linkGitHubActionsProject] is used to test, build, and push envvars Docker image.
 
-### master branch
+## master branch
 
 master is always releasable (unless tests are not passing). A change to master triggers a GitHub Action which tests the code, sends the code coverage, and builds a Docker image without pushing it.
 
-### Git tag
+## Git tag
 
 A push of a tag triggers a GitHub Action which tests, builds, and pushes a new Docker image to Docker Hub.
 
@@ -23,7 +23,7 @@ A push of a tag triggers a GitHub Action which tests, builds, and pushes a new D
 1. Once the build passed, go to [flemay/envvars][linkDockerHubProject] on Docker Hub
 1. In `Build Details` tab, you should see the new Docker image version
 
-### Pull Request
+## Pull Request
 
 A pull request triggers GitHub Action which tests the code and the Docker image.
 
@@ -45,6 +45,8 @@ The following is a step-by-step guide on how I configured Docker Hub `flemay/env
 1. Fill out the form (Namespace, Name, Visibility, and Short Description)
 1. Go to `Builds`, `Configure Automated Builds`, delete all `BUILD RULES` and `Build Triggers`, and save your modification.
 1. Go to `Collaborators` tab and add the docker hub user you want to use for automated builds. This user can now be used in GitHub Actions to push the image.
+
+> For DOCKER_PASSWORD, it is recommended to use an Access Token and not the password from the automation user. To create it, log in as the automation Docker user, go to Account Settings. From the Security tab, you will be able to create the token. The name of the token can be something like "GitHub Actions".
 
 ## Codecov
 
