@@ -1,6 +1,6 @@
 <p align="center"><img src="./docs/envvars_gopher.png" width="260"></p>
 
-[![Build Status][linkTravisCIProjectBadge]][linkTravisCIProject]
+[![Build Status][linkGitHubActionsProjectBadge]][linkGitHubActionsProject]
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
 [![codecov][linkCodecovProjectBadge]][linkCodecovProject]
 [![GitHub Tag][linkGitHubProjectBadge]][linkGitHubProject]
@@ -120,8 +120,8 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 
 [linkYAML]: http://yaml.org/spec/1.2/spec.html
 [link3Musketeers]: https://3musketeers.io
-[linkTravisCIProjectBadge]: https://travis-ci.org/flemay/envvars.svg?branch=master
-[linkTravisCIProject]: https://travis-ci.org/flemay/envvars
+[linkGitHubActionsProjectBadge]: https://github.com/flemay/envvars/workflows/Deploy/badge.svg
+[linkGitHubActionsProject]: https://github.com/flemay/envvars/actions
 [linkDockerHubProjectBadge]: https://img.shields.io/badge/repository-dockerhub-blue.svg
 [linkDockerHubProject]: https://hub.docker.com/r/flemay/envvars
 [LinkDockerHubProjectPullsBadge]: https://img.shields.io/docker/pulls/flemay/envvars
