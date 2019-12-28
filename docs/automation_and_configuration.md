@@ -11,6 +11,15 @@
 
 master is always releasable (unless tests are not passing). A change to master triggers a GitHub Action which tests the code, sends the code coverage, and builds a Docker image without pushing it.
 
+The master branch is also protected by:
+
+- requiring status checks to pass before merging
+  - codecov/project
+  - Test GitHub Action
+- requiring branches to be up to date before merging
+
+See [Configuring GitHub protected branches][linkConfiguringGitHubProtectedBranches].
+
 ## Git tag
 
 [![GitHub Tag][linkGitHubProjectTagBadge]][linkGitHubProject]
@@ -76,3 +85,4 @@ The code coverage is uploaded to [Codecov][linkCodecovProject] after a successfu
 [linkGoReportCardProject]: https://goreportcard.com/report/github.com/flemay/envvars
 [linkGitHubProjectTagBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
 [linkGitHubProject]: https://github.com/flemay/envvars
+[linkConfiguringGitHubProtectedBranches]: https://help.github.com/en/github/administering-a-repository/configuring-protected-branches
