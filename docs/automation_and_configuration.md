@@ -1,11 +1,6 @@
 # Automation & Configuration
 
-## GitHub Actions
-
-[![Build Status][linkGitHubActionsProjectTestBadge]][linkGitHubActionsProject]
-[![Build Status][linkGitHubActionsProjectReleaseBadge]][linkGitHubActionsProject]
-
-[GitHub Actions][linkGitHubActionsProject] is used to test, build, and push envvars Docker image.
+## GitHub
 
 ## master branch
 
@@ -19,6 +14,21 @@ The master branch is also protected by:
 - requiring branches to be up to date before merging
 
 See [Configuring GitHub protected branches][linkConfiguringGitHubProtectedBranches].
+
+## GitHub Actions
+
+[![Build Status][linkGitHubActionsProjectTestBadge]][linkGitHubActionsProject]
+[![Build Status][linkGitHubActionsProjectReleaseBadge]][linkGitHubActionsProject]
+
+This project uses [GitHub Actions][linkGitHubActionsProject] to test, build, and push envvars Docker image. There are two: Test and Release.
+
+`Test` is triggered whenever there is a [Pull Request created][linkGitHubActionsPullRequestEvent] or a [change to master branch][linkGitHubActionsPushEvent].
+
+`Release` gets triggered under a [GitHub create event][linkGitHubActionsCreateEvent]. However, it is only on tag created that the release of the Docker image happens.
+
+> [GitHub release event][linkGitHubActionsReleaseEvent] could eventually be used but for now, the release is done on Git tag.
+
+Environment variables nammed `DOCKER_PASSWORD` and `CODECOV_TOKEN` were set in the Secrets section of the repository's settings.
 
 ## Git tag
 
@@ -35,13 +45,10 @@ A push of a tag triggers a GitHub Action which tests, builds, and pushes a new D
 1. Once the build passed, go to [flemay/envvars][linkDockerHubProject] on Docker Hub
 1. In `Build Details` tab, you should see the new Docker image version
 
-## Pull Request
-
-A pull request triggers GitHub Action which tests the code and the Docker image.
-
 ## Docker Hub
 
 [![Docker Hub][linkDockerHubProjectBadge]][linkDockerHubProject]
+[![Docker Hub Pulls Badge][LinkDockerHubProjectPullsBadge]][linkDockerHubProject]
 
 Docker Hub is used to store `flemay/envars` images. The Docker Hub autobuild/autotest are not used for this project because GitHub Actions gives more control on how the project is tested and built. This process is repeatable/portable with different CI/CD tools (like GitLab) and also for other docker registries.
 
@@ -86,3 +93,8 @@ The code coverage is uploaded to [Codecov][linkCodecovProject] after a successfu
 [linkGitHubProjectTagBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
 [linkGitHubProject]: https://github.com/flemay/envvars
 [linkConfiguringGitHubProtectedBranches]: https://help.github.com/en/github/administering-a-repository/configuring-protected-branches
+[LinkDockerHubProjectPullsBadge]: https://img.shields.io/docker/pulls/flemay/envvars
+[linkGitHubActionsCreateEvent]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#create-event-create
+[linkGitHubActionsReleaseEvent]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#release-event-release
+[linkGitHubActionsPullRequestEvent]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#pull-request-event-pull_request
+[linkGitHubActionsPushEvent]: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows#push-event-push
