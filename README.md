@@ -19,7 +19,7 @@ Envvars is in its early stage and its API is not stable. Envvars will be product
 
 You are encouraged to try envvars, [share your feedback and contribute to it][linkContributing].
 
-More information can be found [here][linkReleasesAndAutomation].
+See [Automation & Configuration][linkAutomationAndConfiguration] for more details.
 
 ## Declaration File
 
@@ -115,7 +115,7 @@ Envvars fits nicely with the [3 Musketeers][link3Musketeers] for managing the en
 Contributions are greatly appreciated. Everyone can contribute and [here][linkContributing] are different ways.
 
 
-[linkReleasesAndAutomation]: ./docs/releases_and_automation.md
+[linkAutomationAndConfiguration]: ./docs/automation_and_configuration.md
 [linkLicense]: LICENSE
 [linkContributing]: CONTRIBUTING.md
 
