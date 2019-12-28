@@ -6,7 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Release
-      run: ./scripts/github_release.sh
+      run: make _ciRelease
       env:
         DOCKER_USERNAME: flemaybot
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

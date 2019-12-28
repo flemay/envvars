@@ -10,7 +10,8 @@ all:
 
 ciTest: envfile deps test sendCoverage build run buildDockerImage clean
 
-ciRelease: envfile deps test build run buildDockerImage pushDockerImage clean
+_ciRelease:
+	TAG=$(GIT_TAG) ./scripts/github_release.sh
 
 envfile:
 	cp -f $(ENVFILE) .env
