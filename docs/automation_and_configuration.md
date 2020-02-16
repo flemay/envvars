@@ -58,12 +58,13 @@ The following is a step-by-step guide on how I configured Docker Hub `flemay/env
 
 1. It is handy to have 2 Docker Hub users: 1 for the creation of the docker registry, the other to push the images
 1. Go to [https://hub.docker.com][linkDockerHub] and sign in with your main docker hub user.
-1. Go to `Create` and  `Create Automated Build`
-1. Select GitHub
-1. Select User `flemay` and then the repository `envvars`
-1. Fill out the form (Namespace, Name, Visibility, and Short Description)
-1. Go to `Builds`, `Configure Automated Builds`, delete all `BUILD RULES` and `Build Triggers`, and save your modification.
-1. Go to `Collaborators` tab and add the docker hub user you want to use for automated builds. This user can now be used in GitHub Actions to push the image.
+1. Go to `Repositories`
+1. Click `Create Repository` button
+1. Fill out the form (Namespace, Name, Description, Visibility)
+1. Leave the `Build Settings` section empty
+1. Click `Create` button
+1. In the `General` tab, update the `Readme` section with this repository's README
+1. In the `Collaborators` tab, add the docker hub user you want to use for automated builds. This user can now be used in GitHub Actions to push the image.
 
 > For DOCKER_PASSWORD, it is recommended to use an Access Token and not the password from the automation user. To create it, log in as the automation Docker user, go to Account Settings. From the Security tab, you will be able to create the token. The name of the token can be something like "GitHub Actions".
 

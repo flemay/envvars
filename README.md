@@ -117,7 +117,7 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 
 [linkAutomationAndConfiguration]: ./docs/automation_and_configuration.md
 [linkLicense]: LICENSE
-[linkContributing]: CONTRIBUTING.md
+[linkContributing]: ./docs/CONTRIBUTING.md
 
 [linkYAML]: http://yaml.org/spec/1.2/spec.html
 [link3Musketeers]: https://3musketeers.io
