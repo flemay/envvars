@@ -1,11 +1,13 @@
 # Envvars
 
+[![GitHub Repository][linkGitHubProjectRepositoryBadge]][linkGitHubProjectRepository]
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
 [![codecov][linkCodecovProjectBadge]][linkCodecovProject]
 [![GitHub Tag][linkGitHubProjectTagBadge]][linkGitHubProject]
 [![Build Status][linkGitHubActionsProjectTestBadge]][linkGitHubActionsProject]
 [![Build Status][linkGitHubActionsProjectReleaseBadge]][linkGitHubActionsProject]
 [![Docker Hub][linkDockerHubProjectBadge]][linkDockerHubProject]
+[![Docker Image Version][linkDockerHubProjectImageVersion]][linkDockerHubProject]
 [![Docker Hub Pulls Badge][LinkDockerHubProjectPullsBadge]][linkDockerHubProject]
 [![License][linkLicenseBadge]][linkLicense]
 
@@ -123,6 +125,8 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 [linkLicense]: LICENSE
 [linkContributing]: ./docs/CONTRIBUTING.md
 
+[linkGitHubProjectRepositoryBadge]: https://img.shields.io/badge/repository-github-black.svg
+[linkGitHubProjectRepository]: https://github.com/flemay/envvars
 [linkYAML]: http://yaml.org/spec/1.2/spec.html
 [link3Musketeers]: https://3musketeers.io
 [linkGitHubActionsProjectTestBadge]: https://github.com/flemay/envvars/workflows/Test/badge.svg
@@ -130,6 +134,7 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 [linkGitHubActionsProject]: https://github.com/flemay/envvars/actions
 [linkDockerHubProjectBadge]: https://img.shields.io/badge/repository-dockerhub-blue.svg
 [linkDockerHubProject]: https://hub.docker.com/r/flemay/envvars
+[linkDockerHubProjectImageVersion]: https://img.shields.io/docker/v/flemay/envvars?label=docker%20image%20version&sort=semver
 [LinkDockerHubProjectPullsBadge]: https://img.shields.io/docker/pulls/flemay/envvars
 [linkDockerHub]: https://hub.docker.com
 [linkCodecovProjectBadge]: https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg
