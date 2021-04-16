@@ -4,12 +4,11 @@
 
 ## master branch
 
-master is always releasable (unless tests are not passing). A change to master triggers a GitHub Action which tests the code, sends the code coverage, and builds a Docker image without pushing it.
+master is always releasable (unless tests are not passing). A change to master triggers a GitHub Action which tests the code, and builds a Docker image without pushing it.
 
 The master branch is also protected by:
 
 - requiring status checks to pass before merging
-  - codecov/project
   - Test GitHub Action
 - requiring branches to be up to date before merging
 
@@ -28,7 +27,7 @@ This project uses [GitHub Actions][linkGitHubActionsProject] to test, build, and
 
 > [GitHub release event][linkGitHubActionsReleaseEvent] could eventually be used but for now, the release is done on Git tag.
 
-Environment variables nammed `DOCKER_PASSWORD` and `CODECOV_TOKEN` were set in the Secrets section of the repository's settings.
+Environment variable nammed `DOCKER_PASSWORD` is set in the Secrets section of the repository's settings.
 
 ## Git tag
 
@@ -68,12 +67,6 @@ The following is a step-by-step guide on how I configured Docker Hub `flemay/env
 
 > For DOCKER_PASSWORD, it is recommended to use an Access Token and not the password from the automation user. To create it, log in as the automation Docker user, go to Account Settings. From the Security tab, you will be able to create the token. The name of the token can be something like "GitHub Actions".
 
-## Codecov
-
-[![codecov][linkCodecovProjectBadge]][linkCodecovProject]
-
-The code coverage is uploaded to [Codecov][linkCodecovProject] after a successful GitHub Action build.
-
 ## Go Report Card
 
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
@@ -87,8 +80,6 @@ The code coverage is uploaded to [Codecov][linkCodecovProject] after a successfu
 [linkDockerHubProjectBadge]: https://img.shields.io/badge/dockerhub-builds-blue.svg
 [linkDockerHubProject]: https://hub.docker.com/r/flemay/envvars
 [linkDockerHub]: https://hub.docker.com
-[linkCodecovProjectBadge]: https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg
-[linkCodecovProject]: https://codecov.io/gh/flemay/envvars
 [linkGoReportCardProjectBadge]: https://goreportcard.com/badge/github.com/flemay/envvars
 [linkGoReportCardProject]: https://goreportcard.com/report/github.com/flemay/envvars
 [linkGitHubProjectTagBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
