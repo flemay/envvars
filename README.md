@@ -2,7 +2,6 @@
 
 [![GitHub Repository][linkGitHubProjectRepositoryBadge]][linkGitHubProjectRepository]
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
-[![codecov][linkCodecovProjectBadge]][linkCodecovProject]
 [![GitHub Tag][linkGitHubProjectTagBadge]][linkGitHubProject]
 [![Build Status][linkGitHubActionsProjectTestBadge]][linkGitHubActionsProject]
 [![Build Status][linkGitHubActionsProjectReleaseBadge]][linkGitHubActionsProject]
@@ -137,8 +136,6 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 [linkDockerHubProjectImageVersion]: https://img.shields.io/docker/v/flemay/envvars?label=docker%20image%20version&sort=semver
 [LinkDockerHubProjectPullsBadge]: https://img.shields.io/docker/pulls/flemay/envvars
 [linkDockerHub]: https://hub.docker.com
-[linkCodecovProjectBadge]: https://codecov.io/gh/flemay/envvars/branch/master/graph/badge.svg
-[linkCodecovProject]: https://codecov.io/gh/flemay/envvars
 [linkGoReportCardProjectBadge]: https://goreportcard.com/badge/github.com/flemay/envvars
 [linkGoReportCardProject]: https://goreportcard.com/report/github.com/flemay/envvars
 [linkLicenseBadge]: https://img.shields.io/dub/l/vibe-d.svg

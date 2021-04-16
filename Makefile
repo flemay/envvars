@@ -8,7 +8,7 @@ ENVFILE ?= env.template
 all:
 	ENVFILE=env.example $(MAKE) envfile deps test build run buildDockerImage clean
 
-ciTest: envfile deps test sendCoverage build run buildDockerImage clean
+ciTest: envfile deps test build run buildDockerImage clean
 
 _ciRelease:
 	TAG=$(GIT_TAG) ./scripts/github_release.sh
@@ -25,9 +25,6 @@ mock:
 
 test:
 	$(COMPOSE_RUN_GOLANG) ./scripts/test.sh
-
-sendCoverage: $(PROFILE_NAME)
-	$(COMPOSE_RUN_GOLANG) ./scripts/coverage.sh
 
 build:
 	$(COMPOSE_RUN_GOLANG) bash -c 'VERSION=$(VERSION) ./scripts/build.sh'
