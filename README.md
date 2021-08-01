@@ -1,5 +1,6 @@
 # Envvars
 
+[![Go Reference][linkProjectGoReferenceBadge]][linkProjectGoReference]
 [![GitHub Repository][linkGitHubProjectRepositoryBadge]][linkGitHubProjectRepository]
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
 [![GitHub Tag][linkGitHubProjectTagBadge]][linkGitHubProject]
@@ -124,6 +125,8 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 [linkLicense]: LICENSE
 [linkContributing]: ./docs/CONTRIBUTING.md
 
+[linkProjectGoReferenceBadge]: https://pkg.go.dev/badge/filippo.io/age.svg
+[linkProjectGoReference]: https://pkg.go.dev/github.com/flemay/envvars
 [linkGitHubProjectRepositoryBadge]: https://img.shields.io/badge/repository-github-black.svg
 [linkGitHubProjectRepository]: https://github.com/flemay/envvars
 [linkYAML]: http://yaml.org/spec/1.2/spec.html
