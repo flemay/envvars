@@ -1,78 +1,118 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"log"
 	"os"
+	"text/template"
 )
 
-type rootFlags struct {
-	file *string
-}
-
 func main() {
-	commands := map[string]commander{
-		"init": newInitCmd(),
+	const appName = "envvars"
+
+	log.SetFlags(0)
+	log.SetPrefix(appName + ": ")
+	cmds := commands{
+		initCmd(),
 	}
+
+	usage, err := defaultUsage(appName, cmds)
+	if err != nil {
+		log.Fatalf("%s\n", err)
+	}
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(), "%s\n", usage)
+	}
+
+	var helpFlag bool
+	flag.BoolVar(&helpFlag, "help", false, "Help")
+	flag.BoolVar(&helpFlag, "h", false, "Help (shorthand)")
+	flag.Parse()
+
+	if helpFlag {
+		flag.Usage()
+		// same behavior as COMMAND --help
+		os.Exit(0)
+	}
+
 	if len(os.Args) < 2 {
 		flag.Usage()
 		os.Exit(1)
 	}
 
-	cmd, exists := commands[os.Args[1]]
+	cmd, exists := cmds.Get(os.Args[1])
 	if !exists {
-		flag.Usage()
-		os.Exit(1)
+		log.Fatalf("%q is not an %s command. See \"%s --help\"\n", os.Args[1], appName, appName)
 	}
 
-	log.SetFlags(0)
-	log.SetPrefix("envvars: ")
-
-	err := cmd.Run(os.Args[2:])
-	if err != nil {
+	if err := cmd.Run(os.Args[2:]); err != nil {
 		log.Fatalf("error: %s\n", err)
 	}
 }
 
-type commander interface {
-	Name() string
-	Usage() string
-	Run(args []string) error
-}
-
 type command struct {
-	flagSet *flag.FlagSet
-	usage   string
-	run     func() error
+	Name string
+	Desc string
+	Run  func(args []string) error
 }
 
-func (c command) Name() string {
-	return c.flagSet.Name()
-}
+type commands []command
 
-func (c command) Usage() string {
-	return c.usage
-}
-
-func (c command) Run(args []string) error {
-	if err := c.flagSet.Parse(args); err != nil {
-		return err
+func (cmds commands) Get(name string) (command, bool) {
+	for _, cmd := range cmds {
+		if cmd.Name == name {
+			return cmd, true
+		}
 	}
-	if c.run == nil {
-		return fmt.Errorf("command %q does not implement the method 'run'", c.Name())
-	}
-	return c.run()
+	return command{}, false
 }
 
-func newInitCmd() commander {
-	cmd := struct{ command }{}
-	cmd.flagSet = flag.NewFlagSet("init", flag.ExitOnError)
-	cmd.usage = "Creates a new Declaration File to get started"
-	var flagFile string
-	cmd.flagSet.StringVar(&flagFile, "file", "envvars.yml", "declaration file")
-	cmd.flagSet.StringVar(&flagFile, "f", "envvars.yml", "declaration file (shorthand)")
-	cmd.run = func() error {
+func defaultUsage(appName string, cmds commands) (string, error) {
+	data := struct {
+		AppName string
+		Cmds    commands
+	}{
+		appName,
+		cmds,
+	}
+	usageTpl := `Usage:
+{{.AppName}} COMMAND [OPTIONS]
+
+Commands:
+  {{range .Cmds}}
+  {{.Name}}    {{.Desc}}
+  {{end}}
+
+Run '{{.AppName}} COMMAND --help' for more information on a command.`
+
+	tmpl, err := template.New("usage").Parse(usageTpl)
+	if err != nil {
+		return "", err
+	}
+
+	var tmplResult bytes.Buffer
+	if err := tmpl.Execute(&tmplResult, data); err != nil {
+		return "", err
+	}
+	return tmplResult.String(), nil
+}
+
+func initCmd() command {
+	cmd := command{
+		Name: "init",
+		Desc: "Create a new declaration file to get started with",
+	}
+	cmd.Run = func(args []string) error {
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		var flagFile string
+		fs.StringVar(&flagFile, "file", "envvars.yml", "declaration file")
+		fs.StringVar(&flagFile, "f", "envvars.yml", "declaration file (shorthand)")
+		if err := fs.Parse(args); err != nil {
+			return err
+		}
+
 		fmt.Printf("running init %q\n", flagFile)
 		return nil
 	}
