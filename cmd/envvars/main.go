@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 	"text/template"
 
 	"github.com/flemay/envvars/pkg/envvars"
@@ -25,6 +26,7 @@ func main() {
 func run(appName string) error {
 	cmds := commands{
 		initCmd(),
+		versionCmd("1.1", "some date", "2343243"),
 	}
 
 	usage, err := defaultUsage(appName, cmds)
@@ -38,6 +40,9 @@ func run(appName string) error {
 	var helpFlag bool
 	flag.BoolVar(&helpFlag, "help", false, "Help")
 	flag.BoolVar(&helpFlag, "h", false, "Help (shorthand)")
+
+	// My understanding so far is if there is an error on parsing,
+	// the error will be displayed followed by the usage.
 	flag.Parse()
 
 	if helpFlag {
@@ -47,6 +52,8 @@ func run(appName string) error {
 	}
 
 	if len(os.Args) < 2 {
+		// Maybe the usage should be printed so it is consistant with flag.Usage()
+		// and flagSet.ExitOnError
 		return fmt.Errorf("a command is required. See \"%s --help\".", appName)
 	}
 
@@ -83,15 +90,25 @@ func defaultUsage(appName string, cmds commands) (string, error) {
 		appName,
 		cmds,
 	}
-	usageTpl := `Usage:
-{{.AppName}} COMMAND [OPTIONS]
+	usageTpl := `{{.AppName}} gives your environment variables the love they deserve.
+
+Usage:
+    {{.AppName}} COMMAND [OPTIONS]
 
 Commands:
-{{range .Cmds}}
-  {{.Name}}    {{.Desc}}
-{{end}}
+{{- range .Cmds}}
+    {{.Name}}    {{.Desc}}
+{{- end}}
 
-Run "{{.AppName}} COMMAND --help" for more information on a command.`
+Run "{{.AppName}} COMMAND --help" for more information on a command.
+
+Examples:
+    Create a file to get started
+        $ {{.AppName}} init
+    Validate the file while developing
+        $ {{.AppName}} validate
+    Make sure the current environment variables comply to the Declaration file
+        $ {{.AppName}} ensure`
 
 	tmpl, err := template.New("usage").Parse(usageTpl)
 	if err != nil {
@@ -121,6 +138,26 @@ func initCmd() command {
 
 		reader := yml.NewDeclarationYML(flagFile)
 		return envvars.Init(reader)
+	}
+	return cmd
+}
+
+func versionCmd(version string, buildDate string, gitCommit string) command {
+	cmd := command{
+		Name: "version",
+		Desc: "Show version information",
+	}
+	cmd.Run = func(args []string) error {
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		fs.Parse(args)
+
+		log.Printf(`
+Version:      %s
+Built:        %s
+Git commit:   %s
+Go version:   %s
+OS/Arch:      %s/%s`, version, buildDate, gitCommit, runtime.Version(), runtime.GOOS, runtime.GOARCH)
+		return nil
 	}
 	return cmd
 }
