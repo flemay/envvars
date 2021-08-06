@@ -7,6 +7,9 @@ import (
 	"log"
 	"os"
 	"text/template"
+
+	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/yml"
 )
 
 func main() {
@@ -14,6 +17,12 @@ func main() {
 
 	log.SetFlags(0)
 	log.SetPrefix(appName + ": ")
+	if err := run(appName); err != nil {
+		log.Fatalf("%s\n", err)
+	}
+}
+
+func run(appName string) error {
 	cmds := commands{
 		initCmd(),
 	}
@@ -33,23 +42,20 @@ func main() {
 
 	if helpFlag {
 		flag.Usage()
-		// same behavior as COMMAND --help
-		os.Exit(0)
+		// same behavior as COMMAND --help, so no error
+		return nil
 	}
 
 	if len(os.Args) < 2 {
-		flag.Usage()
-		os.Exit(1)
+		return fmt.Errorf("a command is required. See \"%s --help\".", appName)
 	}
 
 	cmd, exists := cmds.Get(os.Args[1])
 	if !exists {
-		log.Fatalf("%q is not an %s command. See \"%s --help\"\n", os.Args[1], appName, appName)
+		return fmt.Errorf("%q is not an %s command. See \"%s --help\"", os.Args[1], appName, appName)
 	}
 
-	if err := cmd.Run(os.Args[2:]); err != nil {
-		log.Fatalf("error: %s\n", err)
-	}
+	return cmd.Run(os.Args[2:])
 }
 
 type command struct {
@@ -81,11 +87,11 @@ func defaultUsage(appName string, cmds commands) (string, error) {
 {{.AppName}} COMMAND [OPTIONS]
 
 Commands:
-  {{range .Cmds}}
+{{range .Cmds}}
   {{.Name}}    {{.Desc}}
-  {{end}}
+{{end}}
 
-Run '{{.AppName}} COMMAND --help' for more information on a command.`
+Run "{{.AppName}} COMMAND --help" for more information on a command.`
 
 	tmpl, err := template.New("usage").Parse(usageTpl)
 	if err != nil {
@@ -102,19 +108,19 @@ Run '{{.AppName}} COMMAND --help' for more information on a command.`
 func initCmd() command {
 	cmd := command{
 		Name: "init",
-		Desc: "Create a new declaration file to get started with",
+		Desc: "Create a new declaration file to get started",
 	}
 	cmd.Run = func(args []string) error {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
 		var flagFile string
 		fs.StringVar(&flagFile, "file", "envvars.yml", "declaration file")
 		fs.StringVar(&flagFile, "f", "envvars.yml", "declaration file (shorthand)")
-		if err := fs.Parse(args); err != nil {
-			return err
-		}
 
-		fmt.Printf("running init %q\n", flagFile)
-		return nil
+		// Since ExitOnError is used, no need to look at a returned error
+		fs.Parse(args)
+
+		reader := yml.NewDeclarationYML(flagFile)
+		return envvars.Init(reader)
 	}
 	return cmd
 }
