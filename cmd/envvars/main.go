@@ -26,6 +26,7 @@ func main() {
 func run(appName string) error {
 	cmds := commands{
 		initCmd(),
+		validateCmd(),
 		versionCmd("1.1", "some date", "2343243"),
 	}
 
@@ -90,10 +91,9 @@ func defaultUsage(appName string, cmds commands) (string, error) {
 		appName,
 		cmds,
 	}
-	usageTpl := `{{.AppName}} gives your environment variables the love they deserve.
-
-Usage:
+	usageTpl := `Usage:
     {{.AppName}} COMMAND [OPTIONS]
+    {{.AppName}} --help
 
 Commands:
 {{- range .Cmds}}
@@ -140,6 +140,25 @@ func initCmd() command {
 		return envvars.Init(reader)
 	}
 	return cmd
+}
+
+func validateCmd() command {
+	cmd := command{
+		Name: "validate",
+		Desc: "Check if the declaration file contains any error",
+	}
+	cmd.Run = func(args []string) error {
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		var flagFile string
+		fs.StringVar(&flagFile, "file", "envvars.yml", "declaration file")
+		fs.StringVar(&flagFile, "f", "envvars.yml", "declaration file (shorthand)")
+		fs.Parse(args)
+
+		reader := yml.NewDeclarationYML(flagFile)
+		return envvars.Validate(reader)
+	}
+	return cmd
+
 }
 
 func versionCmd(version string, buildDate string, gitCommit string) command {
