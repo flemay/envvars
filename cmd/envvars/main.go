@@ -26,9 +26,10 @@ func main() {
 
 func run(appName string) error {
 	cmds := commands{
+		ensureCmd(),
 		initCmd(),
-		validateCmd(),
 		listCmd(),
+		validateCmd(),
 		versionCmd("1.1", "some date", "2343243"),
 	}
 
@@ -124,6 +125,10 @@ Examples:
 	return tmplResult.String(), nil
 }
 
+func setFileFlag() *string {
+	return nil
+}
+
 func initCmd() command {
 	cmd := command{
 		Name: "init",
@@ -161,7 +166,33 @@ func validateCmd() command {
 		return envvars.Validate(reader)
 	}
 	return cmd
+}
 
+func ensureCmd() command {
+	cmd := command{
+		Name: "ensure",
+		Desc: "Verify that the environment variables comply to their declaration",
+	}
+	cmd.Run = func(args []string) error {
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		var flagFile string
+		fs.StringVar(&flagFile, "file", "envvars.yml", "declaration file")
+		fs.StringVar(&flagFile, "f", "envvars.yml", "declaration file (shorthand)")
+
+		var flagTags string
+		fs.StringVar(&flagTags, "tags", "", "comma-separeted list of tags")
+		fs.StringVar(&flagTags, "t", "", "comma-separeted list of tags (shorthand)")
+
+		fs.Parse(args)
+
+		reader := yml.NewDeclarationYML(flagFile)
+		tags := []string{}
+		if flagTags != "" {
+			tags = strings.Split(flagTags, ",")
+		}
+		return envvars.Ensure(reader, tags...)
+	}
+	return cmd
 }
 
 func listCmd() command {
