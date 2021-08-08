@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"runtime"
+	"strings"
 	"text/template"
 
 	"github.com/flemay/envvars/pkg/envvars"
@@ -27,6 +28,7 @@ func run(appName string) error {
 	cmds := commands{
 		initCmd(),
 		validateCmd(),
+		listCmd(),
 		versionCmd("1.1", "some date", "2343243"),
 	}
 
@@ -152,10 +154,49 @@ func validateCmd() command {
 		var flagFile string
 		fs.StringVar(&flagFile, "file", "envvars.yml", "declaration file")
 		fs.StringVar(&flagFile, "f", "envvars.yml", "declaration file (shorthand)")
+
 		fs.Parse(args)
 
 		reader := yml.NewDeclarationYML(flagFile)
 		return envvars.Validate(reader)
+	}
+	return cmd
+
+}
+
+func listCmd() command {
+	cmd := command{
+		Name: "list",
+		Desc: "Display the declaration of each environment variable",
+	}
+	cmd.Run = func(args []string) error {
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		var flagFile string
+		fs.StringVar(&flagFile, "file", "envvars.yml", "declaration file")
+		fs.StringVar(&flagFile, "f", "envvars.yml", "declaration file (shorthand)")
+
+		var flagTags string
+		fs.StringVar(&flagTags, "tags", "", "comma-separeted list of tags")
+		fs.StringVar(&flagTags, "t", "", "comma-separeted list of tags (shorthand)")
+
+		fs.Parse(args)
+
+		reader := yml.NewDeclarationYML(flagFile)
+		tags := []string{}
+		if flagTags != "" {
+			tags = strings.Split(flagTags, ",")
+		}
+		collection, err := envvars.List(reader, tags...)
+		if err != nil {
+			return err
+		}
+		fmt.Println("name,desc")
+		for _, ev := range collection {
+			line := []string{ev.Name, ev.Desc}
+			fmt.Println(strings.Join(line, ","))
+		}
+		return nil
+
 	}
 	return cmd
 
