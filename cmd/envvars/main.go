@@ -10,6 +10,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/flemay/envvars/pkg/envfile"
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/yml"
 )
@@ -27,6 +28,7 @@ func main() {
 func run(appName string) error {
 	cmds := commands{
 		ensureCmd(),
+		envfileCmd(),
 		initCmd(),
 		listCmd(),
 		validateCmd(),
@@ -66,6 +68,9 @@ func run(appName string) error {
 		return fmt.Errorf("%q is not an %s command. See \"%s --help\"", os.Args[1], appName, appName)
 	}
 
+	if cmd.Run == nil {
+		return fmt.Errorf("the command %q does not implement the methor Run.", cmd.Name)
+	}
 	return cmd.Run(os.Args[2:])
 }
 
@@ -125,42 +130,26 @@ func (cmds commands) Get(name string) (command, bool) {
 	return command{}, false
 }
 
-type commandFlag int
-
-const (
-	commandFlagFile commandFlag = iota
-	commandFlagTags
-)
-
-type commandFlagSet struct {
-	flagSet       *flag.FlagSet
-	file          string
-	tags          string
-	tagsSeparated []string
+func defineFlagFile(fs *flag.FlagSet) *string {
+	var file string
+	fs.StringVar(&file, "file", "envvars.yml", "declaration file")
+	fs.StringVar(&file, "f", "envvars.yml", "declaration file (shorthand)")
+	return &file
 }
 
-func (cfs *commandFlagSet) Parse(args []string) {
-	// Since ExitOnError is used, no need to look at a returned error
-	cfs.flagSet.Parse(args)
-	if cfs.tags != "" {
-		cfs.tagsSeparated = strings.Split(cfs.tags, ",")
-	}
+func defineFlagTags(fs *flag.FlagSet) *string {
+	var tags string
+	fs.StringVar(&tags, "tags", "", "comma-separeted list of tags")
+	fs.StringVar(&tags, "t", "", "comma-separeted list of tags (shorthand)")
+	return &tags
 }
 
-func newCommandFlagSet(name string, cmdFlags ...commandFlag) *commandFlagSet {
-	cfs := commandFlagSet{}
-	cfs.flagSet = flag.NewFlagSet(name, flag.ExitOnError)
-	for _, cf := range cmdFlags {
-		switch cf {
-		case commandFlagFile:
-			cfs.flagSet.StringVar(&cfs.file, "file", "envvars.yml", "declaration file")
-			cfs.flagSet.StringVar(&cfs.file, "f", "envvars.yml", "declaration file (shorthand)")
-		case commandFlagTags:
-			cfs.flagSet.StringVar(&cfs.tags, "tags", "", "comma-separeted list of tags")
-			cfs.flagSet.StringVar(&cfs.tags, "t", "", "comma-separeted list of tags (shorthand)")
-		}
+func commaSeparateTags(tags string) []string {
+	var tagsSeparated []string
+	if tags != "" {
+		tagsSeparated = strings.Split(tags, ",")
 	}
-	return &cfs
+	return tagsSeparated
 }
 
 func initCmd() command {
@@ -169,9 +158,10 @@ func initCmd() command {
 		Desc: "Create a new declaration file to get started",
 	}
 	cmd.Run = func(args []string) error {
-		cfs := newCommandFlagSet(cmd.Name, commandFlagFile)
-		cfs.Parse(args)
-		reader := yml.NewDeclarationYML(cfs.file)
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		fileFlag := defineFlagFile(fs)
+		fs.Parse(args)
+		reader := yml.NewDeclarationYML(*fileFlag)
 		return envvars.Init(reader)
 	}
 	return cmd
@@ -183,9 +173,10 @@ func validateCmd() command {
 		Desc: "Check if the declaration file contains any error",
 	}
 	cmd.Run = func(args []string) error {
-		cfs := newCommandFlagSet(cmd.Name, commandFlagFile)
-		cfs.Parse(args)
-		reader := yml.NewDeclarationYML(cfs.file)
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		fileFlag := defineFlagFile(fs)
+		fs.Parse(args)
+		reader := yml.NewDeclarationYML(*fileFlag)
 		return envvars.Validate(reader)
 	}
 	return cmd
@@ -197,10 +188,12 @@ func ensureCmd() command {
 		Desc: "Verify that the environment variables comply to their declaration",
 	}
 	cmd.Run = func(args []string) error {
-		cfs := newCommandFlagSet(cmd.Name, commandFlagFile, commandFlagTags)
-		cfs.Parse(args)
-		reader := yml.NewDeclarationYML(cfs.file)
-		return envvars.Ensure(reader, cfs.tagsSeparated...)
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		fileFlag := defineFlagFile(fs)
+		tagsFlag := defineFlagTags(fs)
+		fs.Parse(args)
+		reader := yml.NewDeclarationYML(*fileFlag)
+		return envvars.Ensure(reader, commaSeparateTags(*tagsFlag)...)
 	}
 	return cmd
 }
@@ -211,10 +204,12 @@ func listCmd() command {
 		Desc: "Display the declaration of each environment variable",
 	}
 	cmd.Run = func(args []string) error {
-		cfs := newCommandFlagSet(cmd.Name, commandFlagFile, commandFlagTags)
-		cfs.Parse(args)
-		reader := yml.NewDeclarationYML(cfs.file)
-		collection, err := envvars.List(reader, cfs.tagsSeparated...)
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		fileFlag := defineFlagFile(fs)
+		tagsFlag := defineFlagTags(fs)
+		fs.Parse(args)
+		reader := yml.NewDeclarationYML(*fileFlag)
+		collection, err := envvars.List(reader, commaSeparateTags(*tagsFlag)...)
 		if err != nil {
 			return err
 		}
@@ -230,14 +225,41 @@ func listCmd() command {
 
 }
 
+func envfileCmd() command {
+	cmd := command{
+		Name: "envfile",
+		Desc: "Generate (or remove) an env file based on the declaration file",
+	}
+	cmd.Run = func(args []string) error {
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		fileFlag := defineFlagFile(fs)
+		tagsFlag := defineFlagTags(fs)
+		envFileFlag := fs.String("env-file", ".env", "envfile to be generated")
+		exampleFlag := fs.Bool("example", false, "include example values to the generated envfile")
+		overwriteFlag := fs.Bool("overwrite", false, "overwrite the envfile if it exists")
+		removeFlag := fs.Bool("rm", false, "remove the envfile")
+		fs.Parse(args)
+
+		reader := yml.NewDeclarationYML(*fileFlag)
+		if *removeFlag {
+			return envfile.Remove(*envFileFlag)
+		}
+		writer := envfile.NewEnvfile(*envFileFlag, *exampleFlag, *overwriteFlag)
+		return envvars.Envfile(reader, writer, commaSeparateTags(*tagsFlag)...)
+
+	}
+	return cmd
+
+}
+
 func versionCmd(version string, buildDate string, gitCommit string) command {
 	cmd := command{
 		Name: "version",
 		Desc: "Show version information",
 	}
 	cmd.Run = func(args []string) error {
-		cfs := newCommandFlagSet(cmd.Name)
-		cfs.Parse(args)
+		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
+		fs.Parse(args)
 
 		log.Printf(`
 Version:      %s
