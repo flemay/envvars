@@ -2,6 +2,8 @@ package main
 
 import (
 	"bytes"
+	_ "embed"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
@@ -15,24 +17,27 @@ import (
 	"github.com/flemay/envvars/pkg/yml"
 )
 
+//go:embed "version.json"
+var versionJSONFileEmbed []byte
+
 func main() {
 	const appName = "envvars"
 
 	log.SetFlags(0)
 	log.SetPrefix(appName + ": ")
-	if err := run(appName); err != nil {
+	if err := run(appName, versionJSONFileEmbed); err != nil {
 		log.Fatalf("%s\n", err)
 	}
 }
 
-func run(appName string) error {
+func run(appName string, versionJSONFile []byte) error {
 	cmds := commands{
 		ensureCmd(),
 		envfileCmd(),
 		initCmd(),
 		listCmd(),
 		validateCmd(),
-		versionCmd("1.1", "some date", "2343243"),
+		versionCmd(versionJSONFile),
 	}
 
 	usage, err := defaultUsage(appName, cmds)
@@ -130,14 +135,14 @@ func (cmds commands) Get(name string) (command, bool) {
 	return command{}, false
 }
 
-func defineFlagFile(fs *flag.FlagSet) *string {
+func defineFileFlag(fs *flag.FlagSet) *string {
 	var file string
 	fs.StringVar(&file, "file", "envvars.yml", "declaration file")
 	fs.StringVar(&file, "f", "envvars.yml", "declaration file (shorthand)")
 	return &file
 }
 
-func defineFlagTags(fs *flag.FlagSet) *string {
+func defineTagsFlag(fs *flag.FlagSet) *string {
 	var tags string
 	fs.StringVar(&tags, "tags", "", "comma-separeted list of tags")
 	fs.StringVar(&tags, "t", "", "comma-separeted list of tags (shorthand)")
@@ -159,7 +164,7 @@ func initCmd() command {
 	}
 	cmd.Run = func(args []string) error {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
-		fileFlag := defineFlagFile(fs)
+		fileFlag := defineFileFlag(fs)
 		fs.Parse(args)
 		reader := yml.NewDeclarationYML(*fileFlag)
 		return envvars.Init(reader)
@@ -174,7 +179,7 @@ func validateCmd() command {
 	}
 	cmd.Run = func(args []string) error {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
-		fileFlag := defineFlagFile(fs)
+		fileFlag := defineFileFlag(fs)
 		fs.Parse(args)
 		reader := yml.NewDeclarationYML(*fileFlag)
 		return envvars.Validate(reader)
@@ -189,8 +194,8 @@ func ensureCmd() command {
 	}
 	cmd.Run = func(args []string) error {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
-		fileFlag := defineFlagFile(fs)
-		tagsFlag := defineFlagTags(fs)
+		fileFlag := defineFileFlag(fs)
+		tagsFlag := defineTagsFlag(fs)
 		fs.Parse(args)
 		reader := yml.NewDeclarationYML(*fileFlag)
 		return envvars.Ensure(reader, commaSeparateTags(*tagsFlag)...)
@@ -205,8 +210,8 @@ func listCmd() command {
 	}
 	cmd.Run = func(args []string) error {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
-		fileFlag := defineFlagFile(fs)
-		tagsFlag := defineFlagTags(fs)
+		fileFlag := defineFileFlag(fs)
+		tagsFlag := defineTagsFlag(fs)
 		fs.Parse(args)
 		reader := yml.NewDeclarationYML(*fileFlag)
 		collection, err := envvars.List(reader, commaSeparateTags(*tagsFlag)...)
@@ -232,8 +237,8 @@ func envfileCmd() command {
 	}
 	cmd.Run = func(args []string) error {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
-		fileFlag := defineFlagFile(fs)
-		tagsFlag := defineFlagTags(fs)
+		fileFlag := defineFileFlag(fs)
+		tagsFlag := defineTagsFlag(fs)
 		envFileFlag := fs.String("env-file", ".env", "envfile to be generated")
 		exampleFlag := fs.Bool("example", false, "include example values to the generated envfile")
 		overwriteFlag := fs.Bool("overwrite", false, "overwrite the envfile if it exists")
@@ -252,7 +257,7 @@ func envfileCmd() command {
 
 }
 
-func versionCmd(version string, buildDate string, gitCommit string) command {
+func versionCmd(versionJSONFile []byte) command {
 	cmd := command{
 		Name: "version",
 		Desc: "Show version information",
@@ -261,12 +266,27 @@ func versionCmd(version string, buildDate string, gitCommit string) command {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
 		fs.Parse(args)
 
+		var versionJSON struct {
+			Version   string
+			BuildDate string
+			GitCommit string
+		}
+
+		if err := json.Unmarshal(versionJSONFile, &versionJSON); err != nil {
+			return err
+		}
 		log.Printf(`
 Version:      %s
 Built:        %s
 Git commit:   %s
 Go version:   %s
-OS/Arch:      %s/%s`, version, buildDate, gitCommit, runtime.Version(), runtime.GOOS, runtime.GOARCH)
+OS/Arch:      %s/%s`,
+			versionJSON.Version,
+			versionJSON.BuildDate,
+			versionJSON.GitCommit,
+			runtime.Version(),
+			runtime.GOOS,
+			runtime.GOARCH)
 		return nil
 	}
 	return cmd
