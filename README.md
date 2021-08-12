@@ -2,6 +2,7 @@
 
 <p align="center"><img src="./docs/envvars_gopher.png" width="260"></p>
 
+<p align="center">
 [![Go Reference][linkProjectGoReferenceBadge]][linkProjectGoReference]
 [![GitHub Repository][linkGitHubProjectRepositoryBadge]][linkGitHubProjectRepository]
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
@@ -12,6 +13,7 @@
 [![Docker Image Version][linkDockerHubProjectImageVersion]][linkDockerHubProject]
 [![Docker Hub Pulls Badge][LinkDockerHubProjectPullsBadge]][linkDockerHubProject]
 [![License][linkLicenseBadge]][linkLicense]
+</p>
 
 ---
 
