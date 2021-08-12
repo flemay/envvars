@@ -1,5 +1,9 @@
 # Envvars
 
+<p align="center"><img src="./docs/envvars_gopher.png" width="260"></p>
+
+Envvars, a command line tool written in Go, provides a way to describe the environment variables of a project and ensures they are defined before testing, building, and deploying. It also generates an env file to be used by other applications such as Docker and Compose.
+
 [![Go Reference][linkProjectGoReferenceBadge]][linkProjectGoReference]
 [![GitHub Repository][linkGitHubProjectRepositoryBadge]][linkGitHubProjectRepository]
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
@@ -11,9 +15,7 @@
 [![Docker Hub Pulls Badge][LinkDockerHubProjectPullsBadge]][linkDockerHubProject]
 [![License][linkLicenseBadge]][linkLicense]
 
-<p align="center"><img src="./docs/envvars_gopher.png" width="260"></p>
-
-Envvars, a command line tool written in Go, provides a way to describe the environment variables of a project and ensures they are defined before testing, building, and deploying. It also generates an env file to be used by other applications such as Docker and Compose.
+---
 
 ## Releases and current state
 
