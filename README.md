@@ -17,46 +17,6 @@
 
 Envvars, a command line tool written in Go, provides a way to describe the environment variables of a project and ensures they are defined before testing, building, and deploying. It also generates an env file to be used by other applications such as Docker and Compose.
 
-## Releases and current state
-
-Envvars is in its early stage and its API is not stable. Envvars will be production ready when it reaches `v1.0.0`.
-
-You are encouraged to try envvars, [share your feedback and contribute to it][linkContributing].
-
-See [Automation & Configuration][linkAutomationAndConfiguration] for more details.
-
-## Declaration File
-
-The declaration file (written in [YAML][linkYAML]) is the core of Envvars. It declares all the environment variables used by a project.
-
-Envvars is looking for the declaration file `envvars.yml` by default. A different file can be passed with the flag `-f path/to/declarationfile.yml`.
-
-```yml
-tags:
-  - name: deploy
-    desc: tag used when deploying
-
-envvars:
-  - name: ENV
-    desc: Application stage (dev, qa, preprod, prod)
-    tags:
-      - deploy
-    optional: true
-    example: dev
-```
-
-| Field            |      Type      | Required | Description                                                                                                                        |
-|------------------|:--------------:|:--------:|------------------------------------------------------------------------------------------------------------------------------------|
-| tags             |      list      |    no    | List of tags to be used for targeting a subset of environment variables                                                            |
-| tags.name        |     string     |    yes   | Unique tag name                                                                                                                    |
-| tags.desc        |     string     |    no    | Meaningful description of the tag                                                                                                  |
-| envvars          |      list      |    yes   | List of environment variables                                                                                                      |
-| envvars.name     |     string     |    yes   | Unique environment variable name                                                                                                   |
-| envvars.desc     |     string     |    no    | Meaningful description of the environment variable                                                                                 |
-| envvars.tags     | list of string |    no    | List of tags for the environment variable. Each tag must be declared in the "tags" field.                                          |
-| envvars.optional |      bool      |    no    | Allows the environment variable to be empty or not defined. It is best to avoid it unless your application accepts an empty value. |
-| envvars.example  |     string     |    no    | Example value for the environment variable.                                                                                        |
-
 ## Installation
 
 ```bash
@@ -104,6 +64,38 @@ $ cat .env
 $ envvars --help
 ```
 
+## Declaration File
+
+The declaration file (written in [YAML][linkYAML]) is the core of Envvars. It declares all the environment variables used by a project.
+
+Envvars is looking for the declaration file `envvars.yml` by default. A different file can be passed with the flag `-f path/to/declarationfile.yml`.
+
+```yml
+tags:
+  - name: deploy
+    desc: tag used when deploying
+
+envvars:
+  - name: ENV
+    desc: Application stage (dev, qa, preprod, prod)
+    tags:
+      - deploy
+    optional: true
+    example: dev
+```
+
+| Field            |      Type      | Required | Description                                                                                                                        |
+|------------------|:--------------:|:--------:|------------------------------------------------------------------------------------------------------------------------------------|
+| tags             |      list      |    no    | List of tags to be used for targeting a subset of environment variables                                                            |
+| tags.name        |     string     |    yes   | Unique tag name                                                                                                                    |
+| tags.desc        |     string     |    no    | Meaningful description of the tag                                                                                                  |
+| envvars          |      list      |    yes   | List of environment variables                                                                                                      |
+| envvars.name     |     string     |    yes   | Unique environment variable name                                                                                                   |
+| envvars.desc     |     string     |    no    | Meaningful description of the environment variable                                                                                 |
+| envvars.tags     | list of string |    no    | List of tags for the environment variable. Each tag must be declared in the "tags" field.                                          |
+| envvars.optional |      bool      |    no    | Allows the environment variable to be empty or not defined. It is best to avoid it unless your application accepts an empty value. |
+| envvars.example  |     string     |    no    | Example value for the environment variable.                                                                                        |
+
 ## Guidelines
 
 ### Documentation is your best friend
@@ -117,6 +109,14 @@ Envvars fits nicely with the [3 Musketeers][link3Musketeers] for managing the en
 ## Contributing
 
 Contributions are greatly appreciated. Everyone can contribute and [here][linkContributing] are different ways.
+
+## Releases and current state
+
+Envvars is in its early stage and its API is not stable. Envvars will be production ready when it reaches `v1.0.0`.
+
+You are encouraged to try envvars, [share your feedback and contribute to it][linkContributing].
+
+See [Automation & Configuration][linkAutomationAndConfiguration] for more details.
 
 ## License
 
