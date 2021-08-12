@@ -60,3 +60,16 @@ $ git push fork meaningful_branch_name
 - Mockery must be installed locally
 - To generate all of them `$ make _mock`
 - Once generated, one would need to fix all the mocks imports
+
+### cmd/envvars/version.json
+
+This file contains information that are usually provided during the build process. This file is special as it is flagged as `--skip-worktree` with the command `$ git update-index cmd/envvars/version.json`. The side effect is that git will ignore any changes to this file. List of tagged file can be shown with `$ git ls-files -v | grep '^S'`.
+
+To update and commit the file:
+
+1. `$ git update-index --no-skip-worktree cmd/envvars/version.json`.
+1. Commit and push
+1. `$ git update-index --skip-worktree cmd/envvars/version.json`
+
+Credit: https://compiledsuccessfully.dev/git-skip-worktree/
+
