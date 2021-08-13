@@ -93,7 +93,7 @@ func defaultUsage(appName string, cmds commands) (string, error) {
 
 Commands:
 {{- range .Cmds}}
-    {{.Name}}    {{.Desc}}
+    {{printf "%-15s" .Name}} {{.Desc}}
 {{- end}}
 
 Run "{{.AppName}} COMMAND --help" for more information on a command.
