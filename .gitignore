@@ -1,5 +1,8 @@
-/vendor
+vendor
 .env*
 bin/
 .DS_Store
 *.out
+*.yml
+!docker-compose.yml
+!pkg/envfile/testdata/*.yml
