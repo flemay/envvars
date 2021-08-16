@@ -224,10 +224,8 @@ func listCmd() command {
 			fmt.Println(strings.Join(line, ","))
 		}
 		return nil
-
 	}
 	return cmd
-
 }
 
 func envfileCmd() command {
@@ -245,10 +243,10 @@ func envfileCmd() command {
 		removeFlag := fs.Bool("rm", false, "remove the envfile")
 		fs.Parse(args)
 
-		reader := yml.NewDeclarationYML(*fileFlag)
 		if *removeFlag {
 			return envfile.Remove(*envFileFlag)
 		}
+		reader := yml.NewDeclarationYML(*fileFlag)
 		writer := envfile.NewEnvfile(*envFileFlag, *exampleFlag, *overwriteFlag)
 		return envvars.Envfile(reader, writer, commaSeparateTags(*tagsFlag)...)
 
