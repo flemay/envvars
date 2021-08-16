@@ -6,3 +6,6 @@ bin/
 *.yml
 !docker-compose.yml
 !pkg/envfile/testdata/*.yml
+
+# special file. See docs/CONTRIBUTING.md
+cmd/envvars/version.json
