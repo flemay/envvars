@@ -63,15 +63,15 @@ $ git push fork meaningful_branch_name
 
 ### cmd/envvars/version.json
 
-This file contains information that are usually provided during the build process. The file was initialy created with a specific content, commited and then added to the file `.gitignore`. So, any changes made to the file will be ignored.
+This file contains information that are usually provided during the build process. This file is special as it is flagged as `--skip-worktree` with the command `$ git update-index cmd/envvars/version.json`. The side effect is that git will ignore any changes to this file. List of tagged file can be shown with `$ git ls-files -v | grep '^S'`.
 
-To update the file with permanent changes:
+To update and commit the file:
 
-1. Remove the file entry from the file `.gitignore` (or add `!`)
-1. Update the file
-1. Commit
-1. Add the file entry back to the file `.gitignore`
-1. Commit
+1. `$ git update-index --no-skip-worktree cmd/envvars/version.json`.
+1. Commit and push
+1. `$ git update-index --skip-worktree cmd/envvars/version.json`
+
+Credit: https://compiledsuccessfully.dev/git-skip-worktree/
 
 ### Go modules
 
