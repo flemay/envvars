@@ -63,15 +63,28 @@ $ git push fork meaningful_branch_name
 
 ### cmd/envvars/version.json
 
-This file contains information that are usually provided during the build process. This file is special as it is flagged as `--skip-worktree` with the command `$ git update-index cmd/envvars/version.json`. The side effect is that git will ignore any changes to this file. List of tagged file can be shown with `$ git ls-files -v | grep '^S'`.
+This file contains information that are usually provided during the build process. This file is special as it requires it when developing but further modifications of the file (like during the build process)  are not commited. Git `--skip-worktree` is used. Credits to https://compiledsuccessfully.dev/git-skip-worktree/.
 
-To update and commit the file:
+File was initialised as followed:
+
+1. Create the file with initial content
+1. Commit
+1. Flag the file as skipped: `$ git update-index --skip-worktree cmd/envvars/version.json`
+1. List files that are skipped: `$ git ls-files -v | grep '^S'`
+
+To commit new changes to the file:
 
 1. `$ git update-index --no-skip-worktree cmd/envvars/version.json`.
 1. Commit and push
 1. `$ git update-index --skip-worktree cmd/envvars/version.json`
 
-Credit: https://compiledsuccessfully.dev/git-skip-worktree/
+If you get an error like `error: Your local changes to the following files would be overwritten by checkout: path/to/file` when checking out a different branch:
+
+1. `$ git update-index --no-skip-worktree cmd/envvars/version.json`.
+1. `$ git stash` (or maybe `$ git checkout cmd/envvars/version.json`)
+1. `$ git checkout <your-branch>`
+1. Flag the file as skipped: `$ git update-index --skip-worktree cmd/envvars/version.json`
+1. Can now clean the stash
 
 ### Go modules
 
