@@ -73,3 +73,16 @@ To update and commit the file:
 
 Credit: https://compiledsuccessfully.dev/git-skip-worktree/
 
+### Go modules
+
+For managing modules, it is best to do so inside a container like the following:
+
+```bash
+# Go inside a Go container
+$ make shell
+
+# Tidy modules
+$ go mod tidy
+$ go mod vendor
+```
+
