@@ -3,13 +3,14 @@ GIT_TAG = v$(VERSION)
 DOCKER_TAG = $(VERSION)
 IMAGE_NAME = flemay/envvars:$(VERSION)
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
+COMPOSE_RUN_SHELLCHECK = docker-compose run --rm shellcheck
 ENVFILE ?= env.template
 TARGET_RUN_ARGS ?= --help
 
 all:
-	ENVFILE=env.example $(MAKE) envfile deps test build run buildDockerImage clean
+	ENVFILE=env.example $(MAKE) envfile deps lint test build run buildDockerImage clean
 
-ciTest: envfile deps test build run buildDockerImage clean
+ciTest: envfile deps lint test build run buildDockerImage clean
 
 _ciRelease:
 	TAG=$(GIT_TAG) ./scripts/github_release.sh
@@ -41,6 +42,9 @@ test:
 	$(COMPOSE_RUN_GOLANG) make _test
 _test:
 	go test -coverprofile=profile.out ./...
+
+lint:
+	$(COMPOSE_RUN_SHELLCHECK) scripts/*.sh
 
 build:
 	$(COMPOSE_RUN_GOLANG) bash -c 'VERSION=$(VERSION) ./scripts/build.sh'

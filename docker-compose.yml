@@ -8,3 +8,12 @@ services:
     volumes:
       - .:/opt/envvars
     working_dir: /opt/envvars
+
+  shellcheck:
+    image: koalaman/shellcheck:latest
+    network_mode: none
+    volumes:
+      - type: bind
+        source: ./scripts
+        target: /opt/app/scripts
+    working_dir: /opt/app

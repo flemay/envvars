@@ -13,7 +13,7 @@ VERSION_JSON_FILE="
   \"GitCommit\": \"$COMMIT_HASH\"
 }
 "
-echo $VERSION_JSON_FILE > cmd/envvars/version.json
+echo "$VERSION_JSON_FILE" > cmd/envvars/version.json
 
 # -s -w: omit symbol table, debug information, and DWARF table
 GO_BUILD_LDFLAGS="-s -w -extldflags \"-static\""
