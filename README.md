@@ -125,7 +125,7 @@ See [Automation & Configuration][linkAutomationAndConfiguration] for more detail
 
 [linkAutomationAndConfiguration]: ./docs/automation_and_configuration.md
 [linkLicense]: LICENSE
-[linkContributing]: ./docs/CONTRIBUTING.md
+[linkContributing]: ./CONTRIBUTING.md
 
 [linkProjectGoReferenceBadge]: https://pkg.go.dev/badge/filippo.io/age.svg
 [linkProjectGoReference]: https://pkg.go.dev/github.com/flemay/envvars
