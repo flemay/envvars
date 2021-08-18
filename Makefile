@@ -18,19 +18,36 @@ envfile:
 
 deps:
 	docker-compose pull
-	$(COMPOSE_RUN_GOLANG) ./scripts/deps.sh
+	$(COMPOSE_RUN_GOLANG) make _deps
+_deps:
+	go mod download
+	go mod vendor
+
+updateDeps:
+	$(COMPOSE_RUN_GOLANG) make _updateDeps
+_updateDeps:
+	go get -d -u ./...
+	go mod vendor
+	go mod tidy
 
 mock:
-	$(COMPOSE_RUN_GOLANG) ./scripts/mock.sh
+	$(COMPOSE_RUN_GOLANG) make _mock
+_mock:
+	go get -u github.com/vektra/mockery/.../
+	mockery -dir=pkg -all -case=underscore -output=pkg/mocks
 
 test:
-	$(COMPOSE_RUN_GOLANG) ./scripts/test.sh
+	$(COMPOSE_RUN_GOLANG) make _test
+_test:
+	go test -coverprofile=profile.out ./...
 
 build:
 	$(COMPOSE_RUN_GOLANG) bash -c 'VERSION=$(VERSION) ./scripts/build.sh'
 
 run:
-	$(COMPOSE_RUN_GOLANG) ./scripts/run.sh
+	$(COMPOSE_RUN_GOLANG) make _run
+_run:
+	./bin/envvars --help
 
 buildDockerImage:
 	docker build --no-cache -t $(IMAGE_NAME) .
@@ -55,10 +72,12 @@ overwriteTag:
 	git push origin $(GIT_TAG)
 
 clean:
-	$(COMPOSE_RUN_GOLANG) ./scripts/clean.sh
+	$(COMPOSE_RUN_GOLANG) make _clean
 	docker-compose down --remove-orphans
 	-$(MAKE) removeDockerImage
 	rm -f .env
+_clean:
+	rm -fr bin vendor profile.out
 
 shell:
 	$(COMPOSE_RUN_GOLANG) bash
