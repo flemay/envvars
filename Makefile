@@ -4,6 +4,7 @@ DOCKER_TAG = $(VERSION)
 IMAGE_NAME = flemay/envvars:$(VERSION)
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 ENVFILE ?= env.template
+TARGET_RUN_ARGS ?= --help
 
 all:
 	ENVFILE=env.example $(MAKE) envfile deps test build run buildDockerImage clean
@@ -45,9 +46,9 @@ build:
 	$(COMPOSE_RUN_GOLANG) bash -c 'VERSION=$(VERSION) ./scripts/build.sh'
 
 run:
-	$(COMPOSE_RUN_GOLANG) make _run
+	$(COMPOSE_RUN_GOLANG) make _run TARGET_RUN_ARGS="$(TARGET_RUN_ARGS)"
 _run:
-	./bin/envvars --help
+	./bin/envvars $(TARGET_RUN_ARGS)
 
 buildDockerImage:
 	docker build --no-cache -t $(IMAGE_NAME) .
