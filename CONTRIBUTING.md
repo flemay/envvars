@@ -29,7 +29,7 @@ $ go get github.com/flemay/envvars
 # go inside the repo
 $ cd $GOPATH/src/github.com/flemay/envvars && git remote add fork git@github.com:my-id/project.git
 
-# checkout a new branch if you do not want to work on master(optional)
+# checkout a new branch if you do not want to work on main (optional)
 $ git checkout -b meaningful_branch_name
 
 # download all the dependencies
@@ -44,7 +44,7 @@ $ make build
 $ make run
 
 # push your changes
-$ git push fork master
+$ git push fork main
 # or your branch
 $ git push fork meaningful_branch_name
 
