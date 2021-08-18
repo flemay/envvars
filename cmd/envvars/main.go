@@ -87,16 +87,18 @@ func defaultUsage(appName string, cmds commands) (string, error) {
 		appName,
 		cmds,
 	}
-	usageTpl := `Usage:
-    {{.AppName}} COMMAND [OPTIONS]
-    {{.AppName}} --help
+	usageTpl := `Usage: {{.AppName}} [options] [command]
+
+Options:
+    {{printf "%-15s" "-h"}} Output usage information (shorthand)
+    {{printf "%-15s" "-help"}} Output usage information
 
 Commands:
 {{- range .Cmds}}
     {{printf "%-15s" .Name}} {{.Desc}}
 {{- end}}
 
-Run "{{.AppName}} COMMAND --help" for more information on a command.
+Use "{{.AppName}} <command> --help" for more information about a command.
 
 Examples:
     Create a file to get started
@@ -258,7 +260,7 @@ func envfileCmd() command {
 func versionCmd(versionJSONFile []byte) command {
 	cmd := command{
 		Name: "version",
-		Desc: "Show version information",
+		Desc: "Output version information",
 	}
 	cmd.Run = func(args []string) error {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)
