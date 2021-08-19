@@ -38,10 +38,12 @@ $ make deps
 # ...
 # test your changes
 $ make test
-# build Envvars
+# build envvars
 $ make build
-# run Envvars
+# run envvars
 $ make run
+# build a local docker image
+$ make buildDockerImage
 
 # push your changes
 $ git push fork main

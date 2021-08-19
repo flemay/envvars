@@ -4,6 +4,7 @@ DOCKER_TAG = $(VERSION)
 IMAGE_NAME = flemay/envvars:$(VERSION)
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 COMPOSE_RUN_SHELLCHECK = docker-compose run --rm shellcheck
+COMPOSE_RUN_MOCKERY = docker-compose run --rm mockery
 ENVFILE ?= env.template
 TARGET_RUN_ARGS ?= --help
 
@@ -33,10 +34,7 @@ _updateDeps:
 	go mod tidy
 
 mock:
-	$(COMPOSE_RUN_GOLANG) make _mock
-_mock:
-	go get -u github.com/vektra/mockery/.../
-	mockery -dir=pkg -all -case=underscore -output=pkg/mocks
+	$(COMPOSE_RUN_MOCKERY) -dir=pkg -all -case=underscore -output=pkg/mocks
 
 test:
 	$(COMPOSE_RUN_GOLANG) make _test

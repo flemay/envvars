@@ -7,7 +7,7 @@ services:
       BUILD_FOR_SCRATCH_IMAGE: "true"
     volumes:
       - .:/opt/envvars
-    working_dir: /opt/envvars
+    working_dir: /opt/app
 
   shellcheck:
     image: koalaman/shellcheck:latest
@@ -16,4 +16,13 @@ services:
       - type: bind
         source: ./scripts
         target: /opt/app/scripts
+    working_dir: /opt/app
+
+  mockery:
+    image: vektra/mockery:latest
+    network_mode: none
+    volumes:
+      - type: bind
+        source: ./pkg
+        target: /opt/app/pkg
     working_dir: /opt/app
