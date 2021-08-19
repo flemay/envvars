@@ -5,6 +5,7 @@ IMAGE_NAME = flemay/envvars:$(VERSION)
 COMPOSE_RUN_GOLANG = docker-compose run --rm golang
 COMPOSE_RUN_SHELLCHECK = docker-compose run --rm shellcheck
 COMPOSE_RUN_MOCKERY = docker-compose run --rm mockery
+COMPOSE_RUN_GOLANGCILINT = docker-compose run --rm golangcilint
 ENVFILE ?= env.template
 TARGET_RUN_ARGS ?= --help
 
@@ -43,6 +44,7 @@ _test:
 
 lint:
 	$(COMPOSE_RUN_SHELLCHECK) scripts/*.sh
+	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint --version
 
 build:
 	$(COMPOSE_RUN_GOLANG) bash -c 'VERSION=$(VERSION) ./scripts/build.sh'

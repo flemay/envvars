@@ -6,7 +6,9 @@ services:
     environment:
       BUILD_FOR_SCRATCH_IMAGE: "true"
     volumes:
-      - .:/opt/app
+      - type: bind
+        source: .
+        target: /opt/app
     working_dir: /opt/app
 
   shellcheck:
@@ -16,6 +18,7 @@ services:
       - type: bind
         source: ./scripts
         target: /opt/app/scripts
+        read_only: true
     working_dir: /opt/app
 
   mockery:
@@ -25,4 +28,14 @@ services:
       - type: bind
         source: .
         target: /opt/app
+    working_dir: /opt/app
+
+  golangcilint:
+    image: golangci/golangci-lint:latest-alpine
+    network_mode: none
+    volumes:
+      - type: bind
+        source: .
+        target: /opt/app
+        read_only: true
     working_dir: /opt/app
