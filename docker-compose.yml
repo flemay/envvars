@@ -6,7 +6,7 @@ services:
     environment:
       BUILD_FOR_SCRATCH_IMAGE: "true"
     volumes:
-      - .:/opt/envvars
+      - .:/opt/app
     working_dir: /opt/app
 
   shellcheck:
@@ -23,6 +23,6 @@ services:
     network_mode: none
     volumes:
       - type: bind
-        source: ./pkg
-        target: /opt/app/pkg
+        source: .
+        target: /opt/app
     working_dir: /opt/app
