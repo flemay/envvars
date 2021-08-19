@@ -20,8 +20,13 @@ Envvars, a command line tool written in Go, provides a way to describe the envir
 ## Installation
 
 ```bash
-# with go get
-$ go get -u github.com/flemay/envvars
+# install latest release
+$ go install github.com/flemay/envvars@latest
+
+# install from source
+$ git clone https://github.com/flemay/envvars
+$ cd envvars
+$ go install ./...
 
 # or use the tiny docker image (< 5 MB)
 $ docker run --rm flemay/envvars

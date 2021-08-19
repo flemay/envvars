@@ -59,8 +59,9 @@ $ git push fork meaningful_branch_name
 
 [Mockery](https://github.com/vektra/mockery) is being used to generate mocks in the folder `pkg/mocks`.
 
-- To generate the mocks `$ make mock`
-- Once generated, one would need to fix all the mocks imports
+1. Download deps if it not done `$ make deps`
+2. To generate the mocks `$ make mock`
+3. Once generated, one would need to fix all the mocks imports
 
 ### cmd/envvars/version.json
 
@@ -84,14 +85,4 @@ Steps for fixing an error like `error: Your local changes to the following files
 
 ### Go modules
 
-For managing modules, it is best to do so inside a container like the following:
-
-```bash
-# Go inside a Go container
-$ make shell
-
-# Tidy modules
-$ go mod tidy
-$ go mod vendor
-```
-
+To update modules, run the command `$ make updateDeps`.
