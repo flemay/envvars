@@ -28,7 +28,7 @@ $ go install ./...
 
 # or use the tiny docker image (< 5 MB)
 # example for version 0.0.7
-$ docker run --rm flemay/envvars:0.0.7
+$ docker run --rm flemay/envvars:0.0.7 --help
 ```
 
 ## Usage
