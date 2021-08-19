@@ -1,16 +1,16 @@
 # Envvars
 
 [![Go Reference][linkProjectGoReferenceBadge]][linkProjectGoReference]
-[![GitHub Repository][linkGitHubProjectRepositoryBadge]][linkGitHubProjectRepository]
+[![License][linkLicenseBadge]][linkLicense]
 [![Go Report Card][linkGoReportCardProjectBadge]][linkGoReportCardProject]
-[![GitHub Tag][linkGitHubProjectTagBadge]][linkGitHubProject]
+[![GitHub Tag][linkProjectGitHubTagBadge]][linkProjectGitHubReleases]
 [![Build Status][linkGitHubActionsProjectTestBadge]][linkGitHubActionsProject]
-[![Build Status][linkGitHubActionsProjectReleaseBadge]][linkGitHubActionsProject]
+[![Build Status][linkGitHubActionsProjectReleaseBadge]][linkGitHubActionsProject]<br>
 [![Docker Hub][linkDockerHubProjectBadge]][linkDockerHubProject]
 [![Docker Image Version][linkDockerHubProjectImageVersion]][linkDockerHubProject]
 [![Docker Hub Pulls Badge][LinkDockerHubProjectPullsBadge]][linkDockerHubProject]
-[![License][linkLicenseBadge]][linkLicense]
 
+<br>
 <p align="center"><img src="./docs/envvars_gopher.png" width="260"></p>
 
 Envvars, a command line tool written in Go, provides a way to describe the environment variables of a project and ensures they are defined before testing, building, and deploying. It also generates an env file to be used by other applications such as Docker and Compose.
@@ -137,8 +137,6 @@ See [Automation & Configuration][linkAutomationAndConfiguration] for more detail
 
 [linkProjectGoReferenceBadge]: https://pkg.go.dev/badge/filippo.io/age.svg
 [linkProjectGoReference]: https://pkg.go.dev/github.com/flemay/envvars
-[linkGitHubProjectRepositoryBadge]: https://img.shields.io/badge/repository-github-black.svg
-[linkGitHubProjectRepository]: https://github.com/flemay/envvars
 [linkYAML]: http://yaml.org/spec/1.2/spec.html
 [link3Musketeers]: https://3musketeers.io
 [linkGitHubActionsProjectTestBadge]: https://github.com/flemay/envvars/workflows/Test/badge.svg
@@ -152,7 +150,7 @@ See [Automation & Configuration][linkAutomationAndConfiguration] for more detail
 [linkGoReportCardProjectBadge]: https://goreportcard.com/badge/github.com/flemay/envvars
 [linkGoReportCardProject]: https://goreportcard.com/report/github.com/flemay/envvars
 [linkLicenseBadge]: https://img.shields.io/dub/l/vibe-d.svg
-[linkGitHubProjectTagBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
-[linkGitHubProject]: https://github.com/flemay/envvars
+[linkProjectGitHubTagBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
+[linkProjectGitHubReleases]: https://github.com/flemay/envvars/releases
 [linkProjectStargazersSVG]: https://starchart.cc/flemay/envvars.svg
 [linkProjectStargazers]: https://starchart.cc/flemay/envvars
