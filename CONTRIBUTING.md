@@ -59,8 +59,7 @@ $ git push fork meaningful_branch_name
 
 [Mockery](https://github.com/vektra/mockery) is being used to generate mocks in the folder `pkg/mocks`.
 
-- Mockery must be installed locally
-- To generate all of them `$ make _mock`
+- To generate the mocks `$ make mock`
 - Once generated, one would need to fix all the mocks imports
 
 ### cmd/envvars/version.json

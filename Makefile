@@ -34,7 +34,7 @@ _updateDeps:
 	go mod tidy
 
 mock:
-	$(COMPOSE_RUN_MOCKERY) -dir=pkg -all -case=underscore -output=pkg/mocks
+	$(COMPOSE_RUN_MOCKERY) --dir=pkg --all --case=underscore --output=pkg/mocks
 
 test:
 	$(COMPOSE_RUN_GOLANG) make _test
