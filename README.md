@@ -124,6 +124,10 @@ You are encouraged to try envvars, [share your feedback and contribute to it][li
 
 See [Automation & Configuration][linkAutomationAndConfiguration] for more details.
 
+## Stargazers over time
+
+[![Stargazers over time][linkProjectStargazersSVG]][linkProjectStargazers]
+
 ## License
 
 [MIT][linkLicense]
@@ -152,3 +156,5 @@ See [Automation & Configuration][linkAutomationAndConfiguration] for more detail
 [linkLicenseBadge]: https://img.shields.io/dub/l/vibe-d.svg
 [linkGitHubProjectTagBadge]: https://img.shields.io/github/tag/flemay/envvars.svg
 [linkGitHubProject]: https://github.com/flemay/envvars
+[linkProjectStargazersSVG]: https://starchart.cc/flemay/envvars.svg
+[linkProjectStargazers]: https://starchart.cc/flemay/envvars
