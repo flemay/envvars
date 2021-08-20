@@ -10,9 +10,9 @@ ENVFILE ?= env.template
 TARGET_RUN_ARGS ?= --help
 
 all:
-	ENVFILE=env.example $(MAKE) envfile deps lint test build run buildDockerImage clean
+	ENVFILE=env.example $(MAKE) envfile deps test build run buildDockerImage clean
 
-ciTest: envfile deps lint test build run buildDockerImage clean
+ciTest: envfile deps test build run buildDockerImage clean
 
 _ciRelease:
 	TAG=$(GIT_TAG) ./scripts/github_release.sh
@@ -38,13 +38,11 @@ mock:
 	$(COMPOSE_RUN_MOCKERY) --dir=pkg --all --case=underscore --output=pkg/mocks
 
 test:
+	$(COMPOSE_RUN_SHELLCHECK) scripts/*.sh
+	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint run pkg/...
 	$(COMPOSE_RUN_GOLANG) make _test
 _test:
 	go test -coverprofile=profile.out ./...
-
-lint:
-	$(COMPOSE_RUN_SHELLCHECK) scripts/*.sh
-	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint run pkg/...
 
 build:
 	$(COMPOSE_RUN_GOLANG) bash -c 'VERSION=$(VERSION) ./scripts/build.sh'

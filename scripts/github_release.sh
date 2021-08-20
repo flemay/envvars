@@ -14,4 +14,4 @@ echo "GITHUB_TAG: ${GITHUB_TAG}"
 
 [ "${TAG}" == "${GITHUB_TAG}" ] || { echo "TAG differs from GITHUB_TAG"; exit 1; }
 
-make envfile deps lint test build run buildDockerImage pushDockerImage clean
+make envfile deps test build run buildDockerImage pushDockerImage clean
