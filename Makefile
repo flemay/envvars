@@ -38,9 +38,9 @@ mock:
 	$(COMPOSE_RUN_MOCKERY) --dir=pkg --all --case=underscore --output=pkg/mocks
 
 test:
+	$(COMPOSE_RUN_GOLANG) make _test
 	$(COMPOSE_RUN_SHELLCHECK) scripts/*.sh
 	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint run pkg/...
-	$(COMPOSE_RUN_GOLANG) make _test
 _test:
 	go test -coverprofile=profile.out ./...
 

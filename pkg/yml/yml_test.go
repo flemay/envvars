@@ -72,7 +72,7 @@ func TestDeclarationYML_Read_toReturnErrorIfFileNotFound(t *testing.T) {
 
 func TestDeclarationYML_Write_toWriteDeclarationInYMLFile(t *testing.T) {
 	// given
-	filename := "testdata/envvars.yml.tmp"
+	filename := t.TempDir() + "/envvars.yml"
 	writer := yml.NewDeclarationYML(filename)
 	d := &envvars.Declaration{
 		Envvars: []*envvars.Envvar{
@@ -91,12 +91,11 @@ func TestDeclarationYML_Write_toWriteDeclarationInYMLFile(t *testing.T) {
 	expectedFile := readFile(t, "testdata/envvars.yml.golden")
 	actualFile := readFile(t, filename)
 	assert.Equal(t, expectedFile, actualFile)
-	removeFileOrDir(t, filename)
 }
 
 func TestDeclarationYML_Write_toReturnErrorIfFileExists(t *testing.T) {
 	// given
-	filename := "testdata/envvars.yml.tmp"
+	filename := t.TempDir() + "/envvars.yml"
 	writer := yml.NewDeclarationYML(filename)
 	d := &envvars.Declaration{
 		Envvars: []*envvars.Envvar{
@@ -113,13 +112,12 @@ func TestDeclarationYML_Write_toReturnErrorIfFileExists(t *testing.T) {
 	err = writer.Write(d, false)
 
 	// then
-	assert.EqualError(t, err, "open testdata/envvars.yml.tmp: file exists")
-	removeFileOrDir(t, filename)
+	assert.EqualError(t, err, "open "+filename+": file exists")
 }
 
 func TestDeclarationYML_Write_toOverwriteExistingFile(t *testing.T) {
 	// given
-	filename := "testdata/envvars.yml.tmp"
+	filename := t.TempDir() + "/envvars.yml"
 	writer := yml.NewDeclarationYML(filename)
 	d := &envvars.Declaration{
 		Envvars: []*envvars.Envvar{
@@ -140,13 +138,6 @@ func TestDeclarationYML_Write_toOverwriteExistingFile(t *testing.T) {
 	expectedFile := readFile(t, "testdata/envvars.yml.golden")
 	actualFile := readFile(t, filename)
 	assert.Equal(t, expectedFile, actualFile)
-	removeFileOrDir(t, filename)
-}
-
-func removeFileOrDir(t *testing.T, name string) {
-	if err := os.Remove(name); err != nil {
-		t.Fatalf(err.Error())
-	}
 }
 
 func readFile(t *testing.T, name string) string {
