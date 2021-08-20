@@ -1,13 +1,14 @@
 package envfile_test
 
 import (
+	"io/ioutil"
+	"os"
+	"testing"
+
 	"github.com/flemay/envvars/pkg/envfile"
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/yml"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
-	"os"
-	"testing"
 )
 
 func TestEnvfile_toImplementEnvfileWriterInterface(t *testing.T) {
@@ -128,14 +129,14 @@ func TestEnvfile_Remove_toReturnErrorIfEnvfileNotPresent(t *testing.T) {
 
 func removeFileOrDir(t *testing.T, name string) {
 	if err := os.Remove(name); err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err.Error())
 	}
 }
 
 func readFile(t *testing.T, name string) string {
 	f, err := ioutil.ReadFile(name)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err.Error())
 	}
 	return string(f)
 }
@@ -143,13 +144,15 @@ func readFile(t *testing.T, name string) string {
 func createEmptyFile(t *testing.T, name string) {
 	f, err := os.Create(name)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err.Error())
 	}
 	if err := f.Close(); err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err.Error())
 	}
 }
 
 func createDir(t *testing.T, name string) {
-	os.Mkdir(name, os.ModePerm)
+	if err := os.Mkdir(name, os.ModePerm); err != nil {
+		t.Fatal(err.Error())
+	}
 }

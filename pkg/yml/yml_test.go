@@ -1,12 +1,13 @@
 package yml_test
 
 import (
-	"github.com/flemay/envvars/pkg/envvars"
-	"github.com/flemay/envvars/pkg/yml"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"testing"
+
+	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/yml"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestDeclarationYML_Read_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) {
@@ -106,10 +107,11 @@ func TestDeclarationYML_Write_toReturnErrorIfFileExists(t *testing.T) {
 			},
 		},
 	}
-	writer.Write(d, false)
+	err := writer.Write(d, false)
+	assert.NoError(t, err)
 
 	// when
-	err := writer.Write(d, false)
+	err = writer.Write(d, false)
 
 	// then
 	assert.EqualError(t, err, "open testdata/envvars.yml.tmp: file exists")
@@ -128,10 +130,11 @@ func TestDeclarationYML_Write_toOverwriteExistingFile(t *testing.T) {
 			},
 		},
 	}
-	writer.Write(d, false)
+	err := writer.Write(d, false)
+	assert.NoError(t, err)
 
 	// when
-	err := writer.Write(d, true)
+	err = writer.Write(d, true)
 
 	// then
 	assert.NoError(t, err)

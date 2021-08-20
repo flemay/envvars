@@ -3,8 +3,9 @@ package envfile
 import (
 	"bufio"
 	"fmt"
-	"github.com/flemay/envvars/pkg/envvars"
 	"os"
+
+	"github.com/flemay/envvars/pkg/envvars"
 )
 
 // Envfile define a struct which is responsible to generates an env file.
@@ -18,10 +19,10 @@ type Envfile struct {
 // It returns an error if the file already exists unless overwrite is true
 func (e *Envfile) Write(c envvars.EnvvarCollection) error {
 	fileinfo, err := os.Stat(e.filename)
-	if err != nil && os.IsNotExist(err) == false {
+	if err != nil && !os.IsNotExist(err) {
 		return err
 	}
-	if err == nil && e.overwrite == false {
+	if err == nil && !e.overwrite {
 		return fmt.Errorf("error: %s already exist", e.filename)
 	}
 	if err == nil && fileinfo.IsDir() {

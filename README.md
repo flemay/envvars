@@ -135,7 +135,7 @@ See [Automation & Configuration][linkAutomationAndConfiguration] for more detail
 [linkLicense]: LICENSE
 [linkContributing]: ./CONTRIBUTING.md
 
-[linkProjectGoReferenceBadge]: https://pkg.go.dev/badge/filippo.io/age.svg
+[linkProjectGoReferenceBadge]: https://pkg.go.dev/badge/github.com/flemay/envvars.svg
 [linkProjectGoReference]: https://pkg.go.dev/github.com/flemay/envvars
 [linkYAML]: http://yaml.org/spec/1.2/spec.html
 [link3Musketeers]: https://3musketeers.io

@@ -44,7 +44,7 @@ _test:
 
 lint:
 	$(COMPOSE_RUN_SHELLCHECK) scripts/*.sh
-	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint --version
+	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint run pkg/...
 
 build:
 	$(COMPOSE_RUN_GOLANG) bash -c 'VERSION=$(VERSION) ./scripts/build.sh'

@@ -1,8 +1,9 @@
 package envvars
 
 import (
-	"github.com/flemay/envvars/pkg/errorappender"
 	"os"
+
+	"github.com/flemay/envvars/pkg/errorappender"
 )
 
 // Ensure verifies that the environment variables comply to their Declaration. Tags can be passed along to only ensure environment variables with the tags
@@ -24,7 +25,7 @@ func ensureEnvvar(ev *Envvar) error {
 	}
 	errorAppender := errorappender.NewErrorAppender("; ")
 	value, found := os.LookupEnv(ev.Name)
-	if found == false {
+	if !found {
 		errorAppender.AppendString("is not defined")
 	} else if value == "" {
 		errorAppender.AppendString("is empty")
