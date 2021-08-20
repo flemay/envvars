@@ -1,7 +1,6 @@
 package envfile_test
 
 import (
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -134,7 +133,7 @@ func removeFileOrDir(t *testing.T, name string) {
 }
 
 func readFile(t *testing.T, name string) string {
-	f, err := ioutil.ReadFile(name)
+	f, err := os.ReadFile(name)
 	if err != nil {
 		t.Fatal(err.Error())
 	}

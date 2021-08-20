@@ -2,10 +2,10 @@ package yml
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/flemay/envvars/pkg/envvars"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
-	"os"
 )
 
 // DeclarationYML handles read/write of a Declaration YML file
@@ -20,7 +20,7 @@ func NewDeclarationYML(filename string) *DeclarationYML {
 
 // Read returns a Declaration from a yml file
 func (declarationYML *DeclarationYML) Read() (*envvars.Declaration, error) {
-	data, err := ioutil.ReadFile(declarationYML.filename)
+	data, err := os.ReadFile(declarationYML.filename)
 	if err != nil {
 		return nil, fmt.Errorf("error occurred when reading the file %s: %s", declarationYML.filename, err.Error())
 	}
