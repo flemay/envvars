@@ -87,9 +87,11 @@ func defaultUsage(appName string, cmds commands) (string, error) {
 		appName,
 		cmds,
 	}
-	usageTpl := `Usage: {{.AppName}} [options] [command]
+	usageTpl := `Usage:
+    {{.AppName}} [flags]
+    {{.AppName}} [command]
 
-Options:
+Flags:
     {{printf "%-15s" "-h"}} Output usage information (shorthand)
     {{printf "%-15s" "-help"}} Output usage information
 
@@ -98,7 +100,7 @@ Commands:
     {{printf "%-15s" .Name}} {{.Desc}}
 {{- end}}
 
-Use "{{.AppName}} <command> --help" for more information about a command.
+Use "{{.AppName}} [command] --help" for more information about a command.
 
 Examples:
     Create a file to get started
@@ -192,7 +194,7 @@ func validateCmd() command {
 func ensureCmd() command {
 	cmd := command{
 		Name: "ensure",
-		Desc: "Verify that the environment variables comply to their declaration",
+		Desc: "Verify that the environment variables comply to their declaration. It also validates the declaration file",
 	}
 	cmd.Run = func(args []string) error {
 		fs := flag.NewFlagSet(cmd.Name, flag.ExitOnError)

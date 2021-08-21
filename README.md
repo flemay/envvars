@@ -47,7 +47,7 @@ $ envvars init
 # validate the declaration file if it contains errors
 $ envvars validate
 
-# ensure the environment variables comply with the declaration file
+# ensure the environment variables comply with the declaration file. The declaration file is also validated.
 $ envvars ensure
 # Error: environment variable ECHO is not defined
 # set ECHO with empty value
