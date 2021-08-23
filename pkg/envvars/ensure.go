@@ -1,6 +1,7 @@
 package envvars
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
@@ -24,20 +25,23 @@ func ensureEnvvar(ev *Envvar) error {
 	if ev.Optional {
 		return nil
 	}
-	value, found := os.LookupEnv(ev.Name)
 
-	var errMessage string
-	if !found {
-		errMessage = "is not defined"
-	} else if value == "" {
-		errMessage = "is empty"
-	}
-
-	if errMessage != "" {
+	newError := func(envIsMessage string) error {
+		message := fmt.Sprintf("environment variable %s %s", ev.Name, envIsMessage)
 		if ev.Desc != "" {
-			errMessage = fmt.Sprintf("%s. Variable description: %s", errMessage, ev.Desc)
+			message = fmt.Sprintf("%s. Variable description: %s", message, ev.Desc)
 		}
-		return fmt.Errorf("environment variable %s %s", ev.Name, errMessage)
+		return errors.New(message)
 	}
+
+	value, found := os.LookupEnv(ev.Name)
+	if !found {
+		return newError("is not defined")
+	}
+
+	if value == "" {
+		return newError("is empty")
+	}
+
 	return nil
 }
