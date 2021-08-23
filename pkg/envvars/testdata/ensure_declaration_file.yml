@@ -3,6 +3,7 @@ tags:
   - name: tag2
 envvars:
   - name: ENVVAR_1
+    desc: Desc of ENVVAR_1
     tags:
       - tag1
   - name: ENVVAR_2

@@ -1,12 +1,13 @@
 package envvars_test
 
 import (
+	"os"
+	"testing"
+
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/mocks"
 	"github.com/flemay/envvars/pkg/yml"
 	"github.com/stretchr/testify/assert"
-	"os"
-	"testing"
 )
 
 func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
@@ -87,14 +88,14 @@ func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/ensure_declaration_file.yml")
 	os.Setenv("ENVVAR_2", "")
+	defer os.Unsetenv("ENVVAR_2")
 
 	// when
-	err := envvars.Ensure(reader)
+	got := envvars.Ensure(reader)
 
 	// then
-	os.Unsetenv("ENVVAR_2")
-	expectedErrorMsg := readFile(t, "testdata/ensure_error_message.golden")
-	assert.EqualError(t, err, expectedErrorMsg)
+	want := readFile(t, "testdata/ensure_error_message.golden")
+	assert.EqualError(t, got, want)
 }
 
 func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
@@ -115,5 +116,5 @@ func TestEnsure_toReturnErrorIfTaggedEnvvarsDoNotComply(t *testing.T) {
 	// when
 	err := envvars.Ensure(reader, "tag1")
 	// then
-	assert.EqualError(t, err, "environment variable ENVVAR_1 is not defined")
+	assert.EqualError(t, err, "environment variable ENVVAR_1 is not defined. Variable description: Desc of ENVVAR_1")
 }
