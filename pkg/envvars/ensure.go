@@ -1,6 +1,8 @@
 package envvars
 
 import (
+	"errors"
+	"fmt"
 	"os"
 
 	"github.com/flemay/envvars/pkg/errorappender"
@@ -23,13 +25,23 @@ func ensureEnvvar(ev *Envvar) error {
 	if ev.Optional {
 		return nil
 	}
-	errorAppender := errorappender.NewErrorAppender("; ")
-	value, found := os.LookupEnv(ev.Name)
-	if !found {
-		errorAppender.AppendString("is not defined")
-	} else if value == "" {
-		errorAppender.AppendString("is empty")
+
+	newError := func(envIsMessage string) error {
+		message := fmt.Sprintf("environment variable %s %s", ev.Name, envIsMessage)
+		if ev.Desc != "" {
+			message = fmt.Sprintf("%s. Variable description: %s", message, ev.Desc)
+		}
+		return errors.New(message)
 	}
 
-	return errorAppender.Wrap("environment variable " + ev.Name + " ")
+	value, found := os.LookupEnv(ev.Name)
+	if !found {
+		return newError("is not defined")
+	}
+
+	if value == "" {
+		return newError("is empty")
+	}
+
+	return nil
 }
