@@ -2,6 +2,8 @@ package envfile_test
 
 import (
 	"os"
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/flemay/envvars/pkg/envfile"
@@ -14,87 +16,69 @@ func TestEnvfile_toImplementEnvfileWriterInterface(t *testing.T) {
 	assert.Implements(t, (*envvars.EnvfileWriter)(nil), new(envfile.Envfile))
 }
 
-func TestEnvfile_toGenerateFileIfItDoesNotExist(t *testing.T) {
-	// given
-	reader := yml.NewDeclarationYML("testdata/envvars.yml")
-	name := t.TempDir() + "/envfile.tmp"
-	writer := envfile.NewEnvfile(name, false, false)
-	d, _ := reader.Read()
+func TestEnvfileWrite(t *testing.T) {
+	var tests = []struct {
+		name                   string
+		givenDeclarationFile   string
+		givenEnvfileExists     bool
+		givenEnvfileIsDir      bool
+		whenExample            bool
+		whenOverwrite          bool
+		thenGoldenFile         string
+		thenErrorMessageRegExp string
+	}{
+		{"generate file", "./testdata/envvars.yml", false, false, false, false, "./testdata/envfile.golden", ""},
+		{"generate file with example", "./testdata/envvars.yml", false, false, true, false, "./testdata/envfile_example.golden", ""},
+		{"overwrite existing file", "./testdata/envvars.yml", true, false, false, true, "./testdata/envfile.golden", ""},
+		{"fail generate when existing file", "./testdata/envvars.yml", true, false, false, false, "", `.* already exist$`},
+		{"fail overwrite a directory", "./testdata/envvars.yml", false, true, false, true, "", `.* is a folder, not a file$`},
+	}
 
-	// when
-	err := writer.Write(d.Envvars)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// given
+			reader := yml.NewDeclarationYML(tt.givenDeclarationFile)
+			d, err := reader.Read()
+			if err != nil {
+				t.Fatalf("Reader.Read: %v", err)
+			}
 
-	// then
-	assert.NoError(t, err)
-	expected := readFile(t, "testdata/envfile.golden")
-	actual := readFile(t, name)
-	assert.Equal(t, expected, actual)
-}
+			if tt.givenEnvfileExists && tt.givenEnvfileIsDir {
+				t.Fatalf("givenEnvfileExists and givenEnvfileIsDir cannot be both true")
+			}
 
-func TestEnvfile_toGenerateFileWithExampleIfItDoesNotExist(t *testing.T) {
-	// given
-	reader := yml.NewDeclarationYML("testdata/envvars.yml")
-	name := t.TempDir() + "/envfile.tmp"
-	writer := envfile.NewEnvfile(name, true, false)
-	d, _ := reader.Read()
+			envfileName := t.TempDir()
+			if !tt.givenEnvfileIsDir {
+				envfileName = envfileName + "/.env"
+			}
 
-	// when
-	err := writer.Write(d.Envvars)
+			if tt.givenEnvfileExists {
+				createEmptyFile(t, envfileName)
+			}
+			writer := envfile.NewEnvfile(envfileName, tt.whenExample, tt.whenOverwrite)
 
-	// then
-	assert.NoError(t, err)
-	expected := readFile(t, "testdata/envfile_example.golden")
-	actual := readFile(t, name)
-	assert.Equal(t, expected, actual)
-}
+			// when
+			if err := writer.Write(d.Envvars); err != nil {
+				if tt.thenErrorMessageRegExp == "" {
+					t.Fatalf("Writer.Write: %v", err)
+				}
+				// then
+				re := regexp.MustCompile(tt.thenErrorMessageRegExp)
+				if !re.MatchString(err.Error()) {
+					t.Errorf("want regexp %q to match %q", tt.thenErrorMessageRegExp, err.Error())
+				}
+			}
 
-func TestEnvfile_toGenerateFileIfItExistsAndOverwrite(t *testing.T) {
-	// given
-	reader := yml.NewDeclarationYML("testdata/envvars.yml")
-	name := t.TempDir() + "/envfile.tmp"
-	createEmptyFile(t, name)
-	writer := envfile.NewEnvfile(name, false, true)
-	d, _ := reader.Read()
-
-	// when
-	err := writer.Write(d.Envvars)
-
-	// then
-	assert.NoError(t, err)
-	expected := readFile(t, "testdata/envfile.golden")
-	actual := readFile(t, name)
-	assert.Equal(t, expected, actual)
-}
-
-func TestEnvfile_toReturnErrorIfFileExistsAndNotOverwrite(t *testing.T) {
-	// given
-	reader := yml.NewDeclarationYML("testdata/envvars.yml")
-	name := t.TempDir() + "/envfile.tmp"
-	createEmptyFile(t, name)
-	writer := envfile.NewEnvfile(name, false, false)
-	d, _ := reader.Read()
-
-	// when
-	err := writer.Write(d.Envvars)
-
-	// then
-	assert.Error(t, err)
-	assert.EqualError(t, err, "error: "+name+" already exist")
-}
-
-func TestEnvfile_toReturnErrorIfPathIsFolderAndOverwrite(t *testing.T) {
-	// given
-	reader := yml.NewDeclarationYML("testdata/envvars.yml")
-	name := t.TempDir()
-	writer := envfile.NewEnvfile(name, false, true)
-	d, _ := reader.Read()
-
-	// when
-	err := writer.Write(d.Envvars)
-
-	// then
-	assert.Error(t, err)
-	assert.EqualError(t, err, "error: "+name+" is a folder, not a file")
+			//then
+			if tt.thenGoldenFile != "" {
+				want := readFile(t, tt.thenGoldenFile)
+				got := readFile(t, envfileName)
+				if want != got {
+					t.Errorf("want %q, got %q", want, got)
+				}
+			}
+		})
+	}
 }
 
 func TestEnvfile_toRemoveFileIfItExists(t *testing.T) {
@@ -120,12 +104,13 @@ func TestEnvfile_Remove_toReturnErrorIfEnvfileNotPresent(t *testing.T) {
 	assert.Error(t, err)
 }
 
+// readFile reads a file and returns it as string. It also removes trailing EOL.
 func readFile(t *testing.T, name string) string {
 	f, err := os.ReadFile(name)
 	if err != nil {
 		t.Fatal(err.Error())
 	}
-	return string(f)
+	return strings.TrimSuffix(string(f), "\n")
 }
 
 func createEmptyFile(t *testing.T, name string) {
