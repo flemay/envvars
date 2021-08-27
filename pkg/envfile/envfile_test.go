@@ -2,7 +2,6 @@ package envfile_test
 
 import (
 	"os"
-	"regexp"
 	"strings"
 	"testing"
 
@@ -17,20 +16,20 @@ func TestEnvfile_toImplementEnvfileWriterInterface(t *testing.T) {
 
 func TestEnvfileWrite(t *testing.T) {
 	var tests = []struct {
-		name                   string
-		givenDeclarationFile   string
-		givenEnvfileExists     bool
-		givenEnvfileIsDir      bool
-		whenExample            bool
-		whenOverwrite          bool
-		thenGoldenFile         string
-		thenErrorMessageRegExp string
+		name                 string
+		givenDeclarationFile string
+		givenEnvfileExists   bool
+		givenEnvfileIsDir    bool
+		whenExample          bool
+		whenOverwrite        bool
+		thenGoldenFile       string
+		thenErrorSubMessage  string
 	}{
 		{"generate file", "./testdata/envvars.yml", false, false, false, false, "./testdata/envfile.golden", ""},
 		{"generate file with example", "./testdata/envvars.yml", false, false, true, false, "./testdata/envfile_example.golden", ""},
 		{"overwrite existing file", "./testdata/envvars.yml", true, false, false, true, "./testdata/envfile.golden", ""},
-		{"fail generate when existing file", "./testdata/envvars.yml", true, false, false, false, "", `.* already exist$`},
-		{"fail overwrite a directory", "./testdata/envvars.yml", false, true, false, true, "", `.* is a folder, not a file$`},
+		{"fail generate when existing file", "./testdata/envvars.yml", true, false, false, false, "", "already exist"},
+		{"fail overwrite a directory", "./testdata/envvars.yml", false, true, false, true, "", "is a folder, not a file"},
 	}
 
 	for _, tt := range tests {
@@ -58,23 +57,21 @@ func TestEnvfileWrite(t *testing.T) {
 
 			// when
 			if err := writer.Write(d.Envvars); err != nil {
-				if tt.thenErrorMessageRegExp == "" {
+				if tt.thenErrorSubMessage == "" {
 					t.Fatalf("Writer.Write: %v", err)
 				}
 				// then
-				re := regexp.MustCompile(tt.thenErrorMessageRegExp)
-				if !re.MatchString(err.Error()) {
-					t.Errorf("want regexp %q to match %q", tt.thenErrorMessageRegExp, err.Error())
+				if !strings.Contains(err.Error(), tt.thenErrorSubMessage) {
+					t.Errorf("want %q to be in error %q", tt.thenErrorSubMessage, err.Error())
 				}
+				return
 			}
 
 			//then
-			if tt.thenGoldenFile != "" {
-				want := readFile(t, tt.thenGoldenFile)
-				got := readFile(t, envfileName)
-				if want != got {
-					t.Errorf("want %q, got %q", want, got)
-				}
+			want := readFile(t, tt.thenGoldenFile)
+			got := readFile(t, envfileName)
+			if want != got {
+				t.Errorf("want %q, got %q", want, got)
 			}
 		})
 	}

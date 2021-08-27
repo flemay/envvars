@@ -2,6 +2,7 @@ package yml_test
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"github.com/flemay/envvars/pkg/envvars"
@@ -9,65 +10,67 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDeclarationYML_Read_toReturnDeclarationBasedOnDeclarationFile(t *testing.T) {
-	// given
-	declarationYML := yml.NewDeclarationYML("testdata/envvars.yml")
-
-	// when
-	d, err := declarationYML.Read()
-
-	// then
-	assert.NoError(t, err)
-	assert.NotNil(t, d)
-	expectedTags := envvars.TagCollection{
-		&envvars.Tag{
-			Name: "tag1",
-			Desc: "desc of tag1",
+func TestDelcarationYML_Read(t *testing.T) {
+	thenDeclaration := envvars.Declaration{
+		Tags: envvars.TagCollection{
+			&envvars.Tag{
+				Name: "tag1",
+				Desc: "desc of tag1",
+			},
+		},
+		Envvars: envvars.EnvvarCollection{
+			&envvars.Envvar{
+				Name: "ENVVAR_1",
+				Desc: "desc of ENVVAR_1",
+			},
+			&envvars.Envvar{
+				Name:     "ENVVAR_2",
+				Desc:     "desc of ENVVAR_2",
+				Optional: true,
+				Example:  "example1",
+			},
 		},
 	}
-	assert.EqualValues(t, expectedTags, d.Tags)
-
-	expectedEnvvars := envvars.EnvvarCollection{
-		&envvars.Envvar{
-			Name: "ENVVAR_1",
-			Desc: "desc of ENVVAR_1",
-		},
-		&envvars.Envvar{
-			Name:     "ENVVAR_2",
-			Desc:     "desc of ENVVAR_2",
-			Optional: true,
-			Example:  "example1",
-		},
+	var tests = []struct {
+		name                 string
+		givenDeclarationFile string
+		thenDeclaration      *envvars.Declaration
+		thenErrorSubMessage  string
+	}{
+		{"returns declaration", "./testdata/envvars.yml", &thenDeclaration, ""},
+		{"error if malformated file", "./testdata/envvars_malformated.yml", nil, "error occurred when parsing the file"},
+		{"error if file not found", "nosuchfile.yml", nil, "no such file or directory"},
 	}
 
-	assert.EqualValues(t, expectedEnvvars, d.Envvars)
-}
-func TestDeclarationYML_Read_toReturnErrorIfMalformatedDeclarationFile(t *testing.T) {
-	// given
-	declarationFilePath := "testdata/envvars_malformated.yml"
-	declarationYML := yml.NewDeclarationYML(declarationFilePath)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// given
+			declarationYML := yml.NewDeclarationYML(tt.givenDeclarationFile)
 
-	// when
-	d, err := declarationYML.Read()
+			// when
+			got, err := declarationYML.Read()
 
-	// then
-	assert.Error(t, err)
-	assert.Nil(t, d)
-	assert.Contains(t, err.Error(), "error occurred when parsing the file "+declarationFilePath)
-}
+			// then
+			if err != nil {
+				if tt.thenErrorSubMessage == "" {
+					t.Fatalf("Reader.Read: %v", err)
+				}
+				if !strings.Contains(err.Error(), tt.thenErrorSubMessage) {
+					t.Errorf("want %q to be in error %q", tt.thenErrorSubMessage, err.Error())
+				}
+				return
+			}
 
-func TestDeclarationYML_Read_toReturnErrorIfFileNotFound(t *testing.T) {
-	// given
-	noSuchFilePath := "nosuchfile.yml"
-	declarationYML := yml.NewDeclarationYML(noSuchFilePath)
+			if got == nil {
+				t.Error("want value, got nil")
+				return
+			}
 
-	// when
-	d, err := declarationYML.Read()
-
-	// then
-	assert.Error(t, err)
-	assert.Nil(t, d)
-	assert.Contains(t, err.Error(), "open nosuchfile.yml: no such file or directory")
+			if !tt.thenDeclaration.Equal(*got) {
+				t.Error("want true, got false")
+			}
+		})
+	}
 }
 
 func TestDeclarationYML_Write_toWriteDeclarationInYMLFile(t *testing.T) {
