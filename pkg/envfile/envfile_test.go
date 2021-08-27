@@ -9,11 +9,10 @@ import (
 	"github.com/flemay/envvars/pkg/envfile"
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/yml"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestEnvfile_toImplementEnvfileWriterInterface(t *testing.T) {
-	assert.Implements(t, (*envvars.EnvfileWriter)(nil), new(envfile.Envfile))
+	var _ envvars.EnvfileWriter = new(envfile.Envfile)
 }
 
 func TestEnvfileWrite(t *testing.T) {
@@ -83,25 +82,29 @@ func TestEnvfileWrite(t *testing.T) {
 
 func TestEnvfile_toRemoveFileIfItExists(t *testing.T) {
 	// given
-	name := t.TempDir() + "/envfile.tmp"
+	name := t.TempDir() + "/.env"
 	createEmptyFile(t, name)
 
 	// when
 	err := envfile.Remove(name)
 
 	// then
-	assert.NoError(t, err)
+	if err != nil {
+		t.Errorf("want no error, got %q", err.Error())
+	}
 }
 
 func TestEnvfile_Remove_toReturnErrorIfEnvfileNotPresent(t *testing.T) {
 	// given
-	name := "testdata/envfile.tmp"
+	name := "testdata/.env"
 
 	// when
 	err := envfile.Remove(name)
 
 	// then
-	assert.Error(t, err)
+	if err == nil {
+		t.Error("want error, got no error")
+	}
 }
 
 // readFile reads a file and returns it as string. It also removes trailing EOL.
