@@ -7,23 +7,26 @@ import (
 
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/yml"
-	"github.com/stretchr/testify/assert"
 )
 
-func TestDelcarationYML_Read(t *testing.T) {
+func TestDeclarationYML_implementsDeclarationReader(t *testing.T) {
+	var _ envvars.DeclarationReader = new(yml.DeclarationYML)
+}
+
+func TestDeclarationYML_Read(t *testing.T) {
 	thenDeclaration := envvars.Declaration{
 		Tags: envvars.TagCollection{
-			&envvars.Tag{
+			{
 				Name: "tag1",
 				Desc: "desc of tag1",
 			},
 		},
 		Envvars: envvars.EnvvarCollection{
-			&envvars.Envvar{
+			{
 				Name: "ENVVAR_1",
 				Desc: "desc of ENVVAR_1",
 			},
-			&envvars.Envvar{
+			{
 				Name:     "ENVVAR_2",
 				Desc:     "desc of ENVVAR_2",
 				Optional: true,
@@ -53,9 +56,8 @@ func TestDelcarationYML_Read(t *testing.T) {
 			// then
 			if err != nil {
 				if tt.thenErrorSubMessage == "" {
-					t.Fatalf("Reader.Read: %v", err)
-				}
-				if !strings.Contains(err.Error(), tt.thenErrorSubMessage) {
+					t.Errorf("want no error, got %s", err.Error())
+				} else if !strings.Contains(err.Error(), tt.thenErrorSubMessage) {
 					t.Errorf("want %q to be in error %q", tt.thenErrorSubMessage, err.Error())
 				}
 				return
@@ -67,86 +69,82 @@ func TestDelcarationYML_Read(t *testing.T) {
 			}
 
 			if !tt.thenDeclaration.Equal(*got) {
-				t.Error("want true, got false")
+				t.Errorf("want %+v, got %+v", *tt.thenDeclaration, *got)
 			}
 		})
 	}
 }
 
-func TestDeclarationYML_Write_toWriteDeclarationInYMLFile(t *testing.T) {
-	// given
-	filename := t.TempDir() + "/envvars.yml"
-	writer := yml.NewDeclarationYML(filename)
-	d := &envvars.Declaration{
+func TestDeclarationYML_implementsDeclarationWriter(t *testing.T) {
+	var _ envvars.DeclarationWriter = new(yml.DeclarationYML)
+}
+
+func TestDeclarationYML_Write(t *testing.T) {
+	givenDeclaration := &envvars.Declaration{
 		Envvars: []*envvars.Envvar{
-			&envvars.Envvar{
+			{
 				Name: "ENVVAR_1",
 				Desc: "desc of ENVVAR_1",
 			},
 		},
 	}
-
-	// when
-	err := writer.Write(d, false)
-
-	// then
-	assert.NoError(t, err)
-	expectedFile := readFile(t, "testdata/envvars.yml.golden")
-	actualFile := readFile(t, filename)
-	assert.Equal(t, expectedFile, actualFile)
-}
-
-func TestDeclarationYML_Write_toReturnErrorIfFileExists(t *testing.T) {
-	// given
-	filename := t.TempDir() + "/envvars.yml"
-	writer := yml.NewDeclarationYML(filename)
-	d := &envvars.Declaration{
-		Envvars: []*envvars.Envvar{
-			&envvars.Envvar{
-				Name: "ENVVAR_1",
-				Desc: "desc of ENVVAR_1",
-			},
-		},
+	var tests = []struct {
+		name                       string
+		givenDeclaration           *envvars.Declaration
+		givenDeclarationFileExists bool
+		whenOverwrite              bool
+		thenDeclarationFile        string
+		thenErrorSubMessage        string
+	}{
+		{"write to declaration file", givenDeclaration, false, false, "./testdata/envvars.yml.golden", ""},
+		{"write fails if file exists", givenDeclaration, true, false, "", ": file exists"},
+		{"overwrites existing file", givenDeclaration, true, true, "./testdata/envvars.yml.golden", ""},
 	}
-	err := writer.Write(d, false)
-	assert.NoError(t, err)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// given
+			filename := t.TempDir() + "/envvars.yml"
+			if tt.givenDeclarationFileExists {
+				helperCreateEmptyFile(t, filename)
+			}
+			writer := yml.NewDeclarationYML(filename)
 
-	// when
-	err = writer.Write(d, false)
+			// when
+			err := writer.Write(tt.givenDeclaration, tt.whenOverwrite)
 
-	// then
-	assert.EqualError(t, err, "open "+filename+": file exists")
-}
+			// then
+			if err != nil {
+				if tt.thenErrorSubMessage == "" {
+					t.Errorf("want no error, got %q", err.Error())
+				} else if !strings.Contains(err.Error(), tt.thenErrorSubMessage) {
+					t.Errorf("want %q to be in error %q", tt.thenErrorSubMessage, err.Error())
+				}
+				return
+			}
 
-func TestDeclarationYML_Write_toOverwriteExistingFile(t *testing.T) {
-	// given
-	filename := t.TempDir() + "/envvars.yml"
-	writer := yml.NewDeclarationYML(filename)
-	d := &envvars.Declaration{
-		Envvars: []*envvars.Envvar{
-			&envvars.Envvar{
-				Name: "ENVVAR_1",
-				Desc: "desc of ENVVAR_1",
-			},
-		},
+			want := helperReadFile(t, tt.thenDeclarationFile)
+			got := helperReadFile(t, filename)
+			if want != got {
+				t.Errorf("want %s, got %s", want, got)
+			}
+		})
 	}
-	err := writer.Write(d, false)
-	assert.NoError(t, err)
-
-	// when
-	err = writer.Write(d, true)
-
-	// then
-	assert.NoError(t, err)
-	expectedFile := readFile(t, "testdata/envvars.yml.golden")
-	actualFile := readFile(t, filename)
-	assert.Equal(t, expectedFile, actualFile)
 }
 
-func readFile(t *testing.T, name string) string {
+func helperReadFile(t *testing.T, name string) string {
 	f, err := os.ReadFile(name)
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
 	return string(f)
+}
+
+func helperCreateEmptyFile(t *testing.T, name string) {
+	f, err := os.Create(name)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	if err := f.Close(); err != nil {
+		t.Fatal(err.Error())
+	}
 }

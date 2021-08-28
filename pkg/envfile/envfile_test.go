@@ -10,7 +10,7 @@ import (
 	"github.com/flemay/envvars/pkg/yml"
 )
 
-func TestEnvfile_toImplementEnvfileWriterInterface(t *testing.T) {
+func TestEnvfile_implementsEnvfileWriter(t *testing.T) {
 	var _ envvars.EnvfileWriter = new(envfile.Envfile)
 }
 
@@ -51,7 +51,7 @@ func TestEnvfileWrite(t *testing.T) {
 			}
 
 			if tt.givenEnvfileExists {
-				createEmptyFile(t, envfileName)
+				helperCreateEmptyFile(t, envfileName)
 			}
 			writer := envfile.NewEnvfile(envfileName, tt.whenExample, tt.whenOverwrite)
 
@@ -68,8 +68,8 @@ func TestEnvfileWrite(t *testing.T) {
 			}
 
 			//then
-			want := readFile(t, tt.thenGoldenFile)
-			got := readFile(t, envfileName)
+			want := helperReadFile(t, tt.thenGoldenFile)
+			got := helperReadFile(t, envfileName)
 			if want != got {
 				t.Errorf("want %q, got %q", want, got)
 			}
@@ -80,7 +80,7 @@ func TestEnvfileWrite(t *testing.T) {
 func TestEnvfile_toRemoveFileIfItExists(t *testing.T) {
 	// given
 	name := t.TempDir() + "/.env"
-	createEmptyFile(t, name)
+	helperCreateEmptyFile(t, name)
 
 	// when
 	err := envfile.Remove(name)
@@ -104,8 +104,8 @@ func TestEnvfile_Remove_toReturnErrorIfEnvfileNotPresent(t *testing.T) {
 	}
 }
 
-// readFile reads a file and returns it as string. It also removes trailing EOL.
-func readFile(t *testing.T, name string) string {
+// helperReadFile reads a file and returns it as string. It also removes trailing EOL.
+func helperReadFile(t *testing.T, name string) string {
 	f, err := os.ReadFile(name)
 	if err != nil {
 		t.Fatal(err.Error())
@@ -113,7 +113,7 @@ func readFile(t *testing.T, name string) string {
 	return strings.TrimSuffix(string(f), "\n")
 }
 
-func createEmptyFile(t *testing.T, name string) {
+func helperCreateEmptyFile(t *testing.T, name string) {
 	f, err := os.Create(name)
 	if err != nil {
 		t.Fatal(err.Error())
