@@ -2,7 +2,6 @@ package errorappender
 
 import (
 	"errors"
-	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -15,10 +14,13 @@ func TestErrorAppender_AppendError(t *testing.T) {
 	// when
 	a.AppendError(err1)
 	a.AppendError(err2)
-	err := a.Error()
+	got := a.Error()
 
 	// then
-	assert.EqualError(t, err, "err1err2")
+	want := "err1err2"
+	if got.Error() != want {
+		t.Errorf("want %q got %q", want, got.Error())
+	}
 }
 
 func TestErrorAppender_AppendError_toNotAppendNilError(t *testing.T) {
@@ -27,10 +29,12 @@ func TestErrorAppender_AppendError_toNotAppendNilError(t *testing.T) {
 
 	// when
 	a.AppendError(nil)
-	err := a.Error()
+	got := a.Error()
 
 	// then
-	assert.NoError(t, err)
+	if got != nil {
+		t.Errorf("want no error, got %q", got.Error())
+	}
 }
 
 func TestErrorAppender_AppendString(t *testing.T) {
@@ -40,10 +44,13 @@ func TestErrorAppender_AppendString(t *testing.T) {
 	// when
 	a.AppendString("err1")
 	a.AppendString("err2")
-	err := a.Error()
+	got := a.Error()
 
 	// then
-	assert.EqualError(t, err, "err1err2")
+	want := "err1err2"
+	if got.Error() != want {
+		t.Errorf("want %q, got %q", want, got.Error())
+	}
 }
 
 func TestErrorAppender_AppendString_toNotAppendEmptyString(t *testing.T) {
@@ -52,10 +59,12 @@ func TestErrorAppender_AppendString_toNotAppendEmptyString(t *testing.T) {
 
 	// when
 	a.AppendString("")
-	err := a.Error()
+	got := a.Error()
 
 	// then
-	assert.NoError(t, err)
+	if got != nil {
+		t.Errorf("want no error, got %q", got.Error())
+	}
 }
 
 func TestErrorAppender_Error_toReturnNilIfNoError(t *testing.T) {
@@ -63,10 +72,12 @@ func TestErrorAppender_Error_toReturnNilIfNoError(t *testing.T) {
 	a := NewErrorAppender("")
 
 	// when
-	err := a.Error()
+	got := a.Error()
 
 	// then
-	assert.NoError(t, err)
+	if got != nil {
+		t.Errorf("want no error, got %q", got.Error())
+	}
 }
 
 func TestErrorAppender_Error_toJoinErrorsWithSeparator(t *testing.T) {
@@ -78,10 +89,13 @@ func TestErrorAppender_Error_toJoinErrorsWithSeparator(t *testing.T) {
 	// when
 	a.AppendError(err1)
 	a.AppendError(err2)
-	err := a.Error()
+	got := a.Error()
 
 	// then
-	assert.EqualError(t, err, "err1; err2")
+	want := "err1; err2"
+	if got.Error() != want {
+		t.Errorf("want %q got %q", want, got.Error())
+	}
 }
 
 func TestErrorAppender_Wrap(t *testing.T) {
@@ -93,10 +107,13 @@ func TestErrorAppender_Wrap(t *testing.T) {
 	// when
 	a.AppendError(err1)
 	a.AppendError(err2)
-	err := a.Wrap("errors: ")
+	got := a.Wrap("errors: ")
 
 	// then
-	assert.EqualError(t, err, "errors: err1; err2")
+	want := "errors: err1; err2"
+	if got.Error() != want {
+		t.Errorf("want %q got %q", want, got.Error())
+	}
 }
 
 func TestErrorAppender_Wrap_toReturnNilIfNoError(t *testing.T) {
@@ -104,8 +121,10 @@ func TestErrorAppender_Wrap_toReturnNilIfNoError(t *testing.T) {
 	a := NewErrorAppender("; ")
 
 	// when
-	err := a.Wrap("errors: ")
+	got := a.Wrap("errors: ")
 
 	// then
-	assert.NoError(t, err)
+	if got != nil {
+		t.Errorf("want no error, got %q", got.Error())
+	}
 }
