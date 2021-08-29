@@ -26,18 +26,16 @@ func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/ensure_declaration_file.yml")
-	os.Setenv("ENVVAR_1", "name1")
-	os.Setenv("ENVVAR_2", "name2")
-	os.Setenv("ENVVAR_3", "name3")
+	defer helperSetenv(t,
+		keyValue{"ENVVAR_1", "name1"},
+		keyValue{"ENVVAR_2", "name2"},
+		keyValue{"ENVVAR_3", "name3"})()
 
 	// when
 	err := envvars.Ensure(reader)
 
 	// then
 	assert.NoError(t, err)
-	os.Unsetenv("ENVVAR_1")
-	os.Unsetenv("ENVVAR_2")
-	os.Unsetenv("ENVVAR_3")
 }
 
 func TestEnsure_toReturnNoErrorIfOptionalEnvvarIsNotDefined(t *testing.T) {
