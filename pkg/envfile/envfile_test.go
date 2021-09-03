@@ -15,8 +15,7 @@ func TestEnvfile_implementsEnvfileWriter(t *testing.T) {
 }
 
 func TestEnvfileWrite(t *testing.T) {
-	var tests = []struct {
-		name                 string
+	testCases := map[string]struct {
 		givenDeclarationFile string
 		givenEnvfileExists   bool
 		givenEnvfileIsDir    bool
@@ -25,50 +24,50 @@ func TestEnvfileWrite(t *testing.T) {
 		thenGoldenFile       string
 		thenErrorSubMessage  string
 	}{
-		{"generate file", "./testdata/envvars.yml", false, false, false, false, "./testdata/envfile.golden", ""},
-		{"generate file with example", "./testdata/envvars.yml", false, false, true, false, "./testdata/envfile_example.golden", ""},
-		{"overwrite existing file", "./testdata/envvars.yml", true, false, false, true, "./testdata/envfile.golden", ""},
-		{"fail generate when existing file", "./testdata/envvars.yml", true, false, false, false, "", "already exist"},
-		{"fail overwrite a directory", "./testdata/envvars.yml", false, true, false, true, "", "is a folder, not a file"},
+		"generate file":                    {"./testdata/envvars.yml", false, false, false, false, "./testdata/envfile.golden", ""},
+		"generate file with example":       {"./testdata/envvars.yml", false, false, true, false, "./testdata/envfile_example.golden", ""},
+		"overwrite existing file":          {"./testdata/envvars.yml", true, false, false, true, "./testdata/envfile.golden", ""},
+		"fail generate when existing file": {"./testdata/envvars.yml", true, false, false, false, "", "already exist"},
+		"fail overwrite a directory":       {"./testdata/envvars.yml", false, true, false, true, "", "is a folder, not a file"},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
 			// given
-			reader := yml.NewDeclarationYML(tt.givenDeclarationFile)
+			reader := yml.NewDeclarationYML(tc.givenDeclarationFile)
 			d, err := reader.Read()
 			if err != nil {
 				t.Fatalf("Reader.Read: %v", err)
 			}
 
-			if tt.givenEnvfileExists && tt.givenEnvfileIsDir {
+			if tc.givenEnvfileExists && tc.givenEnvfileIsDir {
 				t.Fatalf("givenEnvfileExists and givenEnvfileIsDir cannot be both true")
 			}
 
 			envfileName := t.TempDir()
-			if !tt.givenEnvfileIsDir {
+			if !tc.givenEnvfileIsDir {
 				envfileName = envfileName + "/.env"
 			}
 
-			if tt.givenEnvfileExists {
+			if tc.givenEnvfileExists {
 				helperCreateEmptyFile(t, envfileName)
 			}
-			writer := envfile.NewEnvfile(envfileName, tt.whenExample, tt.whenOverwrite)
+			writer := envfile.NewEnvfile(envfileName, tc.whenExample, tc.whenOverwrite)
 
 			// when
 			if err := writer.Write(d.Envvars); err != nil {
-				if tt.thenErrorSubMessage == "" {
+				if tc.thenErrorSubMessage == "" {
 					t.Fatalf("Writer.Write: %v", err)
 				}
 				// then
-				if !strings.Contains(err.Error(), tt.thenErrorSubMessage) {
-					t.Errorf("want %q to be in error %q", tt.thenErrorSubMessage, err.Error())
+				if !strings.Contains(err.Error(), tc.thenErrorSubMessage) {
+					t.Errorf("want %q to be in error %q", tc.thenErrorSubMessage, err.Error())
 				}
 				return
 			}
 
 			//then
-			want := helperReadFile(t, tt.thenGoldenFile)
+			want := helperReadFile(t, tc.thenGoldenFile)
 			got := helperReadFile(t, envfileName)
 			if want != got {
 				t.Errorf("want %q, got %q", want, got)

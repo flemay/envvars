@@ -34,31 +34,30 @@ func TestDeclarationYML_Read(t *testing.T) {
 			},
 		},
 	}
-	var tests = []struct {
-		name                 string
+	testCases := map[string]struct {
 		givenDeclarationFile string
 		thenDeclaration      *envvars.Declaration
 		thenErrorSubMessage  string
 	}{
-		{"returns declaration", "./testdata/envvars.yml", &thenDeclaration, ""},
-		{"error if malformated file", "./testdata/envvars_malformated.yml", nil, "error occurred when parsing the file"},
-		{"error if file not found", "nosuchfile.yml", nil, "no such file or directory"},
+		"returns declaration":       {"./testdata/envvars.yml", &thenDeclaration, ""},
+		"error if malformated file": {"./testdata/envvars_malformated.yml", nil, "error occurred when parsing the file"},
+		"error if file not found":   {"nosuchfile.yml", nil, "no such file or directory"},
 	}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
 			// given
-			declarationYML := yml.NewDeclarationYML(tt.givenDeclarationFile)
+			declarationYML := yml.NewDeclarationYML(tc.givenDeclarationFile)
 
 			// when
 			got, err := declarationYML.Read()
 
 			// then
 			if err != nil {
-				if tt.thenErrorSubMessage == "" {
+				if tc.thenErrorSubMessage == "" {
 					t.Errorf("want no error, got %s", err.Error())
-				} else if !strings.Contains(err.Error(), tt.thenErrorSubMessage) {
-					t.Errorf("want %q to be in error %q", tt.thenErrorSubMessage, err.Error())
+				} else if !strings.Contains(err.Error(), tc.thenErrorSubMessage) {
+					t.Errorf("want %q to be in error %q", tc.thenErrorSubMessage, err.Error())
 				}
 				return
 			}
@@ -68,8 +67,8 @@ func TestDeclarationYML_Read(t *testing.T) {
 				return
 			}
 
-			if !tt.thenDeclaration.Equal(*got) {
-				t.Errorf("want %+v, got %+v", *tt.thenDeclaration, *got)
+			if !tc.thenDeclaration.Equal(*got) {
+				t.Errorf("want %+v, got %+v", *tc.thenDeclaration, *got)
 			}
 		})
 	}
@@ -88,41 +87,40 @@ func TestDeclarationYML_Write(t *testing.T) {
 			},
 		},
 	}
-	var tests = []struct {
-		name                       string
+	testCases := map[string]struct {
 		givenDeclaration           *envvars.Declaration
 		givenDeclarationFileExists bool
 		whenOverwrite              bool
 		thenDeclarationFile        string
 		thenErrorSubMessage        string
 	}{
-		{"write to declaration file", givenDeclaration, false, false, "./testdata/envvars.yml.golden", ""},
-		{"write fails if file exists", givenDeclaration, true, false, "", ": file exists"},
-		{"overwrites existing file", givenDeclaration, true, true, "./testdata/envvars.yml.golden", ""},
+		"write to declaration file":  {givenDeclaration, false, false, "./testdata/envvars.yml.golden", ""},
+		"write fails if file exists": {givenDeclaration, true, false, "", ": file exists"},
+		"overwrites existing file":   {givenDeclaration, true, true, "./testdata/envvars.yml.golden", ""},
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) {
 			// given
 			filename := t.TempDir() + "/envvars.yml"
-			if tt.givenDeclarationFileExists {
+			if tc.givenDeclarationFileExists {
 				helperCreateEmptyFile(t, filename)
 			}
 			writer := yml.NewDeclarationYML(filename)
 
 			// when
-			err := writer.Write(tt.givenDeclaration, tt.whenOverwrite)
+			err := writer.Write(tc.givenDeclaration, tc.whenOverwrite)
 
 			// then
 			if err != nil {
-				if tt.thenErrorSubMessage == "" {
+				if tc.thenErrorSubMessage == "" {
 					t.Errorf("want no error, got %q", err.Error())
-				} else if !strings.Contains(err.Error(), tt.thenErrorSubMessage) {
-					t.Errorf("want %q to be in error %q", tt.thenErrorSubMessage, err.Error())
+				} else if !strings.Contains(err.Error(), tc.thenErrorSubMessage) {
+					t.Errorf("want %q to be in error %q", tc.thenErrorSubMessage, err.Error())
 				}
 				return
 			}
 
-			want := helperReadFile(t, tt.thenDeclarationFile)
+			want := helperReadFile(t, tc.thenDeclarationFile)
 			got := helperReadFile(t, filename)
 			if want != got {
 				t.Errorf("want %s, got %s", want, got)
