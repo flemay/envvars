@@ -57,8 +57,10 @@ buildDockerImage:
 	docker run --rm $(IMAGE_NAME) --help
 	docker run --rm $(IMAGE_NAME) version
 
-pushDockerImage:
-	IMAGE_NAME=$(IMAGE_NAME) ./scripts/push.sh
+pushDockerImage: env-DOCKER_USERNAME env-DOCKER_ACCESS_TOKEN
+	@echo "$(DOCKER_ACCESS_TOKEN)" | docker login --username "$(DOCKER_USERNAME)" --password-stdin docker.io
+	docker push $(IMAGE_NAME)
+	docker logout
 
 removeDockerImage:
 	docker rmi -f $(IMAGE_NAME)
@@ -84,3 +86,7 @@ _clean:
 
 shell:
 	$(COMPOSE_RUN_GOLANG) bash
+
+env-%:
+	$(info Check if $* is not empty)
+	@docker run --rm -e ENV_VAR=$($*) node:alpine sh -c '[ -z "$$ENV_VAR" ] && echo "Error: $* is empty" && exit 1 || exit 0'
