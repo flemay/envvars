@@ -18,25 +18,3 @@ func readFile(t *testing.T, name string) string {
 	}
 	return strings.TrimSuffix(string(f), "\n")
 }
-
-type keyValue struct {
-	Key   string
-	Value string
-}
-
-// helperSetenv sets environment variables and returns an unset func to be called
-// during defer.
-func helperSetenv(t *testing.T, kvs ...keyValue) func() {
-	for _, kv := range kvs {
-		if err := os.Setenv(kv.Key, kv.Value); err != nil {
-			t.Fatalf("os.Setenv: %v", err)
-		}
-	}
-	return func() {
-		for _, kv := range kvs {
-			if err := os.Unsetenv(kv.Key); err != nil {
-				t.Fatalf("os.Unsetenv: %v", err)
-			}
-		}
-	}
-}

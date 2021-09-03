@@ -1,49 +1,58 @@
 package envvars_test
 
 import (
+	"testing"
+
 	"github.com/flemay/envvars/pkg/envvars"
 	"github.com/flemay/envvars/pkg/mocks"
 	"github.com/flemay/envvars/pkg/yml"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestValidate_toReturnNoErrorIfValidDeclaration(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/validate_declaration_file.yml")
 	// when
-	err := envvars.Validate(reader)
+	got := envvars.Validate(reader)
 	// then
-	assert.NoError(t, err)
+	if got != nil {
+		t.Errorf("want no error, got %q", got.Error())
+	}
 }
 
 func TestValidate_toReturnNoErrorIfValidDeclarationWithTags(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/validate_declaration_file_with_tags.yml")
 	// when
-	err := envvars.Validate(reader)
+	got := envvars.Validate(reader)
 	// then
-	assert.NoError(t, err)
+	if got != nil {
+		t.Errorf("want no error, got %q", got.Error())
+	}
 }
 
 func TestValidate_toReturnErrorIfInvalidDeclaration(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/declaration_file_invalid.yml")
 	// when
-	err := envvars.Validate(reader)
+	got := envvars.Validate(reader)
 	// then
-	expectedErrorMsg := readFile(t, "testdata/declaration_file_invalid_error_message.golden")
-	assert.EqualError(t, err, expectedErrorMsg)
+	want := readFile(t, "testdata/declaration_file_invalid_error_message.golden")
+	if got.Error() != want {
+		t.Errorf("want %q, got %q", want, got.Error())
+	}
 }
 
 func TestValidate_toReturnErrorIfDeclarationIsEmpty(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/declaration_file_empty.yml")
 	// when
-	err := envvars.Validate(reader)
+	got := envvars.Validate(reader)
 	// then
-	assert.Error(t, err)
-	assert.EqualError(t, err, "declaration must at least have 1 envvars")
+	want := "declaration must at least have 1 envvars"
+	if got.Error() != want {
+		t.Errorf("want %q, got %q", want, got.Error())
+	}
 }
 
 func TestValidate_toReturnErrorIfDeclarationIsNil(t *testing.T) {

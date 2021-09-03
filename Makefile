@@ -40,7 +40,8 @@ mock:
 test:
 	$(COMPOSE_RUN_GOLANG) make _test
 	$(COMPOSE_RUN_SHELLCHECK) scripts/*.sh
-	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint run pkg/...
+	$(warning [WARNING] golangci-lint - excluding test files should only be temporary until the latest docker image uses go 1.17+)
+	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint run --tests=false pkg/...
 _test:
 	go test -coverprofile=profile.out ./...
 
@@ -57,6 +58,9 @@ buildDockerImage:
 	docker run --rm $(IMAGE_NAME) --help
 	docker run --rm $(IMAGE_NAME) version
 
+# pushDockerImage pushes the locally built image to docker hub.
+# It requires 2 environment variables upfront because it does not use
+# a container with access to the Docker docker (which .env could be passed).
 pushDockerImage: env-DOCKER_USERNAME env-DOCKER_ACCESS_TOKEN
 	@echo "$(DOCKER_ACCESS_TOKEN)" | docker login --username "$(DOCKER_USERNAME)" --password-stdin docker.io
 	docker push $(IMAGE_NAME)

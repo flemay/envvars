@@ -25,12 +25,10 @@ func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/ensure_declaration_file.yml")
-	defer helperSetenv(t,
-		keyValue{"ENVVAR_1", "name1"},
-		keyValue{"ENVVAR_2", "name2"},
-		keyValue{"ENVVAR_3", "name3"},
-		keyValue{"OPTIONAL_ENVVAR", "optional"},
-	)()
+	t.Setenv("ENVVAR_1", "name1")
+	t.Setenv("ENVVAR_2", "name2")
+	t.Setenv("ENVVAR_3", "name3")
+	t.Setenv("OPTIONAL_ENVVAR", "optional")
 
 	// when
 	err := envvars.Ensure(reader)
@@ -44,11 +42,9 @@ func TestEnsure_toReturnNoErrorIfEnvvarsComply(t *testing.T) {
 func TestEnsure_toReturnNoErrorIfOptionalEnvvarIsNotDefined(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/ensure_declaration_file.yml")
-	defer helperSetenv(t,
-		keyValue{"ENVVAR_1", "name1"},
-		keyValue{"ENVVAR_2", "name2"},
-		keyValue{"ENVVAR_3", "name3"},
-	)()
+	t.Setenv("ENVVAR_1", "name1")
+	t.Setenv("ENVVAR_2", "name2")
+	t.Setenv("ENVVAR_3", "name3")
 
 	// when
 	got := envvars.Ensure(reader)
@@ -61,12 +57,10 @@ func TestEnsure_toReturnNoErrorIfOptionalEnvvarIsNotDefined(t *testing.T) {
 
 func TestEnsure_toReturnNoErrorIfOptionalEnvvarHasEmptyValue(t *testing.T) {
 	reader := yml.NewDeclarationYML("testdata/ensure_declaration_file.yml")
-	defer helperSetenv(t,
-		keyValue{"ENVVAR_1", "name1"},
-		keyValue{"ENVVAR_2", "name2"},
-		keyValue{"ENVVAR_3", "name3"},
-		keyValue{"OPTIONAL_ENVVAR", ""},
-	)()
+	t.Setenv("ENVVAR_1", "name1")
+	t.Setenv("ENVVAR_2", "name2")
+	t.Setenv("ENVVAR_3", "name3")
+	t.Setenv("OPTIONAL_ENVVAR", "")
 
 	// when
 	err := envvars.Ensure(reader)
@@ -80,9 +74,7 @@ func TestEnsure_toReturnNoErrorIfOptionalEnvvarHasEmptyValue(t *testing.T) {
 func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/ensure_declaration_file.yml")
-	defer helperSetenv(t,
-		keyValue{"ENVVAR_2", ""},
-	)()
+	t.Setenv("ENVVAR_2", "")
 
 	// when
 	got := envvars.Ensure(reader)
@@ -97,9 +89,7 @@ func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/ensure_declaration_file.yml")
-	defer helperSetenv(t,
-		keyValue{"ENVVAR_2", "name2"},
-	)()
+	t.Setenv("ENVVAR_2", "name2")
 
 	// when
 	got := envvars.Ensure(reader, "tag2")
@@ -113,9 +103,7 @@ func TestEnsure_toReturnNoErrorIfTaggedEnvvarsComply(t *testing.T) {
 func TestEnsure_toReturnErrorIfTaggedEnvvarsDoNotComply(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/ensure_declaration_file.yml")
-	defer helperSetenv(t,
-		keyValue{"ENVVAR_2", "name2"},
-	)()
+	t.Setenv("ENVVAR_2", "name2")
 
 	// when
 	got := envvars.Ensure(reader, "tag1")
