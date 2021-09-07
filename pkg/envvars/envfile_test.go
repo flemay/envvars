@@ -5,10 +5,7 @@ import (
 
 	"github.com/flemay/envvars/pkg/envfile"
 	"github.com/flemay/envvars/pkg/envvars"
-	"github.com/flemay/envvars/pkg/mocks"
 	"github.com/flemay/envvars/pkg/yml"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 )
 
 func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
@@ -30,29 +27,41 @@ func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 
 func TestEnvfile_toWriteEnvfile(t *testing.T) {
 	// given
-	reader := yml.NewDeclarationYML("testdata/envfile_declaration_file.yml")
-	mockWriter := new(mocks.EnvfileWriter)
-	mockWriter.On("Write", mock.Anything).Return(nil)
+	r := yml.NewDeclarationYML("testdata/envfile_declaration_file.yml")
+	filename := t.TempDir() + "/.env"
+	w := envfile.NewEnvfile(filename, false, false)
 
 	// when
-	err := envvars.Envfile(reader, mockWriter)
+	err := envvars.Envfile(r, w)
 
 	// then
-	assert.NoError(t, err)
-	d, _ := reader.Read()
-	mockWriter.AssertCalled(t, "Write", d.Envvars)
+	if err != nil {
+		t.Errorf("want no error, got %q", err.Error())
+		return
+	}
+	got := readFile(t, filename)
+	want := readFile(t, "./testdata/envfile_file.golden")
+	if got != want {
+		t.Errorf("want %q, got %q", want, got)
+	}
 }
 func TestEnvfile_toWriteEnvfileWithOnlySpecifiedTags(t *testing.T) {
 	// given
-	reader := yml.NewDeclarationYML("testdata/envfile_declaration_file.yml")
-	mockWriter := new(mocks.EnvfileWriter)
-	mockWriter.On("Write", mock.Anything).Return(nil)
+	r := yml.NewDeclarationYML("testdata/envfile_declaration_file.yml")
+	filename := t.TempDir() + "/.env"
+	w := envfile.NewEnvfile(filename, false, false)
 
 	// when
-	err := envvars.Envfile(reader, mockWriter, "tag1")
+	err := envvars.Envfile(r, w, "tag1")
 
 	// then
-	d, _ := reader.Read()
-	assert.NoError(t, err)
-	mockWriter.AssertCalled(t, "Write", d.Envvars.WithTag("tag1"))
+	if err != nil {
+		t.Errorf("want no error, got %q", err.Error())
+		return
+	}
+	got := readFile(t, filename)
+	want := readFile(t, "./testdata/envfile_file_with_tag.golden")
+	if got != want {
+		t.Errorf("want %q, got %q", want, got)
+	}
 }
