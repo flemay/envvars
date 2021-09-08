@@ -7,7 +7,7 @@ import (
 )
 
 func TestEnvvarCollectionGet(t *testing.T) {
-	givenEnvvars := envvars.EnvvarCollection{
+	collection := envvars.EnvvarCollection{
 		&envvars.Envvar{Name: "ENVVAR_1"},
 		&envvars.Envvar{Name: "ENVVAR_2"},
 	}
@@ -16,8 +16,8 @@ func TestEnvvarCollectionGet(t *testing.T) {
 		whenEnvvarName  string
 		thenEnvvar      *envvars.Envvar
 	}{
-		"return envvar if match": {givenEnvvars, "ENVVAR_2", givenEnvvars[1]},
-		"return nil if no match": {givenEnvvars, "NOT_DEFINED", nil},
+		"return envvar if match": {collection, "ENVVAR_2", collection[1]},
+		"return nil if no match": {collection, "NOT_DEFINED", nil},
 	}
 
 	for name, tc := range testCases {
@@ -27,7 +27,7 @@ func TestEnvvarCollectionGet(t *testing.T) {
 			// then
 			if tc.thenEnvvar != nil {
 				if got == nil {
-					t.Error("want an envvar, got nil")
+					t.Errorf("want an envvar with name %q, got nil", tc.thenEnvvar.Name)
 					return
 				}
 				if got.Name != tc.thenEnvvar.Name {
@@ -36,14 +36,14 @@ func TestEnvvarCollectionGet(t *testing.T) {
 				return
 			}
 			if got != nil {
-				t.Error("want nil, got not nil")
+				t.Errorf("want nil, got envvar with name %q", got.Name)
 			}
 		})
 	}
 }
 
 func TestEnvvarCollectionGetAll(t *testing.T) {
-	givenEnvvars := envvars.EnvvarCollection{
+	collection := envvars.EnvvarCollection{
 		&envvars.Envvar{Name: "ENVVAR_1"},
 		&envvars.Envvar{Name: "ENVVAR_2"},
 		&envvars.Envvar{Name: "ENVVAR_1"},
@@ -53,8 +53,8 @@ func TestEnvvarCollectionGetAll(t *testing.T) {
 		whenEnvvarName  string
 		thenEnvvars     envvars.EnvvarCollection
 	}{
-		"return matching envvars":             {givenEnvvars, "ENVVAR_1", envvars.EnvvarCollection{givenEnvvars[0], givenEnvvars[2]}},
-		"return empty collection if no match": {givenEnvvars, "NOT_DEFINED", envvars.EnvvarCollection{}},
+		"return matching envvars":             {collection, "ENVVAR_1", envvars.EnvvarCollection{collection[0], collection[2]}},
+		"return empty collection if no match": {collection, "NOT_DEFINED", envvars.EnvvarCollection{}},
 	}
 
 	for name, tc := range testCases {
@@ -63,7 +63,7 @@ func TestEnvvarCollectionGetAll(t *testing.T) {
 			got := tc.givenCollection.GetAll(tc.whenEnvvarName)
 			// then
 			if len(got) != len(tc.thenEnvvars) {
-				t.Errorf("want %q, got %q", len(tc.thenEnvvars), len(got))
+				t.Errorf("want %d, got %d", len(tc.thenEnvvars), len(got))
 				return
 			}
 			for i, envvar := range got {
@@ -76,7 +76,7 @@ func TestEnvvarCollectionGetAll(t *testing.T) {
 }
 
 func TestEnvvarCollectionWithTag(t *testing.T) {
-	givenEnvvars := envvars.EnvvarCollection{
+	collection := envvars.EnvvarCollection{
 		&envvars.Envvar{Name: "ENVVAR_1", Tags: []string{"T1", "T2"}},
 		&envvars.Envvar{Name: "ENVVAR_2", Tags: []string{"T1"}},
 		&envvars.Envvar{Name: "ENVVAR_3", Tags: []string{"T1", "T2"}},
@@ -86,8 +86,8 @@ func TestEnvvarCollectionWithTag(t *testing.T) {
 		whenTagName     string
 		thenEnvvars     envvars.EnvvarCollection
 	}{
-		"return envvars with matching tag":    {givenEnvvars, "T2", envvars.EnvvarCollection{givenEnvvars[0], givenEnvvars[2]}},
-		"return empty collection if no match": {givenEnvvars, "NOT_DEFINED", envvars.EnvvarCollection{}},
+		"return envvars with matching tag":    {collection, "T2", envvars.EnvvarCollection{collection[0], collection[2]}},
+		"return empty collection if no match": {collection, "NOT_DEFINED", envvars.EnvvarCollection{}},
 	}
 
 	for name, tc := range testCases {
