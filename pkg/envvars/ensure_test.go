@@ -10,10 +10,9 @@ import (
 func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/declaration_file_invalid.yml")
-	invalidTags := []string{"tagNotThere", "tagDuplicated", "tagDuplicated", ""}
 
 	// when
-	got := envvars.Ensure(reader, invalidTags...)
+	got := envvars.Ensure(reader, helperInvalidTagNames()...)
 
 	// then
 	want := helperReadFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
