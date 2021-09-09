@@ -55,14 +55,6 @@ $ git push fork meaningful_branch_name
 
 > Steps from [Francesc's tweet](https://mobile.twitter.com/francesc/status/1009487969198075905)
 
-### Mocks
-
-[Mockery](https://github.com/vektra/mockery) is being used to generate mocks in the folder `pkg/mocks`.
-
-1. Download deps if it not done `$ make deps`
-2. To generate the mocks `$ make mock`
-3. Once generated, one would need to fix all the mocks imports
-
 ### cmd/envvars/version.json
 
 This file contains information that are usually provided during the build process. This file is special as it requires it when developing but further modifications of the file (like during the build process)  are not commited. Git `--skip-worktree` is used. Credits to https://compiledsuccessfully.dev/git-skip-worktree/.

@@ -6,12 +6,12 @@ import (
 	"testing"
 )
 
-func givenInvalidTagNameList() []string {
+func helperInvalidTagNames() []string {
 	return []string{"tagNotThere", "tagDuplicated", "tagDuplicated", ""}
 }
 
-// readFile reads a file and returns it as string. It also removes trailing EOL.
-func readFile(t *testing.T, name string) string {
+// helperReadFile reads a file and returns it as string. It also removes trailing EOL.
+func helperReadFile(t *testing.T, name string) string {
 	f, err := os.ReadFile(name)
 	if err != nil {
 		t.Fatalf(err.Error())

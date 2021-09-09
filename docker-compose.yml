@@ -21,15 +21,6 @@ services:
         read_only: true
     working_dir: /opt/app
 
-  mockery:
-    image: vektra/mockery:latest
-    network_mode: none
-    volumes:
-      - type: bind
-        source: .
-        target: /opt/app
-    working_dir: /opt/app
-
   golangcilint:
     image: golangci/golangci-lint:latest-alpine
     network_mode: none

@@ -1,52 +1,52 @@
 package envvars_test
 
 import (
-	"errors"
-	"github.com/flemay/envvars/pkg/envvars"
-	"github.com/flemay/envvars/pkg/mocks"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/pkg/yml"
 )
 
 func TestInit_toCreateDeclarationFile(t *testing.T) {
 	// given
-	expectedDeclaration := &envvars.Declaration{
-		Envvars: envvars.EnvvarCollection{
-			&envvars.Envvar{
-				Name:    "ECHO",
-				Example: "Hello World",
-			},
-		},
-	}
-	mockWriter := new(mocks.DeclarationWriter)
-	mockWriter.On("Write", expectedDeclaration, false).Return(nil)
+	filename := t.TempDir() + "/envvars.yml"
+	w := yml.NewDeclarationYML(filename)
 
 	// when
-	err := envvars.Init(mockWriter)
+	err := envvars.Init(w)
 
 	// then
-	assert.NoError(t, err)
-	mockWriter.AssertExpectations(t)
+	if err != nil {
+		t.Errorf("want no error, got %q", err.Error())
+		return
+	}
+
+	want := helperReadFile(t, "./testdata/init_declaration_file.golden")
+	got := helperReadFile(t, filename)
+	if got != want {
+		t.Errorf("want %q, got %q", want, got)
+	}
 }
 
 func TestInit_toReturnErrorIfDeclarationExists(t *testing.T) {
 	// given
-	expectedDeclaration := &envvars.Declaration{
-		Envvars: envvars.EnvvarCollection{
-			&envvars.Envvar{
-				Name:    "ECHO",
-				Example: "Hello World",
-			},
-		},
+	filename := t.TempDir() + "/envvars.yml"
+	w := yml.NewDeclarationYML(filename)
+	err := envvars.Init(w)
+	if err != nil {
+		t.Fatalf("envvars.Init: %v", err)
 	}
-	expectedError := errors.New("error")
-	mockWriter := new(mocks.DeclarationWriter)
-	mockWriter.On("Write", expectedDeclaration, false).Return(expectedError)
 
 	// when
-	err := envvars.Init(mockWriter)
+	err = envvars.Init(w)
 
 	// then
-	assert.EqualError(t, err, err.Error())
-	mockWriter.AssertExpectations(t)
+	if err == nil {
+		t.Error("want error, got none")
+		return
+	}
+	want := "open " + filename + ": file exists"
+	if err.Error() != want {
+		t.Errorf("want error %q, got %q", want, err.Error())
+	}
 }

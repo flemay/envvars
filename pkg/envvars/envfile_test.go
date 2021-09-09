@@ -11,7 +11,7 @@ import (
 func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
 	r := yml.NewDeclarationYML("testdata/declaration_file_invalid.yml")
-	tags := givenInvalidTagNameList()
+	tags := helperInvalidTagNames()
 	filename := t.TempDir() + "/.env"
 	w := envfile.NewEnvfile(filename, false, false)
 
@@ -19,7 +19,7 @@ func TestEnvfile_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	got := envvars.Envfile(r, w, tags...)
 
 	// then
-	want := readFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
+	want := helperReadFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
 	if got.Error() != want {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -39,8 +39,8 @@ func TestEnvfile_toWriteEnvfile(t *testing.T) {
 		t.Errorf("want no error, got %q", err.Error())
 		return
 	}
-	got := readFile(t, filename)
-	want := readFile(t, "./testdata/envfile_file.golden")
+	got := helperReadFile(t, filename)
+	want := helperReadFile(t, "./testdata/envfile_file.golden")
 	if got != want {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -59,8 +59,8 @@ func TestEnvfile_toWriteEnvfileWithOnlySpecifiedTags(t *testing.T) {
 		t.Errorf("want no error, got %q", err.Error())
 		return
 	}
-	got := readFile(t, filename)
-	want := readFile(t, "./testdata/envfile_file_with_tag.golden")
+	got := helperReadFile(t, filename)
+	want := helperReadFile(t, "./testdata/envfile_file_with_tag.golden")
 	if got != want {
 		t.Errorf("want %q, got %q", want, got)
 	}
