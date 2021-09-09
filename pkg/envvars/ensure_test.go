@@ -16,7 +16,7 @@ func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	got := envvars.Ensure(reader, invalidTags...)
 
 	// then
-	want := readFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
+	want := helperReadFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
 	if got.Error() != want {
 		t.Errorf("want %q, got %q", want, got)
 	}
@@ -80,7 +80,7 @@ func TestEnsure_toReturnErrorIfEnvvarsDoNotComply(t *testing.T) {
 	got := envvars.Ensure(reader)
 
 	// then
-	want := readFile(t, "testdata/ensure_error_message.golden")
+	want := helperReadFile(t, "testdata/ensure_error_message.golden")
 	if got.Error() != want {
 		t.Errorf("want %q, got %q", want, got.Error())
 	}

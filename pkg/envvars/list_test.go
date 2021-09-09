@@ -40,13 +40,13 @@ func TestList_toReturnTaggedEnvvarsIfTagsSpecified(t *testing.T) {
 func TestList_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {
 	// given
 	reader := yml.NewDeclarationYML("testdata/declaration_file_invalid.yml")
-	invalidList := givenInvalidTagNameList()
+	invalidList := helperInvalidTagNames()
 
 	// when
 	c, err := envvars.List(reader, invalidList...)
 
 	// then
-	want := readFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
+	want := helperReadFile(t, "testdata/declaration_file_with_tag_name_list_invalid_error_message.golden")
 	if len(c) != 0 {
 		t.Errorf("want empty envvar collection, got %d", len(c))
 	}

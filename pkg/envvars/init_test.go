@@ -21,8 +21,8 @@ func TestInit_toCreateDeclarationFile(t *testing.T) {
 		return
 	}
 
-	want := readFile(t, "./testdata/init_declaration_file.golden")
-	got := readFile(t, filename)
+	want := helperReadFile(t, "./testdata/init_declaration_file.golden")
+	got := helperReadFile(t, filename)
 	if got != want {
 		t.Errorf("want %q, got %q", want, got)
 	}

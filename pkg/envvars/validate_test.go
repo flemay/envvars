@@ -36,7 +36,7 @@ func TestValidate_toReturnErrorIfInvalidDeclaration(t *testing.T) {
 	// when
 	got := envvars.Validate(r)
 	// then
-	want := readFile(t, "testdata/declaration_file_invalid_error_message.golden")
+	want := helperReadFile(t, "testdata/declaration_file_invalid_error_message.golden")
 	if got.Error() != want {
 		t.Errorf("want %q, got %q", want, got.Error())
 	}
