@@ -36,8 +36,7 @@ _updateDeps:
 test:
 	$(COMPOSE_RUN_GOLANG) make _test
 	$(COMPOSE_RUN_SHELLCHECK) scripts/*.sh
-	$(warning [WARNING] golangci-lint - excluding test files should only be temporary until the latest docker image uses go 1.17+)
-	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint run --tests=false pkg/...
+	$(COMPOSE_RUN_GOLANGCILINT) golangci-lint run pkg/...
 _test:
 	go test -coverprofile=profile.out ./...
 

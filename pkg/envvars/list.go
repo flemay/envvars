@@ -23,16 +23,3 @@ func List(reader DeclarationReader, tags ...string) (EnvvarCollection, error) {
 
 	return taggedCollection, nil
 }
-
-func appendToEnvvarCollection(c EnvvarCollection, evs ...*Envvar) EnvvarCollection {
-	toAppend := make(EnvvarCollection, 0, len(evs))
-	for _, ev := range evs {
-		if c.Get(ev.Name) == nil {
-			toAppend = append(toAppend, ev)
-		}
-	}
-	if len(toAppend) > 0 {
-		return append(c, toAppend...)
-	}
-	return c
-}

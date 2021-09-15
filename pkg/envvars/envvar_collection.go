@@ -34,3 +34,13 @@ func (c EnvvarCollection) GetAll(name string) EnvvarCollection {
 	}
 	return ec
 }
+
+func appendToEnvvarCollection(c EnvvarCollection, evs ...*Envvar) EnvvarCollection {
+	collection := EnvvarCollection{}
+	for _, ev := range evs {
+		if c.Get(ev.Name) == nil {
+			collection = append(collection, ev)
+		}
+	}
+	return collection
+}
