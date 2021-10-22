@@ -17,7 +17,7 @@ $$ cue vet schema.cue envvars.yml
 # Eval
 $$ cue eval schema.cue envvars.yml
 
-# Formatting cue file
+# Format
 $$ cue fmt schema.cue
 
 $$ exit
