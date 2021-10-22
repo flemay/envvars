@@ -4,5 +4,6 @@ bin/
 .DS_Store
 *.out
 *.yml
+!_cuelang/*.yml
 !docker-compose.yml
 !pkg/envfile/testdata/*.yml

@@ -1,0 +1,9 @@
+tags:
+  - name: build
+  - name: deploy
+
+envvars:
+  - name: ENV
+    tags:
+      - build
+      - deploy
