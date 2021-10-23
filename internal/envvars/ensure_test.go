@@ -3,8 +3,8 @@ package envvars_test
 import (
 	"testing"
 
-	"github.com/flemay/envvars/pkg/envvars"
-	"github.com/flemay/envvars/pkg/yml"
+	"github.com/flemay/envvars/internal/envvars"
+	"github.com/flemay/envvars/internal/yml"
 )
 
 func TestEnsure_toReturnErrorIfInvalidDeclarationAndTagNameList(t *testing.T) {

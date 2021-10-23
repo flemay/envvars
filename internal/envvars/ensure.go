@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/flemay/envvars/pkg/errorappender"
+	"github.com/flemay/envvars/internal/errorappender"
 )
 
 // Ensure verifies that the environment variables comply to their Declaration. Tags can be passed along to only ensure environment variables with the tags
