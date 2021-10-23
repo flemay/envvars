@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/internal/envvars"
 	"gopkg.in/yaml.v2"
 )
 

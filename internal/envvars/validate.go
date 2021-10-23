@@ -3,7 +3,7 @@ package envvars
 import (
 	"errors"
 	"fmt"
-	"github.com/flemay/envvars/pkg/errorappender"
+	"github.com/flemay/envvars/internal/errorappender"
 )
 
 // Validate ensures the Declaration is without any error.

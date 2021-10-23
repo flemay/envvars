@@ -1,6 +1,6 @@
 package mock
 
-import "github.com/flemay/envvars/pkg/envvars"
+import "github.com/flemay/envvars/internal/envvars"
 
 type DeclarationReader struct {
 	ReadFunc func() (*envvars.Declaration, error)

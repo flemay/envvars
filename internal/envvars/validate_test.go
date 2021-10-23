@@ -3,9 +3,9 @@ package envvars_test
 import (
 	"testing"
 
-	"github.com/flemay/envvars/pkg/envvars"
-	"github.com/flemay/envvars/pkg/mock"
-	"github.com/flemay/envvars/pkg/yml"
+	"github.com/flemay/envvars/internal/envvars"
+	"github.com/flemay/envvars/internal/mock"
+	"github.com/flemay/envvars/internal/yml"
 )
 
 func TestValidate_toReturnNoErrorIfValidDeclaration(t *testing.T) {

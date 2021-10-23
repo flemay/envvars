@@ -3,7 +3,7 @@ package envvars_test
 import (
 	"testing"
 
-	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/internal/envvars"
 )
 
 func TestEnvvarHasTag(t *testing.T) {

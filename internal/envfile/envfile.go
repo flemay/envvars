@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/flemay/envvars/pkg/envvars"
+	"github.com/flemay/envvars/internal/envvars"
 )
 
 // Envfile define a struct which is responsible to generates an env file.
