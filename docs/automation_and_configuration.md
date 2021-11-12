@@ -62,7 +62,7 @@ The following is a step-by-step guide on how I configured Docker Hub `flemay/env
 1. Fill out the form (Namespace, Name, Description, Visibility)
 1. Leave the `Build Settings` section empty
 1. Click `Create` button
-1. In the `General` tab, update the `Readme` section with this repository's README
+1. In the `General` tab, update the `Readme` with the title of the project and a link to the repository. This ensures users will access the latest version of the README as the Docker's README won't get automatically updated.
 1. In the `Collaborators` tab, add the docker hub user you want to use for automated builds. This user can now be used in GitHub Actions to push the image.
 
 > For DOCKER_ACCESS_TOKEN, it is recommended to use an Access Token and not the password from the automation user. To create it, log in as the automation Docker user, go to Account Settings. From the Security tab, you will be able to create the token. The name of the token can be something like "GitHub Actions".
