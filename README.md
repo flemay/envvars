@@ -122,8 +122,6 @@ Contributions are greatly appreciated. Everyone can contribute and [here][linkCo
 
 Envvars is in its early stage and its API is not stable. Envvars will be production ready when it reaches `v1.0.0`.
 
-You are encouraged to try envvars, [share your feedback and contribute to it][linkContributing].
-
 See [Automation & Configuration][linkAutomationAndConfiguration] for more details.
 
 ## Stargazers over time

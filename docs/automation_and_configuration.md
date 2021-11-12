@@ -2,11 +2,11 @@
 
 ## GitHub
 
-## master branch
+## main branch
 
-master is always releasable (unless tests are not passing). A change to master triggers a GitHub Action which tests the code, and builds a Docker image without pushing it.
+main is always releasable (unless tests are not passing). A change to main triggers a GitHub Action which tests the code, and builds a Docker image without pushing it.
 
-The master branch is also protected by:
+The main branch is also protected by:
 
 - requiring status checks to pass before merging
   - Test GitHub Action
@@ -21,7 +21,7 @@ See [Configuring GitHub protected branches][linkConfiguringGitHubProtectedBranch
 
 This project uses [GitHub Actions][linkGitHubActionsProject] to test, build, and push envvars Docker image. There are two: Test and Release.
 
-`Test` is triggered whenever there is a [Pull Request created][linkGitHubActionsPullRequestEvent] or a [change to master branch][linkGitHubActionsPushEvent].
+`Test` is triggered whenever there is a [Pull Request created][linkGitHubActionsPullRequestEvent] or a [change to main branch][linkGitHubActionsPushEvent].
 
 `Release` gets triggered under a [GitHub create event][linkGitHubActionsCreateEvent]. However, it is only on tag created that the release of the Docker image happens.
 
