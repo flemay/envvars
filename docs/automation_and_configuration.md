@@ -27,7 +27,7 @@ This project uses [GitHub Actions][linkGitHubActionsProject] to test, build, and
 
 > [GitHub release event][linkGitHubActionsReleaseEvent] could eventually be used but for now, the release is done on Git tag.
 
-Environment variable nammed `DOCKER_PASSWORD` is set in the Secrets section of the repository's settings.
+Environment variable nammed `DOCKER_ACCESS_TOKEN` is set in the Secrets section of the repository's settings.
 
 ## Git tag
 
@@ -65,7 +65,7 @@ The following is a step-by-step guide on how I configured Docker Hub `flemay/env
 1. In the `General` tab, update the `Readme` section with this repository's README
 1. In the `Collaborators` tab, add the docker hub user you want to use for automated builds. This user can now be used in GitHub Actions to push the image.
 
-> For DOCKER_PASSWORD, it is recommended to use an Access Token and not the password from the automation user. To create it, log in as the automation Docker user, go to Account Settings. From the Security tab, you will be able to create the token. The name of the token can be something like "GitHub Actions".
+> For DOCKER_ACCESS_TOKEN, it is recommended to use an Access Token and not the password from the automation user. To create it, log in as the automation Docker user, go to Account Settings. From the Security tab, you will be able to create the token. The name of the token can be something like "GitHub Actions".
 
 ## Go Report Card
 
