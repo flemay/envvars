@@ -55,7 +55,9 @@ Docker Hub is used to store `flemay/envars` images. The Docker Hub autobuild/aut
 
 The following is a step-by-step guide on how I configured Docker Hub `flemay/envvars`.
 
-1. It is handy to have 2 Docker Hub users: 1 for the creation of the docker registry, the other to push the images
+1. It is handy to have 2 Docker Hub users
+    1. Admin user for managing the Docker Hub
+    1. Service Account user for pushing the images to Docker Hub wich will be used by services such as GitHub Actions
 1. Go to [https://hub.docker.com][linkDockerHub] and sign in with your main docker hub user.
 1. Go to `Repositories`
 1. Click `Create Repository` button
