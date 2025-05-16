@@ -140,7 +140,7 @@ See [Automation & Configuration][linkAutomationAndConfiguration] for more detail
 [linkProjectGoReferenceBadge]: https://pkg.go.dev/badge/github.com/flemay/envvars.svg
 [linkProjectGoReference]: https://pkg.go.dev/github.com/flemay/envvars
 [linkYAML]: http://yaml.org/spec/1.2/spec.html
-[link3Musketeers]: https://3musketeers.io
+[link3Musketeers]: https://github.com/flemay/3musketeers
 [linkGitHubActionsProjectTestBadge]: https://github.com/flemay/envvars/workflows/Test/badge.svg
 [linkGitHubActionsProjectReleaseBadge]: https://github.com/flemay/envvars/workflows/Release/badge.svg
 [linkGitHubActionsProject]: https://github.com/flemay/envvars/actions
